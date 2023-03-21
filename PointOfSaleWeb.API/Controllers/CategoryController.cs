@@ -15,10 +15,34 @@ namespace PointOfSaleWeb.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Category>> GetAllCategories()
+        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
         {
             var categories = await _catRepo.GetAllCategories();
-            return categories;
+            if (categories == null || !categories.Any())
+            {
+                return NotFound();
+            }
+            return Ok(categories);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Category>> GetCategoryByID(int id)
+        {
+            var category = await _catRepo.GetCategoryByID(id);
+
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            if (category != null)
+            {
+                return Ok(category);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

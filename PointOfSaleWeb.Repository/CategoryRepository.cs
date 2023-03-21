@@ -18,5 +18,14 @@ namespace PointOfSaleWeb.Repository
             using IDbConnection db = _context.CreateConnection();
             return await db.QueryAsync<Category>("GetAllCategories", commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<Category> GetCategoryByID(int id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@CategoryID", id);
+
+            return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryByID", parameters, commandType: CommandType.StoredProcedure);
+        }
     }
 }
