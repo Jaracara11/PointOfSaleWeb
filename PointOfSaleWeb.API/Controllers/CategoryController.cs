@@ -19,6 +19,7 @@ namespace PointOfSaleWeb.API.Controllers
         public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
         {
             var categories = await _catRepo.GetAllCategories();
+
             if (categories == null || !categories.Any())
             {
                 return NotFound();
@@ -55,6 +56,19 @@ namespace PointOfSaleWeb.API.Controllers
             {
                 ModelState.AddModelError("CategoryError", response.Message);
                 return BadRequest(ModelState);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCategory(int id)
+        {
+            var response = await _catRepo.DeleteCategory(id);
+
+            if (!response.Success)
+            {
+                return BadRequest(new { message = response.Message });
             }
 
             return NoContent();
