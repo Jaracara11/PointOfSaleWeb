@@ -44,5 +44,18 @@ namespace PointOfSaleWeb.API.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Category>> AddCategory(Category category)
+        {
+            if (category == null || !ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _catRepo.AddCategory(category);
+
+            return CreatedAtAction(nameof(GetCategoryByID), new { id = category.CategoryID }, new { categoryName = category.CategoryName });
+        }
     }
 }
