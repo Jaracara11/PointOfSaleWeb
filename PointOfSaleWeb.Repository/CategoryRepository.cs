@@ -54,5 +54,29 @@ namespace PointOfSaleWeb.Repository
             }
         }
 
+        public async Task<DbResponse<Category>> DeleteCategory(int categoryId)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@CategoryID", categoryId);
+
+            try
+            {
+                await db.ExecuteAsync("DeleteCategory", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<Category>
+                {
+                    Success = true
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<Category>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
