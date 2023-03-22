@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
@@ -27,5 +28,31 @@ namespace PointOfSaleWeb.Repository
 
             return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryByID", parameters, commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<DbResponse<Category>> AddNewCategory(string categoryName)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@CategoryName", categoryName);
+
+            try
+            {
+                await db.ExecuteAsync("AddNewCategory", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<Category>
+                {
+                    Success = true
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<Category>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
     }
 }

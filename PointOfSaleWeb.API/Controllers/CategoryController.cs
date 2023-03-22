@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Repository;
 using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.API.Controllers
@@ -46,16 +47,17 @@ namespace PointOfSaleWeb.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> AddCategory(Category category)
+        public async Task<ActionResult<Category>> AddNewCategory(Category category)
         {
-            if (category == null || !ModelState.IsValid)
+            var response = await _catRepo.AddNewCategory(category.CategoryName);
+
+            if (!response.Success)
             {
+                ModelState.AddModelError("CategoryError", response.Message);
                 return BadRequest(ModelState);
             }
 
-            await _catRepo.AddCategory(category);
-
-            return CreatedAtAction(nameof(GetCategoryByID), new { id = category.CategoryID }, new { categoryName = category.CategoryName });
+            return NoContent();
         }
     }
 }
