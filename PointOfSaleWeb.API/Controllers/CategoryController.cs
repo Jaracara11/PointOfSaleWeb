@@ -62,7 +62,7 @@ namespace PointOfSaleWeb.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        public async Task<ActionResult> DeleteCategory(int id)
         {
             var response = await _catRepo.DeleteCategory(id);
 
@@ -72,6 +72,29 @@ namespace PointOfSaleWeb.API.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateCategory(int id, Category category)
+        {
+            var existingCategory = await _catRepo.GetCategoryByID(id);
+
+            if (existingCategory == null)
+            {
+                return NotFound();
+            }
+
+            existingCategory.CategoryName = category.CategoryName;
+
+            var response = await _catRepo.UpdateCategory(existingCategory);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("CategoryError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return Ok(response);
         }
     }
 }
