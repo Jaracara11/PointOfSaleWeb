@@ -4,15 +4,15 @@ using System.Data;
 
 namespace PointOfSaleWeb.Repository
 {
-    public class PosDbContext
+    public class InventoryDbContext
     {
         private readonly IConfiguration? _configuration;
         private readonly string? _connectionString;
 
-        public PosDbContext(IConfiguration configuration)
+        public InventoryDbContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("PosDbConn");
+            _connectionString = _configuration.GetConnectionString("InventoryDbConn");
         }
 
         public IDbConnection CreateConnection()

@@ -2595,9 +2595,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\PointOfSaleWeb.API.csproj",
-      "projectName": "PointOfSaleWeb.API",
-      "projectPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\PointOfSaleWeb.API.csproj",
+      "projectUniqueName": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\Inventory.API.csproj",
+      "projectName": "Inventory.API",
+      "projectPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\Inventory.API.csproj",
       "packagesPath": "C:\\Users\\under\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\obj\\",
       "projectStyle": "PackageReference",

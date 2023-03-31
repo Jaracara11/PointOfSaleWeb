@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<PosDbContext>();
+builder.Services.AddScoped<InventoryDbContext>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();

@@ -8,8 +8,8 @@ namespace PointOfSaleWeb.Repository
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private readonly PosDbContext _context;
-        public CategoryRepository(PosDbContext context)
+        private readonly InventoryDbContext _context;
+        public CategoryRepository(InventoryDbContext context)
         {
             _context = context;
         }
