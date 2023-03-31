@@ -25,5 +25,25 @@ namespace Inventory.API.Controllers
             }
             return Ok(products);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Category>> GetProductByID(int id)
+        {
+            var product = await _prodRepo.GetProductByID(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (product != null)
+            {
+                return Ok(product);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
