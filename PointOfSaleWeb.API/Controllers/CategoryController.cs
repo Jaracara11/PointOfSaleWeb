@@ -57,7 +57,7 @@ namespace Inventory.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            return NoContent();
+            return Created("Category", response.Data);
         }
 
         [HttpDelete("{id}")]
@@ -67,7 +67,7 @@ namespace Inventory.API.Controllers
 
             if (!response.Success)
             {
-                return BadRequest(new { message = response.Message });
+                return NotFound();
             }
 
             return NoContent();
@@ -89,7 +89,7 @@ namespace Inventory.API.Controllers
 
             if (!response.Success)
             {
-                ModelState.AddModelError("CategoryError", response.Message);
+                ModelState.AddModelError("Error", response.Message);
                 return BadRequest(ModelState);
             }
 

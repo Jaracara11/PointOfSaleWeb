@@ -37,11 +37,12 @@ namespace PointOfSaleWeb.Repository
 
             try
             {
-                await db.ExecuteAsync("AddNewCategory", parameters, commandType: CommandType.StoredProcedure);
+                var category = await db.QuerySingleOrDefaultAsync<Category>("AddNewCategory", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Category>
                 {
-                    Success = true
+                    Success = true,
+                    Data = category
                 };
             }
             catch (SqlException ex)
@@ -69,12 +70,11 @@ namespace PointOfSaleWeb.Repository
                     Success = true
                 };
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
                 return new DbResponse<Category>
                 {
-                    Success = false,
-                    Message = ex.Message
+                    Success = false
                 };
             }
         }

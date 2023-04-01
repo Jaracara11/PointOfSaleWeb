@@ -1,4 +1,4 @@
-USE [POS]
+USE [Inventory]
 GO
 
 /****** Object: StoredProcedure [dbo].[UpdateCategory] Script Date: 3/26/2023 9:10:51 AM ******/
