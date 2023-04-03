@@ -21,12 +21,6 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
-builder.Configuration.AddJsonFile("appsettings.json");
-var config = builder.Configuration.GetSection("Kestrel:Endpoints:Https:Url");
-var url = config.Value;
-
-app.Urls.Add(url!);
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
