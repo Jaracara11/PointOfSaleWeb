@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>PointOfSaleWeb.API</ActiveDebugProfile>
+    <ActiveDebugProfile>PointOfSaleWeb.Inventory.API</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

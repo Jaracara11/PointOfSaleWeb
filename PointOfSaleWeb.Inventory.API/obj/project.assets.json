@@ -2595,11 +2595,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\Inventory.API.csproj",
-      "projectName": "Inventory.API",
-      "projectPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\Inventory.API.csproj",
+      "projectUniqueName": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\PointOfSaleWeb.Inventory.API.csproj",
+      "projectName": "PointOfSaleWeb.Inventory.API",
+      "projectPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\PointOfSaleWeb.Inventory.API.csproj",
       "packagesPath": "C:\\Users\\under\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.API\\obj\\",
+      "outputPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
