@@ -41,9 +41,9 @@ VALUES (
         @ProductStock,
         @ProductCategoryID
     );
+COMMIT TRANSACTION;
 SELECT @ProductID = SCOPE_IDENTITY();
 EXEC GetProductById @ProductID = @ProductID;
-COMMIT TRANSACTION;
 END TRY BEGIN CATCH;
 IF (@@TRANCOUNT > 0) BEGIN;
 ROLLBACK TRANSACTION;
