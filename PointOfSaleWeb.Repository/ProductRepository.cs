@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
@@ -26,6 +27,37 @@ namespace PointOfSaleWeb.Repository
             parameters.Add("@ProductID", id);
 
             return await db.QuerySingleOrDefaultAsync<Product>("GetProductByID", parameters, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<DbResponse<Product>> AddNewProduct(Product product)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@ProductName", product.ProductName);
+            parameters.Add("@ProductDescription", product.ProductDescription);
+            parameters.Add("@ProductPrice", product.ProductPrice);
+            parameters.Add("@ProductCost", product.ProductCost);
+            parameters.Add("@ProductStock", product.ProductStock);
+            parameters.Add("@ProductCategoryID", product.ProductCategoryID);
+
+            try
+            {
+                product = await db.QuerySingleOrDefaultAsync<Product>("AddNewProduct", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<Product>
+                {
+                    Success = true,
+                    Data = product
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<Product>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

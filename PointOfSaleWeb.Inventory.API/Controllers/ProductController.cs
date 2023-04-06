@@ -27,7 +27,7 @@ namespace Inventory.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Category>> GetProductByID(int id)
+        public async Task<ActionResult<Product>> GetProductByID(int id)
         {
             var product = await _prodRepo.GetProductByID(id);
 
@@ -44,6 +44,20 @@ namespace Inventory.API.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Product>> AddNewProduct(Product product)
+        {
+            var response = await _prodRepo.AddNewProduct(product);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("ProductError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return Created("Product", response.Data);
         }
     }
 }

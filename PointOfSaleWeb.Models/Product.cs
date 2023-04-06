@@ -24,7 +24,7 @@ namespace PointOfSaleWeb.Models
         public decimal ProductPrice { get; set; }
 
         [Required(ErrorMessage = "Product category is required.")]
-        [StringLength(50, MinimumLength = 4, ErrorMessage = "Product category must be between 4 and 50 characters.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Product category ID must be 1 or greater.")]
         public int ProductCategoryID { get; set; }
     }
 }
