@@ -1,6 +1,6 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[AddNewProduct]    Script Date: 4/6/2023 9:49:16 AM ******/
+    /****** Object:  StoredProcedure [dbo].[AddNewProduct]    Script Date: 4/6/2023 10:13:18 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -23,8 +23,8 @@ IF EXISTS (
     @ProductName
 );
 RETURN;
-END BEGIN TRANSACTION;
-BEGIN TRY;
+END BEGIN TRY;
+BEGIN TRANSACTION;
 INSERT INTO [dbo].[Products] (
         ProductName,
         ProductDescription,
@@ -45,6 +45,9 @@ SELECT @ProductID = SCOPE_IDENTITY();
 EXEC GetProductById @ProductID = @ProductID;
 COMMIT TRANSACTION;
 END TRY BEGIN CATCH;
+IF (@@TRANCOUNT > 0) BEGIN;
+ROLLBACK TRANSACTION;
+END;
 PRINT 'Error ocurred in ' + ERROR_PROCEDURE() + ' ' + ERROR_MESSAGE();
 RETURN -1;
 END CATCH;
