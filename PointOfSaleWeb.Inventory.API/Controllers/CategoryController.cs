@@ -23,6 +23,7 @@ namespace Inventory.API.Controllers
             {
                 return NotFound();
             }
+
             return Ok(categories);
         }
 

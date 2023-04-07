@@ -23,6 +23,20 @@ namespace Inventory.API.Controllers
             {
                 return NotFound();
             }
+
+            return Ok(products);
+        }
+
+        [HttpGet("category/{productCategoryID}")]
+        public async Task<ActionResult<Product>> GetProductsByCategory(int productCategoryID)
+        {
+            var products = await _prodRepo.GetProductsByCategory(productCategoryID);
+
+            if (products == null || !products.Any())
+            {
+                return NotFound();
+            }
+
             return Ok(products);
         }
 

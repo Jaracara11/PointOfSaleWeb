@@ -17,6 +17,7 @@ namespace PointOfSaleWeb.Repository
         public async Task<IEnumerable<Category>> GetAllCategories()
         {
             using IDbConnection db = _context.CreateConnection();
+
             return await db.QueryAsync<Category>("GetAllCategories", commandType: CommandType.StoredProcedure);
         }
 
