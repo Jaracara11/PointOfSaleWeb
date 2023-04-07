@@ -21,7 +21,7 @@ namespace PointOfSaleWeb.Repository
             return await db.QueryAsync<Product>("GetAllProducts", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(int id)
+        public async Task<IEnumerable<Product>> GetProductsByCategoryID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();

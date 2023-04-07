@@ -28,9 +28,9 @@ namespace Inventory.API.Controllers
         }
 
         [HttpGet("category/{id}")]
-        public async Task<ActionResult<Product>> GetProductsByCategory(int id)
+        public async Task<ActionResult<Product>> GetProductsByCategoryID(int id)
         {
-            var products = await _prodRepo.GetProductsByCategory(id);
+            var products = await _prodRepo.GetProductsByCategoryID(id);
 
             if (products == null || !products.Any())
             {
