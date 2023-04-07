@@ -8,5 +8,6 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<IEnumerable<Product>> GetProductsByCategoryID(int id);
         Task<Product> GetProductByID(int id);
         Task<DbResponse<Product>> AddNewProduct(Product product);
+        Task<DbResponse<Product>> DeleteProduct(int id);
     }
 }

@@ -56,30 +56,6 @@ namespace PointOfSaleWeb.Repository
             }
         }
 
-        public async Task<DbResponse<Category>> DeleteCategory(int categoryId)
-        {
-            using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@CategoryID", categoryId);
-
-            try
-            {
-                await db.ExecuteAsync("DeleteCategory", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<Category>
-                {
-                    Success = true
-                };
-            }
-            catch (SqlException)
-            {
-                return new DbResponse<Category>
-                {
-                    Success = false
-                };
-            }
-        }
-
         public async Task<DbResponse<Category>> UpdateCategory(Category category)
         {
             using IDbConnection db = _context.CreateConnection();
@@ -109,6 +85,30 @@ namespace PointOfSaleWeb.Repository
                 {
                     Success = false,
                     Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<DbResponse<Category>> DeleteCategory(int id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@CategoryID", id);
+
+            try
+            {
+                await db.ExecuteAsync("DeleteCategory", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<Category>
+                {
+                    Success = true
+                };
+            }
+            catch (SqlException)
+            {
+                return new DbResponse<Category>
+                {
+                    Success = false
                 };
             }
         }

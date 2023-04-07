@@ -61,19 +61,6 @@ namespace Inventory.API.Controllers
             return Created("Category", response.Data);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteCategory(int id)
-        {
-            var response = await _catRepo.DeleteCategory(id);
-
-            if (!response.Success)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
-
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, Category category)
         {
@@ -95,6 +82,19 @@ namespace Inventory.API.Controllers
             }
 
             return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteCategory(int id)
+        {
+            var response = await _catRepo.DeleteCategory(id);
+
+            if (!response.Success)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }

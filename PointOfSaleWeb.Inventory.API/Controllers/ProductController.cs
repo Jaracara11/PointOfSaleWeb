@@ -73,5 +73,18 @@ namespace Inventory.API.Controllers
 
             return Created("Product", response.Data);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var response = await _prodRepo.DeleteProduct(id);
+
+            if (!response.Success)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }

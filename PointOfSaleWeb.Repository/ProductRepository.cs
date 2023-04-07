@@ -69,5 +69,29 @@ namespace PointOfSaleWeb.Repository
                 };
             }
         }
+
+        public async Task<DbResponse<Product>> DeleteProduct(int id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@ProductID", id);
+
+            try
+            {
+                await db.ExecuteAsync("DeleteProduct", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<Product>
+                {
+                    Success = true
+                };
+            }
+            catch (SqlException)
+            {
+                return new DbResponse<Product>
+                {
+                    Success = false
+                };
+            }
+        }
     }
 }
