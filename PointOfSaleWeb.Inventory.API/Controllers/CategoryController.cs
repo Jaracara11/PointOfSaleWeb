@@ -64,24 +64,17 @@ namespace Inventory.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, Category category)
         {
-            var existingCategory = await _catRepo.GetCategoryByID(id);
+            category.CategoryID = id;
 
-            if (existingCategory == null)
-            {
-                return NotFound();
-            }
-
-            existingCategory.CategoryName = category.CategoryName;
-
-            var response = await _catRepo.UpdateCategory(existingCategory);
+            var response = await _catRepo.UpdateCategory(category);
 
             if (!response.Success)
             {
-                ModelState.AddModelError("Error", response.Message);
+                ModelState.AddModelError("CategoryError", response.Message);
                 return BadRequest(ModelState);
             }
 
-            return Ok(response);
+            return Ok(response.Data);
         }
 
         [HttpDelete("{id}")]

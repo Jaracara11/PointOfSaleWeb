@@ -75,7 +75,6 @@ namespace PointOfSaleWeb.Repository
                 return new DbResponse<Category>
                 {
                     Success = true,
-                    Message = "Category updated!",
                     Data = category
                 };
             }
@@ -88,6 +87,7 @@ namespace PointOfSaleWeb.Repository
                 };
             }
         }
+
 
         public async Task<DbResponse<Category>> DeleteCategory(int id)
         {
