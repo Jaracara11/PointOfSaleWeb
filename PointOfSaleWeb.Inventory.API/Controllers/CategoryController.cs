@@ -37,14 +37,7 @@ namespace Inventory.API.Controllers
                 return NotFound();
             }
 
-            if (category != null)
-            {
-                return Ok(category);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            return Ok(category);
         }
 
         [HttpPost]
