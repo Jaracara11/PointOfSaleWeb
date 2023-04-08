@@ -1,13 +1,13 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 12:00:06 PM ******/
+    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 5:21:54 PM ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    ALTER PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
+    CREATE PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
     @ProductName VARCHAR(50),
     @ProductDescription VARCHAR(100),
     @ProductStock INT,
@@ -79,3 +79,4 @@ END catch;
 
 END
 END
+GO

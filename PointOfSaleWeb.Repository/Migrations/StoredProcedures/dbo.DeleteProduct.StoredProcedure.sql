@@ -1,13 +1,13 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 4/8/2023 9:44:22 AM ******/
+    /****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 4/8/2023 5:21:54 PM ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    ALTER PROCEDURE [dbo].[DeleteProduct] @ProductID int AS BEGIN
+    CREATE PROCEDURE [dbo].[DeleteProduct] @ProductID int AS BEGIN
 SET
     NOCOUNT ON;
 
@@ -48,3 +48,4 @@ THROW;
 END CATCH;
 
 END
+GO

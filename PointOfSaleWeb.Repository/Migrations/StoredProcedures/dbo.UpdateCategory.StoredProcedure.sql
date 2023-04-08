@@ -1,13 +1,13 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateCategory]    Script Date: 4/8/2023 11:46:03 AM ******/
+    /****** Object:  StoredProcedure [dbo].[UpdateCategory]    Script Date: 4/8/2023 5:21:54 PM ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    ALTER PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
+    CREATE PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
     @CategoryName VARCHAR(50) AS BEGIN
 SET
     NOCOUNT ON;
@@ -54,3 +54,4 @@ THROW;
 END CATCH;
 
 END
+GO
