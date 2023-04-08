@@ -77,7 +77,8 @@ namespace Inventory.API.Controllers
 
             if (!response.Success)
             {
-                return NotFound();
+                ModelState.AddModelError("CategoryError", response.Message);
+                return BadRequest(ModelState);
             }
 
             return NoContent();

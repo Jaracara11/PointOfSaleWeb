@@ -133,11 +133,12 @@ namespace PointOfSaleWeb.Repository
                     Success = true
                 };
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
                 return new DbResponse<Product>
                 {
-                    Success = false
+                    Success = false,
+                    Message = ex.Message
                 };
             }
         }

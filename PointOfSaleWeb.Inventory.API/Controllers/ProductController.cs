@@ -90,7 +90,8 @@ namespace Inventory.API.Controllers
 
             if (!response.Success)
             {
-                return NotFound();
+                ModelState.AddModelError("ProductError", response.Message);
+                return BadRequest(ModelState);
             }
 
             return NoContent();
