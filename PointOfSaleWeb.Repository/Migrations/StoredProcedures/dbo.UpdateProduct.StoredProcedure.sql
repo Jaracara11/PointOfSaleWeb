@@ -1,6 +1,6 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 10:02:23 AM ******/
+    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 10:35:27 AM ******/
 SET
     ANSI_NULLS ON
 GO
@@ -84,6 +84,36 @@ SET
 
 THROW 51000,
 'Product name already exists!',
+1;
+
+END IF NOT EXISTS (
+    SELECT
+        1
+    FROM
+        Categories
+    WHERE
+        CategoryID = @ProductCategoryID
+) BEGIN
+SET
+    @UpdatedProductName = NULL;
+
+SET
+    @UpdatedProductDescription = NULL;
+
+SET
+    @UpdatedProductPrice = NULL;
+
+SET
+    @UpdatedProductCost = NULL;
+
+SET
+    @UpdatedProductStock = NULL;
+
+SET
+    @UpdatedProductCategoryID = NULL;
+
+THROW 51000,
+'Product category does not exist!',
 1;
 
 END BEGIN TRANSACTION;
