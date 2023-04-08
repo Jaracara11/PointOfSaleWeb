@@ -36,7 +36,7 @@ namespace PointOfSaleWeb.Repository
             var parameters = new DynamicParameters();
             parameters.Add("@ProductID", id);
 
-            return await db.QuerySingleOrDefaultAsync<Product>("GetProductByID", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<Product>("GetProductById", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<DbResponse<Product>> AddNewProduct(Product product)
