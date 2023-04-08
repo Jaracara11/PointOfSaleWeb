@@ -18,9 +18,11 @@ namespace PointOfSaleWeb.Models
         public int ProductStock  { get; set; }
 
         [Required(ErrorMessage = "Product cost is required.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Product cost must be greater than zero.")]
         public decimal ProductCost  { get; set; }
 
         [Required(ErrorMessage = "Product price is required.")]
+        [Range(0.01, double.MaxValue, ErrorMessage = "Product price must be greater than zero.")]
         public decimal ProductPrice { get; set; }
 
         [Required(ErrorMessage = "Product category is required.")]
