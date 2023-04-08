@@ -82,23 +82,9 @@ namespace PointOfSaleWeb.Repository
             parameters.Add("@ProductStock", product.ProductStock);
             parameters.Add("@ProductCategoryID", product.ProductCategoryID);
 
-            parameters.Add("@UpdatedProductName", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
-            parameters.Add("@UpdatedProductDescription", dbType: DbType.String, size: 100, direction: ParameterDirection.Output);
-            parameters.Add("@UpdatedProductStock", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@UpdatedProductCost", dbType: DbType.Decimal, direction: ParameterDirection.Output);
-            parameters.Add("@UpdatedProductPrice", dbType: DbType.Decimal, direction: ParameterDirection.Output);
-            parameters.Add("@UpdatedProductCategoryID", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
             try
             {
-                await db.ExecuteAsync("UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
-
-                product.ProductName = parameters.Get<string>("@UpdatedProductName");
-                product.ProductDescription = parameters.Get<string>("@UpdatedProductDescription");
-                product.ProductStock = parameters.Get<int>("@UpdatedProductStock");
-                product.ProductCost = parameters.Get<decimal>("@UpdatedProductCost");
-                product.ProductPrice = parameters.Get<decimal>("@UpdatedProductPrice");
-                product.ProductCategoryID = parameters.Get<int>("@UpdatedProductCategoryID");
+                product = await db.QuerySingleOrDefaultAsync<Product>("UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Product>
                 {

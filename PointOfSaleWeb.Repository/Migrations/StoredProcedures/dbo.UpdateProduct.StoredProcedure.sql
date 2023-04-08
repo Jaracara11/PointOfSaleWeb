@@ -1,57 +1,30 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 10:35:27 AM ******/
+    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 12:00:06 PM ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    CREATE PROCEDURE [dbo].[UpdateProduct] ---INPUT
-    @ProductID INT,
+    ALTER PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
     @ProductName VARCHAR(50),
     @ProductDescription VARCHAR(100),
     @ProductStock INT,
     @ProductCost DECIMAL(18, 2),
     @ProductPrice DECIMAL(18, 2),
-    @ProductCategoryID INT,
-    ---OUTPUT
-    @UpdatedProductName VARCHAR(50) OUTPUT,
-    @UpdatedProductDescription VARCHAR(100) OUTPUT,
-    @UpdatedProductStock INT OUTPUT,
-    @UpdatedProductCost DECIMAL(18, 2) OUTPUT,
-    @UpdatedProductPrice DECIMAL(18, 2) OUTPUT,
-    @UpdatedProductCategoryID INT OUTPUT AS BEGIN
+    @ProductCategoryID INT AS BEGIN
 SET
-    NOCOUNT ON;
+    nocount ON;
 
-BEGIN TRY IF NOT EXISTS (
+BEGIN IF NOT EXISTS (
     SELECT
         1
     FROM
-        Products
+        products
     WHERE
-        ProductID = @ProductID
-) BEGIN
-SET
-    @UpdatedProductName = NULL;
-
-SET
-    @UpdatedProductDescription = NULL;
-
-SET
-    @UpdatedProductPrice = NULL;
-
-SET
-    @UpdatedProductCost = NULL;
-
-SET
-    @UpdatedProductStock = NULL;
-
-SET
-    @UpdatedProductCategoryID = NULL;
-
-THROW 51000,
+        productid = @ProductID
+) BEGIN THROW 51000,
 'Product does not exist!',
 1;
 
@@ -59,30 +32,11 @@ END IF EXISTS (
     SELECT
         1
     FROM
-        Products
+        products
     WHERE
-        ProductName = @ProductName
+        productname = @ProductName
         AND ProductID <> @ProductID
-) BEGIN
-SET
-    @UpdatedProductName = NULL;
-
-SET
-    @UpdatedProductDescription = NULL;
-
-SET
-    @UpdatedProductPrice = NULL;
-
-SET
-    @UpdatedProductCost = NULL;
-
-SET
-    @UpdatedProductStock = NULL;
-
-SET
-    @UpdatedProductCategoryID = NULL;
-
-THROW 51000,
+) BEGIN THROW 51000,
 'Product name already exists!',
 1;
 
@@ -90,64 +44,38 @@ END IF NOT EXISTS (
     SELECT
         1
     FROM
-        Categories
+        categories
     WHERE
         CategoryID = @ProductCategoryID
-) BEGIN
-SET
-    @UpdatedProductName = NULL;
-
-SET
-    @UpdatedProductDescription = NULL;
-
-SET
-    @UpdatedProductPrice = NULL;
-
-SET
-    @UpdatedProductCost = NULL;
-
-SET
-    @UpdatedProductStock = NULL;
-
-SET
-    @UpdatedProductCategoryID = NULL;
-
-THROW 51000,
+) BEGIN THROW 51000,
 'Product category does not exist!',
 1;
 
-END BEGIN TRANSACTION;
+END BEGIN try;
+
+BEGIN TRANSACTION;
 
 UPDATE
-    Products
+    products
 SET
-    ProductName = @ProductName,
-    ProductDescription = @ProductDescription,
-    ProductPrice = @ProductPrice,
-    ProductCost = @ProductCost,
-    ProductStock = @ProductStock,
-    ProductCategoryID = @ProductCategoryID
+    productname = @ProductName,
+    productdescription = @ProductDescription,
+    productprice = @ProductPrice,
+    productcost = @ProductCost,
+    productstock = @ProductStock,
+    productcategoryid = @ProductCategoryID
 WHERE
-    ProductID = @ProductID;
-
-SELECT
-    @UpdatedProductName = ProductName,
-    @UpdatedProductDescription = ProductDescription,
-    @UpdatedProductPrice = ProductPrice,
-    @UpdatedProductCost = ProductCost,
-    @UpdatedProductStock = ProductStock,
-    @UpdatedProductCategoryID = ProductCategoryID
-FROM
-    Products
-WHERE
-    ProductID = @ProductID;
+    productid = @ProductID;
 
 COMMIT TRANSACTION;
 
-END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+EXEC GetProductByID @ProductID = @ProductID;
+
+END try BEGIN catch IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
 
-END CATCH;
+END catch;
 
+END
 END

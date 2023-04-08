@@ -62,13 +62,10 @@ namespace PointOfSaleWeb.Repository
             var parameters = new DynamicParameters();
             parameters.Add("@CategoryID", category.CategoryID);
             parameters.Add("@CategoryName", category.CategoryName);
-            parameters.Add("@UpdatedCategoryName", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
 
             try
             {
-                await db.ExecuteAsync("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
-
-                category.CategoryName = parameters.Get<string>("@UpdatedCategoryName");
+                category = await db.QuerySingleOrDefaultAsync<Category>("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Category>
                 {
