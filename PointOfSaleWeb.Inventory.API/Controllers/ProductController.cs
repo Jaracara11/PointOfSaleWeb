@@ -70,25 +70,13 @@ namespace Inventory.API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateProduct(int id, Product product)
         {
-            var existingProduct = await _prodRepo.GetProductByID(id);
+            product.ProductID = id;
 
-            if (existingProduct == null)
-            {
-                return NotFound();
-            }
-
-            existingProduct.ProductName = product.ProductName;
-            existingProduct.ProductDescription = product.ProductDescription;
-            existingProduct.ProductStock = product.ProductStock;
-            existingProduct.ProductCost = product.ProductCost;
-            existingProduct.ProductPrice = product.ProductPrice;
-            existingProduct.ProductCategoryID = product.ProductCategoryID;
-
-            var response = await _prodRepo.UpdateProduct(existingProduct);
+            var response = await _prodRepo.UpdateProduct(product);
 
             if (!response.Success)
             {
-                ModelState.AddModelError("Error", response.Message);
+                ModelState.AddModelError("ProductError", response.Message);
                 return BadRequest(ModelState);
             }
 

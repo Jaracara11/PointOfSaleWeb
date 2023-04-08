@@ -67,7 +67,7 @@ namespace Inventory.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Ok(response.Data);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]

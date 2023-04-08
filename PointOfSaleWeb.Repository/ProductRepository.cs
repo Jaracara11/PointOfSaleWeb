@@ -45,9 +45,9 @@ namespace PointOfSaleWeb.Repository
             var parameters = new DynamicParameters();
             parameters.Add("@ProductName", product.ProductName);
             parameters.Add("@ProductDescription", product.ProductDescription);
-            parameters.Add("@ProductPrice", product.ProductPrice);
-            parameters.Add("@ProductCost", product.ProductCost);
             parameters.Add("@ProductStock", product.ProductStock);
+            parameters.Add("@ProductCost", product.ProductCost);
+            parameters.Add("@ProductPrice", product.ProductPrice);
             parameters.Add("@ProductCategoryID", product.ProductCategoryID);
 
             try
@@ -72,37 +72,51 @@ namespace PointOfSaleWeb.Repository
 
         public async Task<DbResponse<Product>> UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
-            //using IDbConnection db = _context.CreateConnection();
-            //var parameters = new DynamicParameters();
-            //parameters.Add("@CategoryID", category.CategoryID);
-            //parameters.Add("@CategoryName", category.CategoryName);
-            //parameters.Add("@UpdatedCategoryName", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@ProductID", product.ProductID);
+            parameters.Add("@ProductName", product.ProductName);
+            parameters.Add("@ProductDescription", product.ProductDescription);
+            parameters.Add("@ProductPrice", product.ProductPrice);
+            parameters.Add("@ProductCost", product.ProductCost);
+            parameters.Add("@ProductStock", product.ProductStock);
+            parameters.Add("@ProductCategoryID", product.ProductCategoryID);
 
-            //try
-            //{
-            //    await db.ExecuteAsync("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
+            parameters.Add("@UpdatedProductName", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
+            parameters.Add("@UpdatedProductDescription", dbType: DbType.String, size: 100, direction: ParameterDirection.Output);
+            parameters.Add("@UpdatedProductStock", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@UpdatedProductCost", dbType: DbType.Decimal, direction: ParameterDirection.Output);
+            parameters.Add("@UpdatedProductPrice", dbType: DbType.Decimal, direction: ParameterDirection.Output);
+            parameters.Add("@UpdatedProductCategoryID", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            //    var updatedCategoryName = parameters.Get<string>("@UpdatedCategoryName");
+            try
+            {
+                await db.ExecuteAsync("UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
 
-            //    category.CategoryName = updatedCategoryName;
+                product.ProductName = parameters.Get<string>("@UpdatedProductName");
+                product.ProductDescription = parameters.Get<string>("@UpdatedProductDescription");
+                product.ProductStock = parameters.Get<int>("@UpdatedProductStock");
+                product.ProductCost = parameters.Get<decimal>("@UpdatedProductCost");
+                product.ProductPrice = parameters.Get<decimal>("@UpdatedProductPrice");
+                product.ProductCategoryID = parameters.Get<int>("@UpdatedProductCategoryID");
 
-            //    return new DbResponse<Category>
-            //    {
-            //        Success = true,
-            //        Message = "Product updated!",
-            //        Data = product
-            //    };
-            //}
-            //catch (SqlException ex)
-            //{
-            //    return new DbResponse<Product>
-            //    {
-            //        Success = false,
-            //        Message = ex.Message
-            //    };
-            //}
+                return new DbResponse<Product>
+                {
+                    Success = true,
+                    Message = "Product updated!",
+                    Data = product
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<Product>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
+
 
         public async Task<DbResponse<Product>> DeleteProduct(int id)
         {

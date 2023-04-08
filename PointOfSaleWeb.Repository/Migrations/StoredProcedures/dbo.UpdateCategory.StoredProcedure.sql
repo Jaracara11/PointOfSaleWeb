@@ -1,13 +1,12 @@
 USE [Inventory]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateCategory]    Script Date: 4/8/2023 8:22:17 AM ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    ALTER PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
+    CREATE PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
     @CategoryName VARCHAR(50),
     @UpdatedCategoryName VARCHAR(50) OUTPUT AS BEGIN
 SET
@@ -43,7 +42,8 @@ THROW 51000,
 'Category name already exists!',
 1;
 
-END
+END BEGIN TRANSACTION;
+
 UPDATE
     Categories
 SET
@@ -58,7 +58,11 @@ FROM
 WHERE
     CategoryID = @CategoryID;
 
-END TRY BEGIN CATCH THROW;
+COMMIT TRANSACTION;
+
+END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+
+THROW;
 
 END CATCH;
 

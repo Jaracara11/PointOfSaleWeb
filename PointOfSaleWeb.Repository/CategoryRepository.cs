@@ -68,13 +68,12 @@ namespace PointOfSaleWeb.Repository
             {
                 await db.ExecuteAsync("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
 
-                var updatedCategoryName = parameters.Get<string>("@UpdatedCategoryName");
-
-                category.CategoryName = updatedCategoryName;
+                category.CategoryName = parameters.Get<string>("@UpdatedCategoryName");
 
                 return new DbResponse<Category>
                 {
                     Success = true,
+                    Message = "Category updated!",
                     Data = category
                 };
             }
