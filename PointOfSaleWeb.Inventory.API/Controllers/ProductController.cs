@@ -50,14 +50,7 @@ namespace Inventory.API.Controllers
                 return NotFound();
             }
 
-            if (product != null)
-            {
-                return Ok(product);
-            }
-            else
-            {
-                return BadRequest();
-            }
+            return Ok(product);
         }
 
         [HttpPost]
@@ -88,7 +81,7 @@ namespace Inventory.API.Controllers
             existingProduct.ProductDescription = product.ProductDescription;
             existingProduct.ProductStock = product.ProductStock;
             existingProduct.ProductCost = product.ProductCost;
-            existingProduct.ProductPrice =  product.ProductPrice;
+            existingProduct.ProductPrice = product.ProductPrice;
             existingProduct.ProductCategoryID = product.ProductCategoryID;
 
             var response = await _prodRepo.UpdateProduct(existingProduct);
