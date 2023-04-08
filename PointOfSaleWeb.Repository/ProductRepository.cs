@@ -70,6 +70,40 @@ namespace PointOfSaleWeb.Repository
             }
         }
 
+        public async Task<DbResponse<Product>> UpdateProduct(Product product)
+        {
+            throw new NotImplementedException();
+            //using IDbConnection db = _context.CreateConnection();
+            //var parameters = new DynamicParameters();
+            //parameters.Add("@CategoryID", category.CategoryID);
+            //parameters.Add("@CategoryName", category.CategoryName);
+            //parameters.Add("@UpdatedCategoryName", dbType: DbType.String, size: 50, direction: ParameterDirection.Output);
+
+            //try
+            //{
+            //    await db.ExecuteAsync("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
+
+            //    var updatedCategoryName = parameters.Get<string>("@UpdatedCategoryName");
+
+            //    category.CategoryName = updatedCategoryName;
+
+            //    return new DbResponse<Category>
+            //    {
+            //        Success = true,
+            //        Message = "Product updated!",
+            //        Data = product
+            //    };
+            //}
+            //catch (SqlException ex)
+            //{
+            //    return new DbResponse<Product>
+            //    {
+            //        Success = false,
+            //        Message = ex.Message
+            //    };
+            //}
+        }
+
         public async Task<DbResponse<Product>> DeleteProduct(int id)
         {
             using IDbConnection db = _context.CreateConnection();

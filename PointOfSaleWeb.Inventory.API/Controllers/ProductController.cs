@@ -74,6 +74,34 @@ namespace Inventory.API.Controllers
             return Created("Product", response.Data);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateProduct(int id, Product product)
+        {
+            var existingProduct = await _prodRepo.GetProductByID(id);
+
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            existingProduct.ProductName = product.ProductName;
+            existingProduct.ProductDescription = product.ProductDescription;
+            existingProduct.ProductStock = product.ProductStock;
+            existingProduct.ProductCost = product.ProductCost;
+            existingProduct.ProductPrice =  product.ProductPrice;
+            existingProduct.ProductCategoryID = product.ProductCategoryID;
+
+            var response = await _prodRepo.UpdateProduct(existingProduct);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("Error", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return Ok(response);
+        }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
