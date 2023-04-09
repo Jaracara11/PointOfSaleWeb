@@ -6,6 +6,7 @@ using PointOfSaleWeb.Repository.Interfaces;
 namespace Inventory.API.Controllers
 {
     [Route("api/category")]
+    [Authorize]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -29,7 +30,6 @@ namespace Inventory.API.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         public async Task<ActionResult<Category>> GetCategoryByID(int id)
         {
             var category = await _catRepo.GetCategoryByID(id);
