@@ -18,7 +18,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
             _authService = new AuthService(configuration);
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<ActionResult<UserInfoDTO>> Login(UserLoginDTO user)
         {
             var response = await _userRepo.GetUserData(user);
