@@ -1,13 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Mec13dkRmfbCmNKmMg3r1PuLDfjOYDX7+WyQQOsT+S9fu4EJ1SCgRwQumLXq8MrY3/dABH+88SQcl+fKdzYZqA==",
+  "dgSpecHash": "jCRaM6hXtxGRAKRmeopX0aPWHLFUnSYQ65CStGxZJmtVd8jlQs6Ava5ACwx2d7JMzWaoipUBPjV1pi3MUC0jgg==",
   "success": true,
   "projectFilePath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\PointOfSaleWeb.Inventory.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\under\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.15\\microsoft.aspnetcore.authentication.jwtbearer.6.0.15.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
