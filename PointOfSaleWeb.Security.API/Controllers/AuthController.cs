@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 using PointOfSaleWeb.Security.API.Services;
@@ -7,6 +8,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
 {
     [ApiController]
     [Route("api/user")]
+    [Authorize]
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepo;
@@ -18,7 +20,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
             _authService = new AuthService(configuration);
         }
 
-        [HttpPost("login")]
+        [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<UserInfoDTO>> Login(UserLoginDTO user)
         {
             var response = await _userRepo.GetUserData(user);
