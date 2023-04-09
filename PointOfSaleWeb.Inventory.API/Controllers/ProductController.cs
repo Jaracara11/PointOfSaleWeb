@@ -56,6 +56,7 @@ namespace Inventory.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Product>> AddNewProduct(Product product)
         {
             var response = await _prodRepo.AddNewProduct(product);
@@ -70,6 +71,7 @@ namespace Inventory.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateProduct(int id, Product product)
         {
             product.ProductID = id;
@@ -86,6 +88,7 @@ namespace Inventory.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
             var response = await _prodRepo.DeleteProduct(id);
