@@ -1,3 +1,5 @@
+using PointOfSaleWeb.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
@@ -9,6 +11,10 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<SecurityDbContext>();
 
 var app = builder.Build();
 

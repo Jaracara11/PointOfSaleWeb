@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PointOfSaleWeb.Security.API\PointOfSaleWeb.Security.API.csproj" />
+  </ItemGroup>
+
 </Project>
