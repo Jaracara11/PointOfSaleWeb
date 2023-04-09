@@ -15,7 +15,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             _context = context;
         }
 
-        public async Task<DbResponse<UserInfoDTO>> GetUserLoginData(UserLoginDTO user)
+        public async Task<DbResponse<UserInfoDTO>> GetUserData(UserLoginDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();

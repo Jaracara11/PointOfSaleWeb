@@ -7,10 +7,10 @@ namespace PointOfSaleWeb.Security.API.Controllers
 {
     [ApiController]
     [Route("api/user")]
-    public class UserController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepo;
-        public UserController(IUserRepository userRepo)
+        public AuthController(IUserRepository userRepo)
         {
             _userRepo = userRepo;
         }
@@ -18,7 +18,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
         [HttpPost]
         public async Task<ActionResult<UserInfoDTO>> Login(UserLoginDTO user)
         {
-            var response = await _userRepo.GetUserLoginData(user);
+            var response = await _userRepo.GetUserData(user);
 
             if (!response.Success)
             {
