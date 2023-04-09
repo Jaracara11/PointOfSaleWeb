@@ -16,4 +16,9 @@
     <ProjectReference Include="..\PointOfSaleWeb.Models\PointOfSaleWeb.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\SecurityDb\Tables\" />
+    <Folder Include="Migrations\SecurityDb\StoredProcedures\" />
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
 
-namespace PointOfSaleWeb.Repository
+namespace PointOfSaleWeb.Repository.Repositories
 {
     public class ProductRepository : IProductRepository
     {

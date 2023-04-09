@@ -1,5 +1,6 @@
 using PointOfSaleWeb.Repository;
 using PointOfSaleWeb.Repository.Interfaces;
+using PointOfSaleWeb.Repository.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

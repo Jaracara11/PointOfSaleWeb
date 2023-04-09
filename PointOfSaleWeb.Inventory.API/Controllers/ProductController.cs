@@ -4,8 +4,8 @@ using PointOfSaleWeb.Repository.Interfaces;
 
 namespace Inventory.API.Controllers
 {
-    [ApiController]
     [Route("api/product")]
+    [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _prodRepo;

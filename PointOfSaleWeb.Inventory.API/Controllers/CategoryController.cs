@@ -4,8 +4,8 @@ using PointOfSaleWeb.Repository.Interfaces;
 
 namespace Inventory.API.Controllers
 {
-    [ApiController]
     [Route("api/category")]
+    [ApiController]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _catRepo;
