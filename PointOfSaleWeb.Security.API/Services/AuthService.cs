@@ -21,7 +21,7 @@ namespace PointOfSaleWeb.Security.API.Services
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("Jwt:Token").Value ?? ""));
+                _configuration.GetSection("Jwt:SecretKey").Value ?? ""));
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
