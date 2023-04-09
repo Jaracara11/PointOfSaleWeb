@@ -15,17 +15,10 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SecurityDbContext>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
