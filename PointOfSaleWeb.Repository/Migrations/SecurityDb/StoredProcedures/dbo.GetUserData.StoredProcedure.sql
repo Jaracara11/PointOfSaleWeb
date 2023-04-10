@@ -1,13 +1,13 @@
 USE [Security]
 GO
-/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 4/9/2023 8:16:16 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 4/9/2023 8:54:12 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 ALTER PROCEDURE [dbo].[GetUserData]
     @Username NVARCHAR(25),
-    @Password VARCHAR(500)
+    @Password NVARCHAR(500)
 
 AS
 BEGIN
