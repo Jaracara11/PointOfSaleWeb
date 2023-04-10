@@ -8,7 +8,7 @@ namespace PointOfSaleWeb.Models
         public int ProductID { get; set; }
 
         [Required(ErrorMessage = "Product name is required.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Product name must be between 3 and 50 characters.")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Product name must have between 3 and 50 characters.")]
         public string ProductName { get; set; } = string.Empty;
 
         [MaxLength(100, ErrorMessage = "Product description cannot exceed 100 characters.")]

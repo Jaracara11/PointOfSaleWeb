@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 using PointOfSaleWeb.Security.API.Services;
@@ -37,6 +38,21 @@ namespace PointOfSaleWeb.Security.API.Controllers
             }
 
             return Ok(response.Data);
+        }
+
+        [HttpPost("register")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<UserInfoDTO>> CreateUser(User user)
+        {
+            var response = await _userRepo.CreateUser(user);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("UserError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return Created("User", response.Data);
         }
     }
 }

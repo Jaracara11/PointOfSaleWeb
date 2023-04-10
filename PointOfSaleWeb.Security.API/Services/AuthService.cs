@@ -2,6 +2,7 @@
 using PointOfSaleWeb.Models.DTOs;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace PointOfSaleWeb.Security.API.Services
 {

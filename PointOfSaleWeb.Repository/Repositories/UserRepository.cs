@@ -24,12 +24,43 @@ namespace PointOfSaleWeb.Repository.Repositories
 
             try
             {
-                var userData = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("GetUserLoginData", parameters, commandType: CommandType.StoredProcedure);
+                var userData = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("GetUserData", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<UserInfoDTO>
                 {
                     Success = true,
                     Data = userData
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<UserInfoDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<DbResponse<UserInfoDTO>> CreateUser(User userData)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@Username", userData.Username);
+            parameters.Add("@Password", userData.Password);
+            parameters.Add("@FirstName", userData.FirstName);
+            parameters.Add("@LastName", userData.LastName);
+            parameters.Add("@Email", userData.Email);
+            parameters.Add("@UserRoleID", userData.UserRoleID);
+
+            try
+            {
+                var user = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("CreateUser", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<UserInfoDTO>
+                {
+                    Success = true,
+                    Data = user
                 };
             }
             catch (SqlException ex)
