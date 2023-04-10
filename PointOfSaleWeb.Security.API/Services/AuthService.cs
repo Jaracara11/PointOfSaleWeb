@@ -15,7 +15,7 @@ namespace PointOfSaleWeb.Security.API.Services
 
         public string CreateToken(UserInfoDTO user)
         {
-            List<Claim> claims = new List<Claim>
+            List<Claim> claims = new()
             {
                 new Claim(ClaimTypes.Role, user.Role)
             };
