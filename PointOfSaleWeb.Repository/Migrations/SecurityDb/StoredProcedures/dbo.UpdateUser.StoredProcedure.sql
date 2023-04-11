@@ -1,4 +1,11 @@
-ALTER PROCEDURE [dbo].[UpdateUser]
+USE [Security]
+GO
+/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 4/10/2023 10:59:51 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[UpdateUser]
     @UserID INT,
     @Username NVARCHAR(50) = NULL,
     @Password NVARCHAR(500) = NULL,
@@ -21,7 +28,6 @@ BEGIN
     DECLARE @UpdateQuery NVARCHAR(MAX) = 'UPDATE Users SET ';
 
     SET @UpdateQuery += 'Username = ISNULL(@Username, Username), ';
-    --SET @UpdateQuery += 'Password = ISNULL(@Password, Password), ';
 	SET @UpdateQuery += 'Password = CONVERT(VARBINARY(500), ''' + CONVERT(NVARCHAR(500), @PasswordHash, 2) + '''), ';
     SET @UpdateQuery += 'FirstName = ISNULL(@FirstName, FirstName), ';
     SET @UpdateQuery += 'LastName = ISNULL(@LastName, LastName), ';
