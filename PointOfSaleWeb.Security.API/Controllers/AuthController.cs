@@ -56,7 +56,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateUser(int id, User user)
+        public async Task<ActionResult> UpdateUser(int id, UserUpdateDTO user)
         {
             user.UserID = id;
 

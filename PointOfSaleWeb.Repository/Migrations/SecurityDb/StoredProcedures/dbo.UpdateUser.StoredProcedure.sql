@@ -1,14 +1,13 @@
 USE [Security]
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 4/10/2023 10:59:51 PM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 4/10/2023 11:13:21 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[UpdateUser]
+ALTER PROCEDURE [dbo].[UpdateUser]
     @UserID INT,
     @Username NVARCHAR(50) = NULL,
-    @Password NVARCHAR(500) = NULL,
     @FirstName NVARCHAR(50) = NULL,
     @LastName NVARCHAR(50) = NULL,
     @Email NVARCHAR(100) = NULL,
@@ -22,13 +21,9 @@ BEGIN
         THROW 50001, 'User does not exist!', 1;
     END
 
-	DECLARE @PasswordHash VARBINARY(500);
-    SET @PasswordHash = HASHBYTES('SHA2_256', @Password);
-
     DECLARE @UpdateQuery NVARCHAR(MAX) = 'UPDATE Users SET ';
 
     SET @UpdateQuery += 'Username = ISNULL(@Username, Username), ';
-	SET @UpdateQuery += 'Password = CONVERT(VARBINARY(500), ''' + CONVERT(NVARCHAR(500), @PasswordHash, 2) + '''), ';
     SET @UpdateQuery += 'FirstName = ISNULL(@FirstName, FirstName), ';
     SET @UpdateQuery += 'LastName = ISNULL(@LastName, LastName), ';
     SET @UpdateQuery += 'Email = ISNULL(@Email, Email), ';
@@ -39,8 +34,8 @@ BEGIN
     BEGIN try;
         BEGIN TRANSACTION;
 
-        EXEC sp_executesql @UpdateQuery, N'@Username NVARCHAR(50), @Password NVARCHAR(500), @FirstName NVARCHAR(50), @LastName NVARCHAR(50), @Email NVARCHAR(100), @UserRoleID INT, @UserID INT', 
-            @Username, @Password, @FirstName, @LastName, @Email, @UserRoleID, @UserID;
+        EXEC sp_executesql @UpdateQuery, N'@Username NVARCHAR(50), @FirstName NVARCHAR(50), @LastName NVARCHAR(50), @Email NVARCHAR(100), @UserRoleID INT, @UserID INT', 
+            @Username, @FirstName, @LastName, @Email, @UserRoleID, @UserID;
 
         COMMIT TRANSACTION;
 

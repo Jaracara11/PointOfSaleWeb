@@ -72,13 +72,12 @@ namespace PointOfSaleWeb.Repository.Repositories
             }
         }
 
-        public async Task<DbResponse<UserInfoDTO>> UpdateUser(User user)
+        public async Task<DbResponse<UserInfoDTO>> UpdateUser(UserUpdateDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@UserID", user.UserID);
             parameters.Add("@Username", user.Username);
-            parameters.Add("@Password", user.Password);
             parameters.Add("@FirstName", user.FirstName);
             parameters.Add("@LastName", user.LastName);
             parameters.Add("@Email", user.Email);
