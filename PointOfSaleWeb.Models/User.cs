@@ -27,8 +27,6 @@ namespace PointOfSaleWeb.Models
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
 
-        [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "User role ID must be greater than zero.")]
         public int UserRoleID { get; set; }
     }
 }

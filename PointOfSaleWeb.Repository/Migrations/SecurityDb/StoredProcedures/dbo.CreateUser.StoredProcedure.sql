@@ -1,18 +1,17 @@
 USE [Security]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 4/9/2023 9:14:50 PM ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 4/10/2023 9:15:18 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER PROCEDURE [dbo].[CreateUser]
+CREATE PROCEDURE [dbo].[CreateUser]
     @Username NVARCHAR(50),
     @Password NVARCHAR(500),
     @FirstName NVARCHAR(50),
     @LastName NVARCHAR(50),
-    @Email NVARCHAR(100),
-    @UserRoleID INT
+    @Email NVARCHAR(100)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -22,20 +21,13 @@ BEGIN
         THROW 50001, 'Username already exists!', 1;
     END
 
-	IF NOT EXISTS (SELECT 1
-                   FROM Roles
-                   WHERE RoleID = @UserRoleID)
-    BEGIN
-        THROW 51000, 'User role ID does not exist!', 1;
-    END
-
     DECLARE @PasswordHash VARBINARY(500);
     SET @PasswordHash = HASHBYTES('SHA2_256', @Password);
 
 	BEGIN try;
 	      BEGIN TRANSACTION;
-          INSERT INTO Users (Username, Password, FirstName, LastName, Email, UserRoleID)
-          VALUES (@Username, @PasswordHash, @FirstName, @LastName, @Email, @UserRoleID);
+          INSERT INTO Users (Username, Password, FirstName, LastName, Email)
+          VALUES (@Username, @PasswordHash, @FirstName, @LastName, @Email);
 		  COMMIT TRANSACTION;
 
 		  DECLARE @UserID INT;

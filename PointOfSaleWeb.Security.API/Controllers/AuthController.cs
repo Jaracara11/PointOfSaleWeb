@@ -40,8 +40,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
             return Ok(response.Data);
         }
 
-        [HttpPost("register")]
-        [Authorize(Roles = "Admin")]
+        [HttpPost("register"), AllowAnonymous]
         public async Task<ActionResult<UserInfoDTO>> CreateUser(User user)
         {
             var response = await _userRepo.CreateUser(user);
@@ -53,6 +52,23 @@ namespace PointOfSaleWeb.Security.API.Controllers
             }
 
             return Created("User", response.Data);
+        }
+
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> UpdateUser(int id, User user)
+        {
+            user.UserID = id;
+
+            var response = await _userRepo.UpdateUser(user);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("UserError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
