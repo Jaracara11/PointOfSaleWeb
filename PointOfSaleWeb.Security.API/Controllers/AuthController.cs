@@ -54,7 +54,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
             return Created("User", response.Data);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateUser(int id, UserUpdateDTO user)
         {
@@ -71,7 +71,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteUser(int id)
         {
