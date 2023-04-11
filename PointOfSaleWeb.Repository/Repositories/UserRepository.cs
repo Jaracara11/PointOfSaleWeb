@@ -106,7 +106,31 @@ namespace PointOfSaleWeb.Repository.Repositories
 
         public async Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO user)
         {
-            throw null;
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserID", user.UserID);
+            parameters.Add("@Username", user.Username);
+            parameters.Add("@OldPassword", user.OldPassword);
+            parameters.Add("@NewPassword", user.NewPassword);
+
+            try
+            {
+                await db.ExecuteAsync("ChangeUserPassword", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<string>
+                {
+                    Success = true,
+                    Message = "Password successfully changed!"
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<string>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
 
         public async Task<DbResponse<UserInfoDTO>> DeleteUser(int id)
