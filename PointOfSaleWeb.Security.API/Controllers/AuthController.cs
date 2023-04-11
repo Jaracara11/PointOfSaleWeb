@@ -21,6 +21,19 @@ namespace PointOfSaleWeb.Security.API.Controllers
             _authService = new AuthService(configuration);
         }
 
+        [HttpGet("roles")]
+        public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles()
+        {
+            var roles = await _userRepo.GetAllUserRoles();
+
+            if (roles == null || !roles.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(roles);
+        }
+
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<UserInfoDTO>> Login(UserLoginDTO user)
         {
