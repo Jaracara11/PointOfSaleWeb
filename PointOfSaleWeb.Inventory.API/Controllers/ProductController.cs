@@ -70,7 +70,7 @@ namespace Inventory.API.Controllers
             return Created("Product", response.Data);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}/edit")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateProduct(int id, Product product)
         {
@@ -87,7 +87,7 @@ namespace Inventory.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/delete")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteProduct(int id)
         {

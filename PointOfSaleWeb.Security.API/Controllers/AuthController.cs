@@ -54,7 +54,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
             return Created("User", response.Data);
         }
 
-        [HttpPut("edit/{id}")]
+        [HttpPut("{id}/edit")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateUser(int id, UserUpdateDTO user)
         {
@@ -71,7 +71,24 @@ namespace PointOfSaleWeb.Security.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpPut("{id}/change-password")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> UpdateUser(int id, UserUpdateDTO user)
+        {
+            user.UserID = id;
+
+            var response = await _userRepo.UpdateUser(user);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("UserError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}/delete")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteUser(int id)
         {

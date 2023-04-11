@@ -57,7 +57,7 @@ namespace Inventory.API.Controllers
             return Created("Category", response.Data);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}/edit")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> UpdateCategory(int id, Category category)
         {
@@ -74,7 +74,7 @@ namespace Inventory.API.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/delete")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
