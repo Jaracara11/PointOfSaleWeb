@@ -15,6 +15,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<UserInfoDTO>> GetAllUsersInfo()
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            return await db.QueryAsync<UserInfoDTO>("GetAllUsersInfo", commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<IEnumerable<Role>> GetAllUserRoles()
         {
             using IDbConnection db = _context.CreateConnection();
@@ -127,7 +134,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                 return new DbResponse<string>
                 {
                     Success = true,
-                    Message = "Password successfully changed!"
+                    Message = "Password changed successfully!"
                 };
             }
             catch (SqlException ex)
