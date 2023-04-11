@@ -54,5 +54,20 @@ namespace PointOfSaleWeb.Security.API.Controllers
 
             return Created("User", response.Data);
         }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var response = await _userRepo.DeleteUser(id);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("UserError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }

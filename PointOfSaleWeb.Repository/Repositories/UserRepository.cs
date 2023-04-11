@@ -72,5 +72,30 @@ namespace PointOfSaleWeb.Repository.Repositories
                 };
             }
         }
+
+        public async Task<DbResponse<UserInfoDTO>> DeleteUser(int id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserID", id);
+
+            try
+            {
+                await db.ExecuteAsync("DeleteUser", parameters, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<UserInfoDTO>
+                {
+                    Success = true
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<UserInfoDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
