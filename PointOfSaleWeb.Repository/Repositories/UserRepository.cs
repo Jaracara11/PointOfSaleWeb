@@ -104,6 +104,11 @@ namespace PointOfSaleWeb.Repository.Repositories
             }
         }
 
+        public async Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO user)
+        {
+            throw null;
+        }
+
         public async Task<DbResponse<UserInfoDTO>> DeleteUser(int id)
         {
             using IDbConnection db = _context.CreateConnection();

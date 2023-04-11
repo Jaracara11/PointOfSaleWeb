@@ -72,12 +72,12 @@ namespace PointOfSaleWeb.Security.API.Controllers
         }
 
         [HttpPut("{id}/change-password")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateUser(int id, UserUpdateDTO user)
+        [Authorize]
+        public async Task<ActionResult> ChangeUserPassword(int id, UserChangePasswordDTO user)
         {
             user.UserID = id;
 
-            var response = await _userRepo.UpdateUser(user);
+            var response = await _userRepo.ChangeUserPassword(user);
 
             if (!response.Success)
             {

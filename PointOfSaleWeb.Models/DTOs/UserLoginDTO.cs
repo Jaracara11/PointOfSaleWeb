@@ -10,6 +10,7 @@ namespace PointOfSaleWeb.Models.DTOs
 
         [Required]
         [StringLength(25, MinimumLength = 4, ErrorMessage = "Password must have between 4 and 50 characters.")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "Password cannot contain white spaces.")]
         public string Password { get; set; } = string.Empty;
     }
 }
