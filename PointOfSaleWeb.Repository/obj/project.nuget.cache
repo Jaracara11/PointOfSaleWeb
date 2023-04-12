@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Dsi8oK3JxkgiIoOp30qN5vDDh2Nevr0i8EMZ6ejemIycJ5ZCx5O/eGYo08PsREl8UVfgr/gWUslPzEel1vYxEA==",
+  "dgSpecHash": "9xcQvb2Hgh8YjlB3i9epqhBKnIfFlaViw5FB5FSgq6dHtghQ9EPhy2ubAB+pCNvjcM3t5LMu0yE3UQBzlK8hgw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
+  "projectFilePath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\under\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
