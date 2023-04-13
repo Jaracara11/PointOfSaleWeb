@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2PLRTE+YeCpkyCw9UQspn04qVZUuIFu2eeD/K51aqzsDVb2FvfXoAKMrLp/UoA7CuNiX7dn4OH4yBUhyGwTuqA==",
+  "dgSpecHash": "Z+rPedy0yGLJtHz3+GYn1SEWZ9A8vIIUNb4/H5d1wNOKo56p3s8Vds9aWgWHqzUfdLoXGAQ+W2ThUXiCqR387A==",
   "success": true,
   "projectFilePath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Security.API/PointOfSaleWeb.Security.API.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,10 @@
     "/Users/leduardo/.nuget/packages/microsoft.netcore.targets/1.1.0/microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/microsoft.sqlserver.server/1.0.0/microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/runtime.any.system.runtime/4.3.0/runtime.any.system.runtime.4.3.0.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/runtime.any.system.text.encoding/4.3.0/runtime.any.system.text.encoding.4.3.0.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/runtime.native.system/4.3.0/runtime.native.system.4.3.0.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/runtime.unix.system.private.uri/4.3.0/runtime.unix.system.private.uri.4.3.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.configuration.configurationmanager/6.0.1/system.configuration.configurationmanager.6.0.1.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.diagnostics.diagnosticsource/6.0.0/system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.drawing.common/6.0.0/system.drawing.common.6.0.0.nupkg.sha512",
@@ -34,6 +38,7 @@
     "/Users/leduardo/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.memory.data/1.0.2/system.memory.data.1.0.2.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/system.private.uri/4.3.0/system.private.uri.4.3.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.runtime/4.3.0/system.runtime.4.3.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.runtime.caching/6.0.0/system.runtime.caching.6.0.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
@@ -47,7 +52,10 @@
     "/Users/leduardo/.nuget/packages/system.text.encodings.web/6.0.0/system.text.encodings.web.6.0.0.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.text.json/4.7.2/system.text.json.4.7.2.nupkg.sha512",
     "/Users/leduardo/.nuget/packages/system.threading.tasks.extensions/4.5.4/system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "/Users/leduardo/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512"
+    "/Users/leduardo/.nuget/packages/system.windows.extensions/6.0.0/system.windows.extensions.6.0.0.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/microsoft.netcore.app.runtime.osx-x64/6.0.15/microsoft.netcore.app.runtime.osx-x64.6.0.15.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/microsoft.aspnetcore.app.runtime.osx-x64/6.0.15/microsoft.aspnetcore.app.runtime.osx-x64.6.0.15.nupkg.sha512",
+    "/Users/leduardo/.nuget/packages/microsoft.netcore.app.host.osx-x64/6.0.15/microsoft.netcore.app.host.osx-x64.6.0.15.nupkg.sha512"
   ],
   "logs": []
 }

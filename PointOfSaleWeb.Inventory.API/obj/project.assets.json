@@ -2198,43 +2198,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\under\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/leduardo/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\PointOfSaleWeb.Inventory.API.csproj",
+      "projectUniqueName": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Inventory.API/PointOfSaleWeb.Inventory.API.csproj",
       "projectName": "PointOfSaleWeb.Inventory.API",
-      "projectPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\PointOfSaleWeb.Inventory.API.csproj",
-      "packagesPath": "C:\\Users\\under\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Inventory.API\\obj\\",
+      "projectPath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Inventory.API/PointOfSaleWeb.Inventory.API.csproj",
+      "packagesPath": "/Users/leduardo/.nuget/packages/",
+      "outputPath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Inventory.API/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\under\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/leduardo/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
-              "projectPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj"
+            "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Models/PointOfSaleWeb.Models.csproj": {
+              "projectPath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Models/PointOfSaleWeb.Models.csproj"
             },
-            "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj": {
-              "projectPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj"
+            "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Repository/PointOfSaleWeb.Repository.csproj": {
+              "projectPath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Repository/PointOfSaleWeb.Repository.csproj"
             }
           }
         }
@@ -2273,7 +2265,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.202/RuntimeIdentifierGraph.json"
       }
     }
   }
