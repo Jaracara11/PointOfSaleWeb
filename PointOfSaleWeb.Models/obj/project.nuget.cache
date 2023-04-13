@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5e9zFc4J5PII9m5re8VP6koTKf1Yg5udtluuRWBZE4FPFN52vQru/9IP73yAlsZ6PscsZax1xFDVMn+sibUkXw==",
+  "dgSpecHash": "ttvtQLK2ICJDLe4p+NT44GjLFcBsDYP+qCPkDYO8zCsjokIUyVvjkqPzpbAADwoXpOYvbaTnSIvJ65wmms1krg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
+  "projectFilePath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Models/PointOfSaleWeb.Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

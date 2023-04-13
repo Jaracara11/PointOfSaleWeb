@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://10.0.0.4:6000"
+      "applicationUrl": "https://10.0.0.89:6000"
     }
   }
 }
