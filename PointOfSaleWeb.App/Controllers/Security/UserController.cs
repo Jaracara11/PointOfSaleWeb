@@ -1,24 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
-using PointOfSaleWeb.Security.API.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
-namespace PointOfSaleWeb.Security.API.Controllers
+namespace PointOfSaleWeb.App.Controllers.Security
 {
     [ApiController]
     [Route("api/user")]
     [Authorize]
-    public class AuthController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepo;
-        private readonly AuthService _authService;
+        private readonly IConfiguration _configuration;
 
-        public AuthController(IUserRepository userRepo, IConfiguration configuration)
+        public UserController(IUserRepository userRepo, IConfiguration configuration)
         {
             _userRepo = userRepo;
-            _authService = new AuthService(configuration);
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -61,7 +63,7 @@ namespace PointOfSaleWeb.Security.API.Controllers
 
             if (response.Data != null)
             {
-                response.Data.Token = _authService.CreateToken(response.Data);
+                response.Data.Token = CreateToken(response.Data);
             }
 
             return Ok(response.Data);
@@ -128,6 +130,27 @@ namespace PointOfSaleWeb.Security.API.Controllers
             }
 
             return NoContent();
+        }
+
+        private string CreateToken(UserInfoDTO user)
+        {
+            List<Claim> claims = new()
+            {
+                new Claim(ClaimTypes.Role, user.Role)
+            };
+
+            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+                _configuration.GetSection("Jwt:SecretKey").Value ?? ""));
+
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: credentials
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

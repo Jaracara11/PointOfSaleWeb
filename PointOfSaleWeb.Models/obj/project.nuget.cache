@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "T00be6ziKb0u3+r1fEImbVIx+uPFEpCoHmcARq2NZ9tSk+vEqceNpItrlix49deVPglioIsywOPmwCTT+v2FNg==",
+  "dgSpecHash": "5e9zFc4J5PII9m5re8VP6koTKf1Yg5udtluuRWBZE4FPFN52vQru/9IP73yAlsZ6PscsZax1xFDVMn+sibUkXw==",
   "success": true,
-  "projectFilePath": "/Users/leduardo/Documents/repos/PointOfSaleWeb.App/PointOfSaleWeb.Models/PointOfSaleWeb.Models.csproj",
-  "expectedPackageFiles": [
-    "/Users/leduardo/.nuget/packages/microsoft.netcore.app.runtime.osx-x64/6.0.15/microsoft.netcore.app.runtime.osx-x64.6.0.15.nupkg.sha512",
-    "/Users/leduardo/.nuget/packages/microsoft.aspnetcore.app.runtime.osx-x64/6.0.15/microsoft.aspnetcore.app.runtime.osx-x64.6.0.15.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

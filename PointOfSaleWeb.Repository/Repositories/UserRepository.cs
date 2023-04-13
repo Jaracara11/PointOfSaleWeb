@@ -9,8 +9,8 @@ namespace PointOfSaleWeb.Repository.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly SecurityDbContext _context;
-        public UserRepository(SecurityDbContext context)
+        private readonly DbContext _context;
+        public UserRepository(DbContext context)
         {
             _context = context;
         }

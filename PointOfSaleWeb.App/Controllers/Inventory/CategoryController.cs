@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 
-namespace Inventory.API.Controllers
+namespace Inventory.API.Controllers.Inventory
 {
     [Route("api/category")]
     [Authorize]
