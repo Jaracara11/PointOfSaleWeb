@@ -2150,11 +2150,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
+      "projectUniqueName": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
       "projectName": "PointOfSaleWeb.Repository",
-      "projectPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
+      "projectPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
       "packagesPath": "C:\\Users\\under\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\obj\\",
+      "outputPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2176,8 +2176,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
-              "projectPath": "C:\\Users\\under\\source\\repos\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj"
+            "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
+              "projectPath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj"
             }
           }
         }
@@ -2221,7 +2221,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -146,7 +146,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddSeconds(30),
                 signingCredentials: credentials
                 );
 
