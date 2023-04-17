@@ -53,6 +53,7 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGet("/healthcheck", () => "API is running!");
 
 app.Run();
 
