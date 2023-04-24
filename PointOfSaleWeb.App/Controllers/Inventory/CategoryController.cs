@@ -17,6 +17,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
         {
             var categories = await _catRepo.GetAllCategories();
@@ -30,6 +31,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<Category>> GetCategoryByID(int id)
         {
             var category = await _catRepo.GetCategoryByID(id);

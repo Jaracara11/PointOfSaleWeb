@@ -25,6 +25,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<UserInfoDTO>>> GetAllUsersInfo()
         {
             var users = await _userRepo.GetAllUsersInfo();
@@ -38,6 +39,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
         }
 
         [HttpGet("roles")]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles()
         {
             var roles = await _userRepo.GetAllUserRoles();
