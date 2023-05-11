@@ -17,7 +17,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 60)]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
             var products = await _prodRepo.GetAllProducts();
@@ -31,7 +31,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpGet("category/{id}")]
-        [ResponseCache(Duration = 60)]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductsByCategoryID(int id)
         {
             var products = await _prodRepo.GetProductsByCategoryID(id);
@@ -45,7 +45,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 60)]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductByID(int id)
         {
             var product = await _prodRepo.GetProductByID(id);
