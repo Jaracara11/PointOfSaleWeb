@@ -45,7 +45,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<ActionResult<Category>> AddNewCategory(Category category)
         {
             var response = await _catRepo.AddNewCategory(category.CategoryName);
@@ -60,7 +60,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpPut("{id}/edit")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<ActionResult> UpdateCategory(int id, Category category)
         {
             category.CategoryID = id;
@@ -77,7 +77,7 @@ namespace Inventory.API.Controllers.Inventory
         }
 
         [HttpDelete("{id}/delete")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var response = await _catRepo.DeleteCategory(id);
