@@ -1,13 +1,13 @@
-USE [Inventory]
+USE [Proyecto11]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateCategory]    Script Date: 4/8/2023 5:21:54 PM ******/
+    /****** Object:  StoredProcedure [dbo].[UpdateCategory]    Script Date: 5/24/2023 4:53:28 PM ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    CREATE PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
+    ALTER PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
     @CategoryName VARCHAR(50) AS BEGIN
 SET
     NOCOUNT ON;
@@ -45,8 +45,6 @@ WHERE
 
 COMMIT TRANSACTION;
 
-EXEC Getcategorybyid @CategoryID = @CategoryID;
-
 END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
@@ -54,4 +52,3 @@ THROW;
 END CATCH;
 
 END
-GO

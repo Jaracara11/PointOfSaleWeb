@@ -1,13 +1,13 @@
-USE [Inventory]
+USE [Proyecto11]
 GO
-    /****** Object:  StoredProcedure [dbo].[UpdateProduct]    Script Date: 4/8/2023 5:21:54 PM ******/
+    /****** Object: StoredProcedure [dbo].[UpdateProduct] ******/
 SET
     ANSI_NULLS ON
 GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    CREATE PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
+    ALTER PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
     @ProductName VARCHAR(50),
     @ProductDescription VARCHAR(100),
     @ProductStock INT,
@@ -15,9 +15,9 @@ GO
     @ProductPrice DECIMAL(18, 2),
     @ProductCategoryID INT AS BEGIN
 SET
-    nocount ON;
+    NOCOUNT ON;
 
-BEGIN IF NOT EXISTS (
+BEGIN TRY IF NOT EXISTS (
     SELECT
         1
     FROM
@@ -28,7 +28,9 @@ BEGIN IF NOT EXISTS (
 'Product does not exist!',
 1;
 
-END IF EXISTS (
+END;
+
+IF EXISTS (
     SELECT
         1
     FROM
@@ -40,7 +42,9 @@ END IF EXISTS (
 'Product name already exists!',
 1;
 
-END IF NOT EXISTS (
+END;
+
+IF NOT EXISTS (
     SELECT
         1
     FROM
@@ -51,7 +55,7 @@ END IF NOT EXISTS (
 'Product category does not exist!',
 1;
 
-END BEGIN try;
+END;
 
 BEGIN TRANSACTION;
 
@@ -69,14 +73,10 @@ WHERE
 
 COMMIT TRANSACTION;
 
-EXEC GetProductByID @ProductID = @ProductID;
-
-END try BEGIN catch IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
 
-END catch;
+END CATCH;
 
 END
-END
-GO
