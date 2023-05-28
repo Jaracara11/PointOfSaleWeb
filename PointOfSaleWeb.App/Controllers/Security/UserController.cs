@@ -112,7 +112,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
                 return BadRequest(ModelState);
             }
 
-            return Ok(response);
+            return NoContent();
         }
 
         [HttpDelete("{username}/delete")]
