@@ -1,11 +1,11 @@
-USE [Security]
+USE [Proyecto11]
 GO
-/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 4/9/2023 8:54:12 PM ******/
+/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 5/28/2023 9:24:59 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[GetUserData]
+ALTER PROCEDURE [dbo].[GetUserData]
     @Username NVARCHAR(25),
     @Password NVARCHAR(500)
 

@@ -85,12 +85,10 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return Created("User", response.Data);
         }
 
-        [HttpPut("{id}/edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateUser(int id, UserUpdateDTO user)
+        public async Task<ActionResult> UpdateUser(UserUpdateDTO user)
         {
-            user.UserID = id;
-
             var response = await _userRepo.UpdateUser(user);
 
             if (!response.Success)
@@ -102,12 +100,10 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return Ok(response);
         }
 
-        [HttpPut("{id}/change-password")]
+        [HttpPut("change-password")]
         [Authorize]
-        public async Task<ActionResult> ChangeUserPassword(int id, UserChangePasswordDTO user)
+        public async Task<ActionResult> ChangeUserPassword(UserChangePasswordDTO user)
         {
-            user.UserID = id;
-
             var response = await _userRepo.ChangeUserPassword(user);
 
             if (!response.Success)
@@ -119,11 +115,11 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return Ok(response);
         }
 
-        [HttpDelete("{id}/delete")]
+        [HttpDelete("{username}/delete")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<ActionResult> DeleteUser(string username)
         {
-            var response = await _userRepo.DeleteUser(id);
+            var response = await _userRepo.DeleteUser(username);
 
             if (!response.Success)
             {

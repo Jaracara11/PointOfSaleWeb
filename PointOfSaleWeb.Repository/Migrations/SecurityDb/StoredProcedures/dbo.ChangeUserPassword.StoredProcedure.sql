@@ -1,12 +1,11 @@
-USE [Security]
+USE [Proyecto11]
 GO
-/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 4/11/2023 8:52:48 AM ******/
+/****** Object:  StoredProcedure [dbo].[ChangeUserPassword]    Script Date: 5/28/2023 9:49:34 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE PROCEDURE [dbo].[ChangeUserPassword]
-    @UserID INT,
+ALTER PROCEDURE [dbo].[ChangeUserPassword]
     @Username NVARCHAR(25),
     @OldPassword NVARCHAR(500),
 	@NewPassword NVARCHAR(500)
@@ -38,7 +37,7 @@ SET @OldPasswordVarbinary = HASHBYTES('SHA2_256', CONVERT(VARBINARY(500), @OldPa
 
 	BEGIN try;
 	      BEGIN TRANSACTION;
-          UPDATE Users SET Password = @NewPasswordVarbinary WHERE Username = @Username AND UserID = @UserID;
+          UPDATE Users SET Password = @NewPasswordVarbinary WHERE Username = @Username;
 		  COMMIT TRANSACTION;
 	 END try
 

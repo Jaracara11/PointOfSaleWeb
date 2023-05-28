@@ -90,7 +90,6 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@UserID", user.UserID);
             parameters.Add("@Username", user.Username);
             parameters.Add("@FirstName", user.FirstName);
             parameters.Add("@LastName", user.LastName);
@@ -122,7 +121,6 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@UserID", user.UserID);
             parameters.Add("@Username", user.Username);
             parameters.Add("@OldPassword", user.OldPassword);
             parameters.Add("@NewPassword", user.NewPassword);
@@ -147,11 +145,11 @@ namespace PointOfSaleWeb.Repository.Repositories
             }
         }
 
-        public async Task<DbResponse<UserInfoDTO>> DeleteUser(int id)
+        public async Task<DbResponse<UserInfoDTO>> DeleteUser(string username)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@UserID", id);
+            parameters.Add("@Username", username);
 
             try
             {
