@@ -2,13 +2,13 @@
   "profiles": {
     "Kestrel": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://10.0.0.4:5000;http://10.0.0.4:5001"
+      "applicationUrl": "https://10.0.0.47:5000;http://10.0.0.47:5001"
     }
   }
 }

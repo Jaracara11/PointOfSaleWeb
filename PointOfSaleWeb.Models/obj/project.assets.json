@@ -1,7 +1,8 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {},
+    "net6.0/linux-arm64": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
@@ -68,6 +69,11 @@
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+      }
+    },
+    "runtimes": {
+      "linux-arm64": {
+        "#import": []
       }
     }
   }
