@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "c9FirnShPSevfuT0FsWZ7c0G9f3q0uy3pIUw9TC6SAAiH+3uQy+2ND1EW1rg/bl7wFmCmvgNS2P4NEA49CSqRA==",
+  "dgSpecHash": "ORm0k+bLVYnOf6RIMlmcDLaEdf0whfiSVqb0gqCkRVQ2YLxF6h9HUFV1FSwtNCKW2LzZz4saVz6U29xsucSsJA==",
   "success": true,
-  "projectFilePath": "/home/pi/PointOfSaleWeb.App/PointOfSaleWeb.App/PointOfSaleWeb.Models/PointOfSaleWeb.Models.csproj",
+  "projectFilePath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
