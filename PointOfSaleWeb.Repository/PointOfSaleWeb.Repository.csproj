@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\SecurityDb\StoredProcedures\dbo.GetUserById.StoredProcedure.sql.sql" />
+    <None Remove="Scripts\SecurityDb\StoredProcedures\dbo.GetUserById.StoredProcedure.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Scripts\SecurityDb\StoredProcedures\dbo.GetUserById.StoredProcedure.sql.sql" />
+    <Compile Include="Scripts\SecurityDb\StoredProcedures\dbo.GetUserById.StoredProcedure.sql" />
   </ItemGroup>
 
   <ItemGroup>
