@@ -1,4 +1,4 @@
-USE [Proyecto11]
+USE [POS]
 GO
 /****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 5/28/2023 9:24:59 AM ******/
 SET ANSI_NULLS ON
@@ -27,7 +27,7 @@ SET @PasswordVarbinary = HASHBYTES('SHA2_256', CONVERT(VARBINARY(500), @Password
         THROW 51000, 'Invalid Password', 1;
     END
 
-	SELECT U.Username, CONCAT(U.FirstName, ' ', U.LastName) AS Name, U.Email, R.RoleName AS Role
+	SELECT U.UserID, U.Username, CONCAT(U.FirstName, ' ', U.LastName) AS Name, U.Email, R.RoleName AS Role
     FROM Users U WITH (NOLOCK)
     JOIN Roles R WITH (NOLOCK) ON U.UserRoleID = R.RoleID
     WHERE U.Username = @Username AND U.Password = @PasswordVarbinary;
