@@ -26,7 +26,7 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@ProductID", id);
+            parameters.Add("@UserID", id);
 
             return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserById", parameters, commandType: CommandType.StoredProcedure);
         }
