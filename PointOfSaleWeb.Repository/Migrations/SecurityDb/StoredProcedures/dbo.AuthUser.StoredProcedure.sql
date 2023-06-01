@@ -1,11 +1,11 @@
 USE [POS]
 GO
-/****** Object:  StoredProcedure [dbo].[GetUserData]    Script Date: 5/28/2023 9:24:59 AM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetUserData]
+ALTER PROCEDURE [dbo].[AuthUser]
     @Username NVARCHAR(25),
     @Password NVARCHAR(500)
 

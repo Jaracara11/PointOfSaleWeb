@@ -38,6 +38,21 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return Ok(users);
         }
 
+        [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
+        [ResponseCache(Duration = 5)]
+        public async Task<ActionResult<User>> GetUserByID(int id)
+        {
+            var user = await _userRepo.GetUserByID(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
         [HttpGet("roles")]
         [ResponseCache(Duration = 5)]
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles()
@@ -55,7 +70,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<UserInfoDTO>> Login(UserLoginDTO user)
         {
-            var response = await _userRepo.GetUserData(user);
+            var response = await _userRepo.AuthUser(user);
 
             if (!response.Success)
             {
@@ -87,7 +102,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
 
         [HttpPut("edit")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateUser(UserUpdateDTO user)
+        public async Task<ActionResult> UpdateUser(UserDataDTO user)
         {
             var response = await _userRepo.UpdateUser(user);
 

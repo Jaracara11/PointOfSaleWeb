@@ -2,7 +2,7 @@
 
 namespace PointOfSaleWeb.Models.DTOs
 {
-    public class UserUpdateDTO
+    public class UserDataDTO
     {
         [Required]
         [StringLength(25, MinimumLength = 3, ErrorMessage = "Username must have between 3 and 50 characters.")]

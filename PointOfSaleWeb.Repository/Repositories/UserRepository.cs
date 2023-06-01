@@ -22,6 +22,15 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<UserInfoDTO>("GetAllUsersInfo", commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<User> GetUserByID(int id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@ProductID", id);
+
+            return await db.QuerySingleOrDefaultAsync<User>("GetUserById", parameters, commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<IEnumerable<Role>> GetAllUserRoles()
         {
             using IDbConnection db = _context.CreateConnection();
@@ -29,7 +38,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<Role>("GetAllUserRoles", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<DbResponse<UserInfoDTO>> GetUserData(UserLoginDTO user)
+        public async Task<DbResponse<UserInfoDTO>> AuthUser(UserLoginDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
@@ -38,7 +47,7 @@ namespace PointOfSaleWeb.Repository.Repositories
 
             try
             {
-                var userData = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("GetUserData", parameters, commandType: CommandType.StoredProcedure);
+                var userData = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("AuthUser", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<UserInfoDTO>
                 {
@@ -86,7 +95,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             }
         }
 
-        public async Task<DbResponse<UserInfoDTO>> UpdateUser(UserUpdateDTO user)
+        public async Task<DbResponse<UserInfoDTO>> UpdateUser(UserDataDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
