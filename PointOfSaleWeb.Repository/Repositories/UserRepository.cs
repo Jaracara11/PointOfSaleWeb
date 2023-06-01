@@ -22,13 +22,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<UserInfoDTO>("GetAllUsersInfo", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<User> GetUserByID(int id)
+        public async Task<UserDataDTO> GetUserByID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
             parameters.Add("@ProductID", id);
 
-            return await db.QuerySingleOrDefaultAsync<User>("GetUserById", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserById", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<Role>> GetAllUserRoles()

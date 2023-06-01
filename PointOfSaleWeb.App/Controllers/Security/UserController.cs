@@ -41,7 +41,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<User>> GetUserByID(int id)
+        public async Task<ActionResult<UserDataDTO>> GetUserByID(int id)
         {
             var user = await _userRepo.GetUserByID(id);
 

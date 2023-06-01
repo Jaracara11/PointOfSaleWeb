@@ -6,7 +6,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
     public interface IUserRepository
     {
         Task<IEnumerable<UserInfoDTO>> GetAllUsersInfo();
-        Task<User> GetUserByID(int id);
+        Task<UserDataDTO> GetUserByID(int id);
         Task<IEnumerable<Role>> GetAllUserRoles();
         Task<DbResponse<UserInfoDTO>> AuthUser(UserLoginDTO user);
         Task<DbResponse<UserInfoDTO>> CreateUser(User user);
