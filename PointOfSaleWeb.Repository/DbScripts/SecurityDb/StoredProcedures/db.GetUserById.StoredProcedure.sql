@@ -1,4 +1,4 @@
-﻿USE [POS]
+USE [POS]
 GO
 SET
     ANSI_NULLS ON
