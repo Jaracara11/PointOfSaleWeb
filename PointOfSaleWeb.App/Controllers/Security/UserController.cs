@@ -130,6 +130,21 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return NoContent();
         }
 
+        [HttpPut("{username}/new-password")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> ResetUserPassword(string username, string newPassword)
+        {
+            var response = await _userRepo.ResetUserPassword(username, newPassword);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("UserError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return NoContent();
+        }
+
         [HttpDelete("{username}/delete")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteUser(string username)

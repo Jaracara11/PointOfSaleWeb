@@ -12,6 +12,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<DbResponse<UserInfoDTO>> CreateUser(User user);
         Task<DbResponse<UserInfoDTO>> UpdateUser(UserDataDTO user);
         Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO user);
+        Task<DbResponse<string>> ResetUserPassword(string username, string newPassword);
         Task<DbResponse<UserInfoDTO>> DeleteUser(string username);
     }
 }
