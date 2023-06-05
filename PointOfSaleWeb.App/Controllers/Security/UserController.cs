@@ -54,7 +54,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
         }
 
         [HttpGet("roles")]
-        [ResponseCache(Duration = 5)]
+        [ResponseCache(Duration = 3600)]
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles()
         {
             var roles = await _userRepo.GetAllUserRoles();
