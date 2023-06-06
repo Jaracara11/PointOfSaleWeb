@@ -68,7 +68,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
         }
 
         [HttpPost("login"), AllowAnonymous]
-        public async Task<ActionResult<UserInfoDTO>> Login(UserLoginDTO user)
+        public async Task<ActionResult<UserDataDTO>> Login(UserLoginDTO user)
         {
             var response = await _userRepo.AuthUser(user);
 
@@ -87,7 +87,7 @@ namespace PointOfSaleWeb.App.Controllers.Security
         }
 
         [HttpPost("register"), AllowAnonymous]
-        public async Task<ActionResult<UserInfoDTO>> CreateUser(User user)
+        public async Task<ActionResult<UserDataDTO>> CreateUser(User user)
         {
             var response = await _userRepo.CreateUser(user);
 
