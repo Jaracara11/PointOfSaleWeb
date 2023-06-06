@@ -22,13 +22,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<UserInfoDTO>("GetAllUsersInfo", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<UserDataDTO> GetUserByID(int id)
+        public async Task<UserDataDTO> GetUserByUsername(string username)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@UserID", id);
+            parameters.Add("@Username", username);
 
-            return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserById", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserByUsername", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<Role>> GetAllUserRoles()
@@ -126,13 +126,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             }
         }
 
-        public async Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO user)
+        public async Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO userData)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@Username", user.Username);
-            parameters.Add("@OldPassword", user.OldPassword);
-            parameters.Add("@NewPassword", user.NewPassword);
+            parameters.Add("@Username", userData.Username);
+            parameters.Add("@OldPassword", userData.OldPassword);
+            parameters.Add("@NewPassword", userData.NewPassword);
 
             try
             {
@@ -154,12 +154,12 @@ namespace PointOfSaleWeb.Repository.Repositories
             }
         }
 
-        public async Task<DbResponse<string>> ResetUserPassword(string username, string newPassword)
+        public async Task<DbResponse<string>> ResetUserPassword(UserChangePasswordDTO userData)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@Username", username);
-            parameters.Add("@NewPassword", newPassword);
+            parameters.Add("@Username", userData.Username);
+            parameters.Add("@NewPassword", userData.NewPassword);
 
             try
             {

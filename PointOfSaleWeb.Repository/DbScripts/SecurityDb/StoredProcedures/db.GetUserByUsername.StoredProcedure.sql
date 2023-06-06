@@ -6,7 +6,7 @@ GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    CREATE PROCEDURE [dbo].[GetUserById] @UserId INT 
+    CREATE PROCEDURE [dbo].[GetUserByUsername] @Username INT 
     AS 
     BEGIN
 SELECT
@@ -18,6 +18,6 @@ SELECT
 FROM
     Users WITH (NOLOCK)
 WHERE
-    UserID = @UserId
+    Username = @Username
 END
 GO

@@ -38,12 +38,12 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return Ok(users);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{username}")]
         [Authorize(Roles = "Admin")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<UserDataDTO>> GetUserByID(int id)
+        public async Task<ActionResult<UserDataDTO>> GetUserByUsername(string username)
         {
-            var user = await _userRepo.GetUserByID(id);
+            var user = await _userRepo.GetUserByUsername(username);
 
             if (user == null)
             {
@@ -117,9 +117,9 @@ namespace PointOfSaleWeb.App.Controllers.Security
 
         [HttpPut("change-password")]
         [Authorize]
-        public async Task<ActionResult> ChangeUserPassword(UserChangePasswordDTO user)
+        public async Task<ActionResult> ChangeUserPassword(UserChangePasswordDTO userData)
         {
-            var response = await _userRepo.ChangeUserPassword(user);
+            var response = await _userRepo.ChangeUserPassword(userData);
 
             if (!response.Success)
             {
@@ -130,11 +130,11 @@ namespace PointOfSaleWeb.App.Controllers.Security
             return NoContent();
         }
 
-        [HttpPut("{username}/new-password")]
+        [HttpPut("new-password")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> ResetUserPassword(string username, string newPassword)
+        public async Task<ActionResult> ResetUserPassword(UserChangePasswordDTO userData)
         {
-            var response = await _userRepo.ResetUserPassword(username, newPassword);
+            var response = await _userRepo.ResetUserPassword(userData);
 
             if (!response.Success)
             {
