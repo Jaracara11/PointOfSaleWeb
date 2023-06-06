@@ -6,7 +6,7 @@ GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    CREATE PROCEDURE [dbo].[GetUserByUsername] @Username INT 
+    ALTER PROCEDURE [dbo].[GetUserByUsername] @Username NVARCHAR(50)
     AS 
     BEGIN
 SELECT
