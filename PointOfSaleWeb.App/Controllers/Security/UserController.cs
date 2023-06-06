@@ -26,9 +26,9 @@ namespace PointOfSaleWeb.App.Controllers.Security
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<UserInfoDTO>>> GetAllUsersInfo()
+        public async Task<ActionResult<IEnumerable<UserDataDTO>>> GetAllUsers()
         {
-            var users = await _userRepo.GetAllUsersInfo();
+            var users = await _userRepo.GetAllUsers();
 
             if (users == null || !users.Any())
             {

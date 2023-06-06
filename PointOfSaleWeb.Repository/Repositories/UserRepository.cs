@@ -15,11 +15,11 @@ namespace PointOfSaleWeb.Repository.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<UserInfoDTO>> GetAllUsersInfo()
+        public async Task<IEnumerable<UserDataDTO>> GetAllUsers()
         {
             using IDbConnection db = _context.CreateConnection();
 
-            return await db.QueryAsync<UserInfoDTO>("GetAllUsersInfo", commandType: CommandType.StoredProcedure);
+            return await db.QueryAsync<UserDataDTO>("GetAllUsers", commandType: CommandType.StoredProcedure);
         }
 
         public async Task<UserDataDTO> GetUserByUsername(string username)
