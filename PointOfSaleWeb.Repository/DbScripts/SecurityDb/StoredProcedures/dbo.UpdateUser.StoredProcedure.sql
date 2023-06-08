@@ -1,6 +1,6 @@
-USE [Proyecto11]
+USE [POS]
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 5/28/2023 9:46:19 AM ******/
+/****** Object:  StoredProcedure [dbo].[UpdateUser]    Script Date: 6/8/2023 9:43:03 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -27,7 +27,6 @@ BEGIN
 
     DECLARE @UpdateQuery NVARCHAR(MAX) = 'UPDATE Users SET ';
 
-    SET @UpdateQuery += 'Username = ISNULL(@Username, Username), ';
     SET @UpdateQuery += 'FirstName = ISNULL(@FirstName, FirstName), ';
     SET @UpdateQuery += 'LastName = ISNULL(@LastName, LastName), ';
     SET @UpdateQuery += 'Email = ISNULL(@Email, Email), ';
