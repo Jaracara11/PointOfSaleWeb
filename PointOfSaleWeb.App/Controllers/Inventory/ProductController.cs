@@ -73,12 +73,10 @@ namespace Inventory.API.Controllers.Inventory
             return Created("Product", response.Data);
         }
 
-        [HttpPut("{id}/edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> UpdateProduct(int id, Product product)
+        public async Task<ActionResult> UpdateProduct(Product product)
         {
-            product.ProductID = id;
-
             var response = await _prodRepo.UpdateProduct(product);
 
             if (!response.Success)

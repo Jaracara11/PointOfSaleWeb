@@ -59,12 +59,10 @@ namespace Inventory.API.Controllers.Inventory
             return Created("Category", response.Data);
         }
 
-        [HttpPut("{id}/edit")]
+        [HttpPut("edit")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> UpdateCategory(int id, Category category)
+        public async Task<ActionResult> UpdateCategory(Category category)
         {
-            category.CategoryID = id;
-
             var response = await _catRepo.UpdateCategory(category);
 
             if (!response.Success)
