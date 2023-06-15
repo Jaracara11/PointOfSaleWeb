@@ -9,9 +9,9 @@ using System.Security.Claims;
 
 namespace PointOfSaleWeb.App.Controllers.Security
 {
-    [ApiController]
     [Route("api/user")]
     [Authorize]
+    [ApiController]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepo;

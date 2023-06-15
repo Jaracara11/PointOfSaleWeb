@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 
-namespace Inventory.API.Controllers.Inventory
+namespace PointOfSaleWeb.App.Controllers.Inventory
 {
     [Route("api/product")]
-    [ApiController]
     [Authorize]
+    [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _prodRepo;
