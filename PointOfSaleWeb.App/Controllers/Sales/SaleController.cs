@@ -17,7 +17,7 @@ namespace PointOfSaleWeb.App.Controllers.Sale
             _salesRepo = salesRepo;
         }
 
-        [HttpGet]
+        [HttpGet("discounts")]
         [ResponseCache(Duration = 3600)]
         [Authorize(Roles = "Admin, Manager")]
         public async Task<ActionResult<IEnumerable<Discount>>> GetAllDiscounts()
@@ -32,9 +32,9 @@ namespace PointOfSaleWeb.App.Controllers.Sale
             return Ok(discounts);
         }
 
-        [HttpGet("{username}")]
+        [HttpGet("discounts/{username}")]
         [ResponseCache(Duration = 3600)]
-        public async Task<ActionResult<IEnumerable<Discount>>> GetAvailableDiscountsByUsername(string username)
+        public async Task<ActionResult<IEnumerable<decimal>>> GetAvailableDiscountsByUsername(string username)
         {
             var discounts = await _salesRepo.GetDiscountsByUsername(username);
 

@@ -15,7 +15,6 @@ BEGIN
 DECLARE @UserRoleID INT = (SELECT UserRoleID FROM Users WHERE Username = @Username)
 
 SELECT
-   UserRoleID,
    DiscountAmount
 FROM
    Discounts WITH (NOLOCK)
