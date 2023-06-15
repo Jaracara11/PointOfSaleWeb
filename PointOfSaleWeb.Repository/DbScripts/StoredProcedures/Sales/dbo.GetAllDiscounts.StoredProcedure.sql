@@ -1,0 +1,14 @@
+USE [POS]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+   ALTER PROCEDURE [dbo].[GetAllDiscounts] AS BEGIN
+SELECT
+   UserRoleID,
+   DiscountsAvailable
+FROM
+   Discounts WITH (NOLOCK)
+END
