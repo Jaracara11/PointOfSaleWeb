@@ -5,10 +5,11 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-   ALTER PROCEDURE [dbo].[GetAllDiscounts] AS BEGIN
+   CREATE PROCEDURE [dbo].[GetAllDiscounts] AS BEGIN
 SELECT
    UserRoleID,
-   DiscountsAvailable
+   DiscountAmount
 FROM
    Discounts WITH (NOLOCK)
+   ORDER BY DiscountAmount ASC
 END

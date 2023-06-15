@@ -3,6 +3,6 @@
     public class Discount
     {
         public int UserRoleID { get; set; }
-        public string[] DiscountsAvailable { get; set; } = Array.Empty<string>();
+        public decimal DiscountAmount { get; set; }
     }
 }
