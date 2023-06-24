@@ -33,22 +33,17 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<decimal>("GetDiscountsByUsername", parameters, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<DbResponse<OrderDTO>> NewOrderTransaction(Order order)
+        public async Task<DbResponse<OrderDTO>> NewOrderTransaction(OrderRequest order)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            //parameters.Add("@OrderID", Guid.NewGuid().ToString());
             parameters.Add("@User", order.User);
             parameters.Add("@Products", JsonSerializer.Serialize(order.Products));
             parameters.Add("@Discount", order.Discount);
-            parameters.Add("@OrderTotal", order.OrderTotal);
-            parameters.Add("@OrderDate", order.OrderDate);
 
             try
             {
                 var orderResponse = await db.QuerySingleOrDefaultAsync<OrderDTO>("NewOrderTransaction", parameters, commandType: CommandType.StoredProcedure);
-
-                orderResponse.Products = order.Products;
 
                 return new DbResponse<OrderDTO>
                 {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.App.Controllers.Sale
@@ -47,7 +48,7 @@ namespace PointOfSaleWeb.App.Controllers.Sale
         }
 
         [HttpPost("checkout-order")]
-        public async Task<ActionResult<Order>> CheckoutOrder(Order order)
+        public async Task<ActionResult<OrderDTO>> CheckoutOrder(OrderRequest order)
         {
             var response = await _salesRepo.NewOrderTransaction(order);
 

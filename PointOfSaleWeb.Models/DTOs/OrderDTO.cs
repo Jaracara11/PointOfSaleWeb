@@ -8,6 +8,6 @@
         public decimal OrderSubTotal { get; set; }
         public decimal? Discount { get; set; }
         public decimal OrderTotal { get; set; }
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; } = string.Empty;
     }
 }
