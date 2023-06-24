@@ -1,4 +1,5 @@
 ﻿using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Models.DTOs;
 
 namespace PointOfSaleWeb.Repository.Interfaces
 {
@@ -6,6 +7,6 @@ namespace PointOfSaleWeb.Repository.Interfaces
     {
         Task<IEnumerable<Discount>> GetAllDiscounts();
         Task<IEnumerable<decimal>> GetDiscountsByUsername(string username);
-        Task<DbResponse<Order>> NewOrderTransaction(Order order);
+        Task<DbResponse<OrderDTO>> NewOrderTransaction(Order order);
     }
 }

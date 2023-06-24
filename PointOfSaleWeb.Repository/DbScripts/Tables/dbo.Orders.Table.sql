@@ -1,6 +1,5 @@
 USE [POS]
 GO
-
 /****** Object:  Table [dbo].[Orders]    Script Date: 6/24/2023 1:17:46 PM ******/
 SET ANSI_NULLS ON
 GO

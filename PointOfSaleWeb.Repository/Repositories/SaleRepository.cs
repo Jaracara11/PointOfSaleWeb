@@ -37,7 +37,7 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
-            parameters.Add("@OrderID", order.OrderID);
+            //parameters.Add("@OrderID", Guid.NewGuid().ToString());
             parameters.Add("@User", order.User);
             parameters.Add("@Products", JsonSerializer.Serialize(order.Products));
             parameters.Add("@Discount", order.Discount);
