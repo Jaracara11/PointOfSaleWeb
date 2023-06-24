@@ -26,6 +26,13 @@ BEGIN
            JSON_VALUE(p.Value, '$.ProductQuantity') AS ProductQuantity
     FROM OPENJSON(@Products) AS p;
 
+    IF NOT EXISTS (SELECT 1
+               FROM   Users
+               WHERE  Username = @User)
+  BEGIN
+      THROW 51000, 'User does not exist!', 1;
+  END 
+
     IF EXISTS (
         SELECT 1
         FROM #ProductQuantities pq
