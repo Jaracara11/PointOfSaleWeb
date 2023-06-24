@@ -23,10 +23,5 @@ namespace PointOfSaleWeb.Models
 
         [Required]
         public DateTime OrderDate { get; set; }
-
-        public Order()
-        {
-            OrderID = Guid.NewGuid().ToString();
-        }
     }
 }
