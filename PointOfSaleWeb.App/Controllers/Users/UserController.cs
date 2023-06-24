@@ -7,7 +7,7 @@ using PointOfSaleWeb.Repository.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace PointOfSaleWeb.App.Controllers.Security
+namespace PointOfSaleWeb.App.Controllers.Users
 {
     [Route("api/user")]
     [Authorize]

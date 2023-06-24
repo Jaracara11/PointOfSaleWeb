@@ -1,4 +1,4 @@
-USE [Security]
+USE [Users]
 GO
 /****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 4/10/2023 9:15:18 PM ******/
 SET ANSI_NULLS ON
