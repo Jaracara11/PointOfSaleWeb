@@ -4,10 +4,10 @@
     {
         public string OrderID { get; set; } = string.Empty;
         public string User { get; set; } = string.Empty;
-        public Product[] Products { get; set; } = Array.Empty<Product>();
+        public string[] Products { get; set; } = Array.Empty<string>();
         public decimal OrderSubTotal { get; set; }
         public decimal? Discount { get; set; }
         public decimal OrderTotal { get; set; }
-        public string OrderDate { get; set; } = string.Empty;
+        public DateTime OrderDate { get; set; }
     }
 }

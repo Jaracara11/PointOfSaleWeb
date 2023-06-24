@@ -11,6 +11,7 @@ CREATE TABLE [dbo].[Orders](
 	[OrderID] [uniqueidentifier] NOT NULL,
 	[User] [nvarchar](25) NOT NULL,
 	[Products] [nvarchar](max) NOT NULL,
+	[OrderSubTotal] [decimal](18, 2) NOT NULL,
 	[Discount] [decimal](18, 2) NULL,
 	[OrderTotal] [decimal](18, 2) NOT NULL,
 	[OrderDate] [datetime] NOT NULL,

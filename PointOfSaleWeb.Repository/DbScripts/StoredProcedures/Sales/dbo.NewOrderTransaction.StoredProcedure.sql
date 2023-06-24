@@ -8,12 +8,32 @@ GO
 ALTER PROCEDURE [dbo].[NewOrderTransaction]
     @User NVARCHAR(25),
     @Products NVARCHAR(MAX),
-    @Discount DECIMAL(18, 2),
-    @OrderTotal DECIMAL(18, 2),
-    @OrderDate DATETIME
+    @Discount DECIMAL(18, 2) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    IF NOT EXISTS (SELECT 1
+                   FROM   Users
+                   WHERE  Username = @User)
+    BEGIN
+        THROW 51000, 'User does not exist!', 1;
+    END 
+
+    DECLARE @DiscountValid DECIMAL(18, 2);
+
+    IF @Discount IS NOT NULL
+    BEGIN
+        SELECT @DiscountValid = DiscountAmount
+        FROM Discounts
+        WHERE UserRoleID = (SELECT UserRoleID FROM Users WHERE Username = @User)
+        AND DiscountAmount = @Discount;
+    END
+
+    IF @DiscountValid IS NULL AND @Discount IS NOT NULL
+    BEGIN
+        THROW 50002, 'Invalid discount amount, please try again.', 1;
+    END
 
     CREATE TABLE #ProductQuantities
     (
@@ -25,13 +45,6 @@ BEGIN
     SELECT JSON_VALUE(p.Value, '$.ProductID') AS ProductID,
            JSON_VALUE(p.Value, '$.ProductQuantity') AS ProductQuantity
     FROM OPENJSON(@Products) AS p;
-
-    IF NOT EXISTS (SELECT 1
-               FROM   Users
-               WHERE  Username = @User)
-  BEGIN
-      THROW 51000, 'User does not exist!', 1;
-  END 
 
     IF EXISTS (
         SELECT 1
@@ -47,11 +60,26 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        DECLARE @OrderID NVARCHAR(50);
-        SET @OrderID = NEWID();
+        DECLARE @OrderID NVARCHAR(50) = NEWID();
+        DECLARE @OrderSubTotal DECIMAL(18, 2) = 0;
+        DECLARE @OrderTotal DECIMAL(18, 2) = 0;
+        DECLARE @OrderDate DATETIME = GETDATE();
+        
+        SELECT @OrderSubTotal = SUM(pq.ProductQuantity * p.ProductPrice)
+        FROM #ProductQuantities pq
+        INNER JOIN Products p ON pq.ProductID = p.ProductID;
 
-        INSERT INTO Orders (OrderID, Products, [User], Discount, OrderTotal, OrderDate)
-        VALUES (@OrderID, @Products, @User, @Discount, @OrderTotal, @OrderDate);
+        IF @Discount IS NOT NULL
+        BEGIN
+            SET @OrderTotal = @OrderSubTotal - (@OrderSubTotal * @Discount);
+        END
+        ELSE
+        BEGIN
+            SET @OrderTotal = @OrderSubTotal;
+        END
+
+        INSERT INTO Orders (OrderID, [User], Products, OrderSubTotal, Discount, OrderTotal, OrderDate)
+        VALUES (@OrderID, @User, @Products, @OrderSubTotal, @Discount, @OrderTotal, @OrderDate);
 
         UPDATE Products
         SET ProductStock = ProductStock - pq.ProductQuantity
@@ -63,10 +91,12 @@ BEGIN
         SELECT
             @OrderID AS OrderID,
             @User AS [User],
-            (@OrderTotal - (@Discount * 100)) AS OrderSubTotal,
+            @Products AS Products,
+            @OrderSubTotal AS OrderSubTotal,
             @Discount AS Discount,
             @OrderTotal AS OrderTotal,
             @OrderDate AS OrderDate;
+
     END TRY
     BEGIN CATCH
         ROLLBACK TRANSACTION;
