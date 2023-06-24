@@ -1,0 +1,8 @@
+CREATE TABLE Orders (
+    OrderID NVARCHAR(50) PRIMARY KEY,
+    User NVARCHAR(25) NOT NULL,
+    Products NVARCHAR(MAX) NOT NULL,
+    Discount DECIMAL(18, 2),
+    OrderTotal DECIMAL(18, 2) NOT NULL,
+    OrderDate DATETIME NOT NULL
+);

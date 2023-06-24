@@ -6,6 +6,6 @@ namespace PointOfSaleWeb.Repository.Interfaces
     {
         Task<IEnumerable<Discount>> GetAllDiscounts();
         Task<IEnumerable<decimal>> GetDiscountsByUsername(string username);
-        Task<Order> NewOrderTransaction(Order order);
+        Task<DbResponse<Order>> NewOrderTransaction(Order order);
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
+using System.Text.Json;
 
 namespace PointOfSaleWeb.Repository.Repositories
 {
@@ -30,9 +33,37 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<decimal>("GetDiscountsByUsername", parameters, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<Order> NewOrderTransaction(Order order)
+        public async Task<DbResponse<OrderDTO>> NewOrderTransaction(Order order)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@OrderID", order.OrderID);
+            parameters.Add("@User", order.User);
+            parameters.Add("@Products", JsonSerializer.Serialize(order.Products));
+            parameters.Add("@Discount", order.Discount);
+            parameters.Add("@OrderTotal", order.OrderTotal);
+            parameters.Add("@OrderDate", order.OrderDate);
+
+            try
+            {
+                var orderResponse = await db.QuerySingleOrDefaultAsync<OrderDTO>("NewOrderTransaction", parameters, commandType: CommandType.StoredProcedure);
+
+                orderResponse.Products = order.Products;
+
+                return new DbResponse<OrderDTO>
+                {
+                    Success = true,
+                    Data = orderResponse
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<OrderDTO>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
         }
     }
 }

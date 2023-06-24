@@ -49,16 +49,15 @@ namespace PointOfSaleWeb.App.Controllers.Sale
         [HttpPost("checkout-order")]
         public async Task<ActionResult<Order>> CheckoutOrder(Order order)
         {
-            //var response = await _salesRepo.NewOrderTransaction(order);
+            var response = await _salesRepo.NewOrderTransaction(order);
 
-            //if (!response.Success)
-            //{
-            //    ModelState.AddModelError("SalesError", response.Message);
-            //    return BadRequest(ModelState);
-            //}
+            if (!response.Success)
+            {
+                ModelState.AddModelError("SalesError", response.Message);
+                return BadRequest(ModelState);
+            }
 
-            //return Created("Sale", response.Data);
-            return Ok(order);
+            return Created("Sale", response.Data);
         }
     }
 }
