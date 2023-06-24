@@ -29,5 +29,10 @@ namespace PointOfSaleWeb.Repository.Repositories
 
             return await db.QueryAsync<decimal>("GetDiscountsByUsername", parameters, commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<Order> NewOrderTransaction(Order order)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

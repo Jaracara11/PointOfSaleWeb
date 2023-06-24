@@ -45,5 +45,20 @@ namespace PointOfSaleWeb.App.Controllers.Sale
 
             return Ok(discounts);
         }
+
+        [HttpPost("checkout-order")]
+        public async Task<ActionResult<Order>> CheckoutOrder(Order order)
+        {
+            //var response = await _salesRepo.NewOrderTransaction(order);
+
+            //if (!response.Success)
+            //{
+            //    ModelState.AddModelError("SalesError", response.Message);
+            //    return BadRequest(ModelState);
+            //}
+
+            //return Created("Sale", response.Data);
+            return Ok(order);
+        }
     }
 }

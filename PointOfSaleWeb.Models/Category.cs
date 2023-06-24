@@ -7,7 +7,7 @@ namespace PointOfSaleWeb.Models
         [Key]
         public int CategoryID { get; set; }
 
-        [Required(ErrorMessage = "Category name is required.")]
+        [Required]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Category name must have between 4 and 50 characters.")]
         public string CategoryName { get; set; } = string.Empty;
     }
