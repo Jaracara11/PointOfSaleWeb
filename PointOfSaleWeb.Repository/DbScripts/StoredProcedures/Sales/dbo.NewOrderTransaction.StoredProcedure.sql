@@ -34,7 +34,7 @@ BEGIN
     )
     BEGIN
         DROP TABLE #ProductQuantities;
-        THROW 50001, 'Product quantity exceeds its stock!', 1;
+        THROW 50001, 'Product quantity exceeds its stock, please update your cart.', 1;
     END
 
     BEGIN TRY
