@@ -20,14 +20,13 @@ BEGIN
         THROW 51000, 'User does not exist!', 1;
     END 
 
-    DECLARE @DiscountValid DECIMAL(18, 2);
-
     IF @Discount IS NOT NULL
     BEGIN
-        SELECT @DiscountValid = DiscountAmount
-        FROM Discounts
-        WHERE UserRoleID = (SELECT UserRoleID FROM Users WHERE Username = @User)
-        AND DiscountAmount = @Discount;
+	   DECLARE @DiscountValid DECIMAL(18, 2);
+       SELECT @DiscountValid = DiscountAmount
+       FROM Discounts WITH (NOLOCK)
+       WHERE UserRoleID = (SELECT UserRoleID FROM Users WHERE Username = @User)
+       AND DiscountAmount = @Discount;
     END
 
     IF @DiscountValid IS NULL AND @Discount IS NOT NULL
