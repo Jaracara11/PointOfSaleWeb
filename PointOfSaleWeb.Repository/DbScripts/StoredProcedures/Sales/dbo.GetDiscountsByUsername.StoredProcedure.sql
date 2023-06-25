@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-   ALTER PROCEDURE [dbo].[GetDiscountsByUsername] 
+   CREATE PROCEDURE [dbo].[GetDiscountsByUsername] 
    @Username NVARCHAR(50)
 
 AS 

@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[NewOrderTransaction]
+CREATE PROCEDURE [dbo].[NewOrderTransaction]
     @User NVARCHAR(25),
     @Products NVARCHAR(MAX),
     @Discount DECIMAL(18, 2) = NULL
