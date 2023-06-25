@@ -1,4 +1,4 @@
-USE [Proyecto11]
+USE [POS]
 GO
     /****** Object:  StoredProcedure [dbo].[UpdateCategory]    Script Date: 5/24/2023 4:53:28 PM ******/
 SET
@@ -7,7 +7,7 @@ GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    ALTER PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
+    CREATE PROCEDURE [dbo].[UpdateCategory] @CategoryID INT,
     @CategoryName VARCHAR(50) AS BEGIN
 SET
     NOCOUNT ON;
@@ -45,7 +45,7 @@ WHERE
 
 COMMIT TRANSACTION;
 
-END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
 

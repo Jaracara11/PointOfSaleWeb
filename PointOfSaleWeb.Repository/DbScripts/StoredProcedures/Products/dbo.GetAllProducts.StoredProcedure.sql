@@ -1,11 +1,11 @@
-USE [Proyecto11]
+USE [POS]
 GO
 /****** Object:  StoredProcedure [dbo].[GetAllProducts]    Script Date: 5/25/2023 4:59:40 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[GetAllProducts]
+CREATE PROCEDURE [dbo].[GetAllProducts]
 AS
 BEGIN
    SELECT

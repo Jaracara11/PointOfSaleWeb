@@ -1,11 +1,11 @@
-USE [Proyecto11]
+USE [POS]
 GO
 /****** Object:  StoredProcedure [dbo].[DeleteUser]    Script Date: 5/28/2023 9:51:18 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[DeleteUser]
+CREATE PROCEDURE [dbo].[DeleteUser]
     @Username NVARCHAR(25)
 AS
 BEGIN

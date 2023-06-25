@@ -1,4 +1,4 @@
-USE [Proyecto11]
+USE [POS]
 GO
     /****** Object: StoredProcedure [dbo].[UpdateProduct] ******/
 SET
@@ -7,7 +7,7 @@ GO
 SET
     QUOTED_IDENTIFIER ON
 GO
-    ALTER PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
+    CREATE PROCEDURE [dbo].[UpdateProduct] @ProductID INT,
     @ProductName VARCHAR(50),
     @ProductDescription VARCHAR(100),
     @ProductStock INT,
@@ -73,7 +73,7 @@ WHERE
 
 COMMIT TRANSACTION;
 
-END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
 

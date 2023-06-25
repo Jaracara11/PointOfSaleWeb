@@ -1,4 +1,4 @@
-USE [Inventory]
+USE [POS]
 GO
     /****** Object:  StoredProcedure [dbo].[AddNewProduct]    Script Date: 4/8/2023 5:21:54 PM ******/
 SET
@@ -67,7 +67,7 @@ SELECT
 
 EXEC GetProductByID @ProductID = @ProductID;
 
-END TRY BEGIN catch IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+END TRY BEGIN catch IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
 

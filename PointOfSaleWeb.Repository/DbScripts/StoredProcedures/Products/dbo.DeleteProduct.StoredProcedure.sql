@@ -1,4 +1,4 @@
-USE [Inventory]
+USE [POS]
 GO
     /****** Object:  StoredProcedure [dbo].[DeleteProduct]    Script Date: 4/8/2023 5:21:54 PM ******/
 SET
@@ -41,7 +41,7 @@ FROM
 
 DBCC CHECKIDENT('Products', RESEED, @MaxProductID);
 
-END TRY BEGIN CATCH IF @ @TRANCOUNT > 0 ROLLBACK TRANSACTION;
+END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
 

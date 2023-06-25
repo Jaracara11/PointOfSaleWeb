@@ -5,7 +5,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[UpdateUser]
+CREATE PROCEDURE [dbo].[UpdateUser]
     @Username NVARCHAR(50) = NULL,
     @FirstName NVARCHAR(50) = NULL,
     @LastName NVARCHAR(50) = NULL,

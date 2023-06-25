@@ -4,7 +4,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[ResetUserPassword]
+CREATE PROCEDURE [dbo].[ResetUserPassword]
     @Username NVARCHAR(25),
 	@NewPassword NVARCHAR(500)
 AS

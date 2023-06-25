@@ -1,4 +1,4 @@
-USE [Inventory]
+USE [POS]
 GO
     /****** Object:  StoredProcedure [dbo].[GetProductById]    Script Date: 4/8/2023 5:21:54 PM ******/
 SET

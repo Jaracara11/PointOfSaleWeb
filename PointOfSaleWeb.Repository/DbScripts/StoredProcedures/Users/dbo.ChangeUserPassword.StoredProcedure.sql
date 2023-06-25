@@ -1,11 +1,11 @@
-USE [Proyecto11]
+USE [POS]
 GO
 /****** Object:  StoredProcedure [dbo].[ChangeUserPassword]    Script Date: 5/28/2023 9:49:34 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[ChangeUserPassword]
+CREATE PROCEDURE [dbo].[ChangeUserPassword]
     @Username NVARCHAR(25),
     @OldPassword NVARCHAR(500),
 	@NewPassword NVARCHAR(500)
