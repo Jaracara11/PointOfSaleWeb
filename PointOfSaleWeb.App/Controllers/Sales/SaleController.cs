@@ -19,33 +19,14 @@ namespace PointOfSaleWeb.App.Controllers.Sale
         }
 
         [HttpGet("discounts")]
-        [ResponseCache(Duration = 3600)]
+        [ResponseCache(Duration = 43200)]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult<IEnumerable<Discount>>> GetAllDiscounts()
-        {
-            var discounts = await _salesRepo.GetAllDiscounts();
-
-            if (discounts == null || !discounts.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(discounts);
-        }
+        public async Task<ActionResult<IEnumerable<Discount>>> GetAllDiscounts() => Ok(await _salesRepo.GetAllDiscounts());
 
         [HttpGet("discounts/{username}")]
-        [ResponseCache(Duration = 3600)]
-        public async Task<ActionResult<IEnumerable<decimal>>> GetAvailableDiscountsByUsername(string username)
-        {
-            var discounts = await _salesRepo.GetDiscountsByUsername(username);
-
-            if (discounts == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(discounts);
-        }
+        [ResponseCache(Duration = 43200)]
+        public async Task<ActionResult<IEnumerable<decimal>>> GetAvailableDiscountsByUsername(string username) => 
+            Ok(await _salesRepo.GetDiscountsByUsername(username));
 
         [HttpPost("checkout-order")]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(OrderRequest order)

@@ -17,18 +17,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
-        {
-            var categories = await _catRepo.GetAllCategories();
-
-            if (categories == null || !categories.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(categories);
-        }
+        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories() => Ok(await _catRepo.GetAllCategories());
 
         [HttpGet("{id}")]
         [ResponseCache(Duration = 5)]

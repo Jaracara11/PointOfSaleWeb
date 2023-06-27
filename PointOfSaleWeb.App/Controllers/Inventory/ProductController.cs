@@ -17,21 +17,9 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         }
 
         [HttpGet]
-        [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
-        {
-            var products = await _prodRepo.GetAllProducts();
-
-            if (products == null || !products.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(products);
-        }
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => Ok(await _prodRepo.GetAllProducts());
 
         [HttpGet("category/{id}")]
-        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductsByCategoryID(int id)
         {
             var products = await _prodRepo.GetProductsByCategoryID(id);
@@ -45,7 +33,6 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         }
 
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductByID(int id)
         {
             var product = await _prodRepo.GetProductByID(id);
