@@ -1,0 +1,12 @@
+CREATE TRIGGER ResetUserIDSeed
+ON Users
+AFTER DELETE
+AS
+BEGIN
+    DECLARE @MaxUserID INT;
+    
+    SELECT @MaxUserID = ISNULL(MAX(UserID), 0)
+    FROM Users;
+    
+    DBCC CHECKIDENT('Users', RESEED, @MaxUserID);
+END;
