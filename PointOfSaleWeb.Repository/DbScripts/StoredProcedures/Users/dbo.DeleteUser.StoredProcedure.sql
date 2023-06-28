@@ -21,11 +21,6 @@ BEGIN
         DELETE FROM Users WHERE Username = @Username;
         COMMIT TRANSACTION;
 
-        -- Reset identity seed of CategoryID column
-        DECLARE @MaxUserID INT;
-        SELECT @MaxUserID = ISNULL(MAX(UserID),0) FROM Users;
-        DBCC CHECKIDENT('Users', RESEED, @MaxUserID);
-
     END TRY
     BEGIN CATCH
         IF @@TRANCOUNT > 0
