@@ -16,9 +16,4 @@
     <ProjectReference Include="..\PointOfSaleWeb.Models\PointOfSaleWeb.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DbScripts\Triggers\" />
-    <Folder Include="DbScripts\StoredProcedures\Sales\" />
-  </ItemGroup>
-
 </Project>
