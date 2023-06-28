@@ -1,6 +1,6 @@
 USE [POS]
 GO
-
+/****** Object:  StoredProcedure [dbo].[NewOrderTransaction]    Script Date: 6/28/2023 1:55:51 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -20,13 +20,21 @@ BEGIN
         THROW 51000, 'User does not exist!', 1;
     END 
 
+	DECLARE @UserRoleID INT;
+
+	SELECT @UserRoleID = (SELECT UserRoleID FROM Users WHERE Username = @User);
+
+	IF (@UserRoleID = 0 OR @UserRoleID IS NULL)
+	BEGIN
+        THROW 51000, 'User does not have permission to perform sales operations.', 1;
+    END 
+
     IF @Discount IS NOT NULL
     BEGIN
 	   DECLARE @DiscountValid DECIMAL(18, 2);
        SELECT @DiscountValid = DiscountAmount
        FROM Discounts WITH (NOLOCK)
-       WHERE UserRoleID = (SELECT UserRoleID FROM Users WHERE Username = @User)
-       AND DiscountAmount = @Discount;
+       WHERE UserRoleID = @UserRoleID AND DiscountAmount = @Discount;
     END
 
     IF @DiscountValid IS NULL AND @Discount IS NOT NULL

@@ -24,5 +24,3 @@ GO
 
 ALTER TABLE [dbo].[Orders] ADD  DEFAULT (newid()) FOR [OrderID]
 GO
-
-

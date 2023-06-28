@@ -31,16 +31,6 @@ WHERE
 
 COMMIT TRANSACTION;
 
--- Reset identity seed of ProductID column
-DECLARE @MaxProductID INT;
-
-SELECT
-    @MaxProductID = ISNULL(MAX(ProductID), 0)
-FROM
-    Products;
-
-DBCC CHECKIDENT('Products', RESEED, @MaxProductID);
-
 END TRY BEGIN CATCH IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
 
 THROW;
