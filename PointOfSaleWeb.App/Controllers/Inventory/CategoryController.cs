@@ -20,7 +20,6 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories() => Ok(await _catRepo.GetAllCategories());
 
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Category>> GetCategoryByID(int id)
         {
             var category = await _catRepo.GetCategoryByID(id);

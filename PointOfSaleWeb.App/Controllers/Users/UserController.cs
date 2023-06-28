@@ -44,7 +44,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         [HttpGet("roles")]
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles() => Ok(await _userRepo.GetAllUserRoles());
-     
+
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<UserDataDTO>> Login(UserLoginDTO user)
         {
@@ -58,7 +58,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (response.Data != null)
             {
-                response.Data.Token = CreateToken(response.Data);
+                response.Data.Token = CreateToken(response.Data.Role);
             }
 
             return Ok(response.Data);
@@ -138,11 +138,11 @@ namespace PointOfSaleWeb.App.Controllers.Users
             return NoContent();
         }
 
-        private string CreateToken(UserInfoDTO user)
+        private string CreateToken(string userRole)
         {
             List<Claim> claims = new()
             {
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Role, userRole)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
