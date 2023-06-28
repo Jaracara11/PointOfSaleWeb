@@ -25,4 +25,16 @@ GO
 ALTER TABLE [dbo].[Orders] ADD  DEFAULT (newid()) FOR [OrderID]
 GO
 
+CREATE TRIGGER PreventDeleteUpdateWithoutWhereOnOrders
+ON Orders
+FOR DELETE, UPDATE
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM deleted)
+  BEGIN
+    RAISERROR('Delete or update operation without a WHERE clause is not allowed in the Orders table.', 16, 1)
+    ROLLBACK TRANSACTION
+  END
+END;
+GO
 

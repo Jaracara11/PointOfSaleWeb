@@ -27,3 +27,15 @@ VALUES (1, 0.20),
 	   (3, 0.05)
 GO
 
+CREATE TRIGGER PreventDeleteUpdateWithoutWhereOnDiscounts
+ON Discounts
+FOR DELETE, UPDATE
+AS
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM deleted)
+  BEGIN
+    RAISERROR('Delete or update operation without a WHERE clause is not allowed in the Discounts table.', 16, 1)
+    ROLLBACK TRANSACTION
+  END
+END;
+GO
