@@ -33,6 +33,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<decimal>("GetDiscountsByUsername", parameters, commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<IEnumerable<RecentOrdersDTO>> GetRecentOrders()
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            return await db.QueryAsync<RecentOrdersDTO>("GetRecentOrders", commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<DbResponse<OrderDTO>> NewOrderTransaction(OrderRequest order)
         {
             using IDbConnection db = _context.CreateConnection();
