@@ -8,11 +8,11 @@ using System.Text.Json;
 
 namespace PointOfSaleWeb.Repository.Repositories
 {
-    public class SaleRepository: ISaleRepository
+    public class OrderRepository: IOrderRepository
     {
         private readonly DbContext _context;
 
-        public SaleRepository(DbContext context)
+        public OrderRepository(DbContext context)
         {
             _context = context;
         }
