@@ -44,7 +44,7 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
 
-            return await db.QuerySingleOrDefaultAsync<Decimal>("TotalSalesOfTheDay", commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<Decimal>("GetTotalSalesOfTheDay", commandType: CommandType.StoredProcedure);
         }
 
         public async Task<DbResponse<OrderDTO>> NewOrderTransaction(OrderRequest order)
