@@ -34,6 +34,9 @@ namespace PointOfSaleWeb.App.Controllers.Order
         [HttpGet("sales-today")]
         public async Task<ActionResult<Decimal>> GetTotalSalesOfTheDay() => Ok(await _ordersRepo.GetTotalSalesOfTheDay());
 
+        [HttpGet("best-sellers")]
+        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _ordersRepo.GetBestSellerProducts());
+
         [HttpPost("checkout-order")]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(OrderRequest order)
         {

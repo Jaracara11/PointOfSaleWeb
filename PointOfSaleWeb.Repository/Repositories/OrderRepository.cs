@@ -47,6 +47,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QuerySingleOrDefaultAsync<Decimal>("GetTotalSalesOfTheDay", commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts()
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            return await db.QueryAsync<BestSellerProductDTO>("GetBestSellerProducts", commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<DbResponse<OrderDTO>> NewOrderTransaction(OrderRequest order)
         {
             using IDbConnection db = _context.CreateConnection();
