@@ -29,7 +29,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
             Ok(await _ordersRepo.GetDiscountsByUsername(username));
 
         [HttpGet("recent-orders")]
-        public async Task<ActionResult<IEnumerable<RecentOrdersDTO>>> GetRecentOrders() => Ok(await _ordersRepo.GetRecentOrders());
+        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetRecentOrders() => Ok(await _ordersRepo.GetRecentOrders());
 
         [HttpGet("sales-today")]
         public async Task<ActionResult<Decimal>> GetTotalSalesOfTheDay() => Ok(await _ordersRepo.GetTotalSalesOfTheDay());
