@@ -2,7 +2,7 @@
 {
     public class OrderDTO
     {
-        public string OrderID { get; set; } = string.Empty;
+        public Guid OrderID { get; set; } 
         public string User { get; set; } = string.Empty;
         public string Products { get; set; } = string.Empty;
         public decimal OrderSubTotal { get; set; }
