@@ -18,23 +18,18 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<IEnumerable<UserDataDTO>> GetAllUsers()
         {
             using IDbConnection db = _context.CreateConnection();
-
             return await db.QueryAsync<UserDataDTO>("GetAllUsers", commandType: CommandType.StoredProcedure);
         }
 
         public async Task<UserDataDTO> GetUserByUsername(string username)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@Username", username);
-
-            return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserByUsername", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserByUsername", new { Username = username }, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<Role>> GetAllUserRoles()
         {
             using IDbConnection db = _context.CreateConnection();
-
             return await db.QueryAsync<Role>("GetAllUserRoles", commandType: CommandType.StoredProcedure);
         }
 
@@ -184,12 +179,10 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<DbResponse<UserInfoDTO>> DeleteUser(string username)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@Username", username);
 
             try
             {
-                await db.ExecuteAsync("DeleteUser", parameters, commandType: CommandType.StoredProcedure);
+                await db.ExecuteAsync("DeleteUser", new { Username = username }, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<UserInfoDTO>
                 {

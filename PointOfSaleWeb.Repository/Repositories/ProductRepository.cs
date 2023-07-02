@@ -17,26 +17,19 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
             using IDbConnection db = _context.CreateConnection();
-
             return await db.QueryAsync<Product>("GetAllProducts", commandType: CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<Product>> GetProductsByCategoryID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@ProductCategoryID", id);
-
-            return await db.QueryAsync<Product>("GetProductsByCategoryId", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QueryAsync<Product>("GetProductsByCategoryId", new { ProductCategoryID = id }, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<Product> GetProductByID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@ProductID", id);
-
-            return await db.QuerySingleOrDefaultAsync<Product>("GetProductById", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<Product>("GetProductById", new { ProductID = id }, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<DbResponse<Product>> AddNewProduct(Product product)
@@ -107,12 +100,10 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<DbResponse<Product>> DeleteProduct(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@ProductID", id);
 
             try
             {
-                await db.ExecuteAsync("DeleteProduct", parameters, commandType: CommandType.StoredProcedure);
+                await db.ExecuteAsync("DeleteProduct", new { ProductID = id }, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Product>
                 {

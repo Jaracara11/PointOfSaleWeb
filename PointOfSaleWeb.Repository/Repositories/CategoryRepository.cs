@@ -17,28 +17,22 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<IEnumerable<Category>> GetAllCategories()
         {
             using IDbConnection db = _context.CreateConnection();
-
             return await db.QueryAsync<Category>("GetAllCategories", commandType: CommandType.StoredProcedure);
         }
 
         public async Task<Category> GetCategoryByID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@CategoryID", id);
-
-            return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryById", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryById", new { CategoryID = id }, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<DbResponse<Category>> AddNewCategory(string categoryName)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@CategoryName", categoryName);
 
             try
             {
-                var category = await db.QuerySingleOrDefaultAsync<Category>("AddNewCategory", parameters, commandType: CommandType.StoredProcedure);
+                var category = await db.QuerySingleOrDefaultAsync<Category>("AddNewCategory", new { CategoryName = categoryName }, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Category>
                 {
@@ -88,12 +82,10 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<DbResponse<Category>> DeleteCategory(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@CategoryID", id);
 
             try
             {
-                await db.ExecuteAsync("DeleteCategory", parameters, commandType: CommandType.StoredProcedure);
+                await db.ExecuteAsync("DeleteCategory", new { CategoryID = id }, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Category>
                 {
