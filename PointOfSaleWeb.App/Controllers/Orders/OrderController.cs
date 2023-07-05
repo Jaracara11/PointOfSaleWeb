@@ -48,9 +48,20 @@ namespace PointOfSaleWeb.App.Controllers.Order
         [HttpGet("sales-today")]
         public async Task<ActionResult<Decimal>> GetTotalSalesOfTheDay() => Ok(await _ordersRepo.GetTotalSalesOfTheDay());
 
-        [HttpGet("best-sellers")]
-        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _ordersRepo.GetBestSellerProducts());
+        [HttpGet("by-date")]
+        [ResponseCache(Duration = 43200)]
+        public async Task<ActionResult<IEnumerable<OrderByDateDTO>>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
+        {
+            var orders = await _ordersRepo.GetOrdersByDate(initialDate, finalDate);
 
+            if (orders == null || !orders.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(orders);
+        }
+          
         [HttpPost("checkout-order")]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(OrderRequest order)
         {

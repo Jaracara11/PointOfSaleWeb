@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.App.Controllers.Inventory
@@ -18,6 +19,10 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => Ok(await _prodRepo.GetAllProducts());
+
+        [HttpGet("best-sellers")]
+        [ResponseCache(Duration = 43200)]
+        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
 
         [HttpGet("category/{id}")]
         public async Task<ActionResult<Product>> GetProductsByCategoryID(int id)

@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
 using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
 
@@ -18,6 +19,12 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
             return await db.QueryAsync<Product>("GetAllProducts", commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts()
+        {
+            using IDbConnection db = _context.CreateConnection();
+            return await db.QueryAsync<BestSellerProductDTO>("GetBestSellerProducts", commandType: CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<Product>> GetProductsByCategoryID(int id)

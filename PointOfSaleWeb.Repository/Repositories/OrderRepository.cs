@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace PointOfSaleWeb.Repository.Repositories
 {
-    public class OrderRepository: IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly DbContext _context;
 
@@ -47,10 +47,14 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QuerySingleOrDefaultAsync<Decimal>("GetTotalSalesOfTheDay", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts()
+        public async Task<IEnumerable<OrderByDateDTO>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<BestSellerProductDTO>("GetBestSellerProducts", commandType: CommandType.StoredProcedure);
+            var parameters = new DynamicParameters();
+            parameters.Add("@InitialDate", initialDate);
+            parameters.Add("@FinalDate", finalDate);
+
+            return await db.QueryAsync<OrderByDateDTO>("GetOrdersByDate", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<DbResponse<OrderDTO>> NewOrderTransaction(OrderRequest order)
