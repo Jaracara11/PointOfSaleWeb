@@ -50,7 +50,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
         [HttpGet("by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<IEnumerable<OrderByDateDTO>>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
+        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
         {
             var orders = await _ordersRepo.GetOrdersByDate(initialDate, finalDate);
 

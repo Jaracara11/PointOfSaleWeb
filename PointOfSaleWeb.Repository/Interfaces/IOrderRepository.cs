@@ -10,7 +10,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<OrderDTO> GetOrderByID(string id);
         Task<IEnumerable<RecentOrderDTO>> GetRecentOrders();
         Task<Decimal> GetTotalSalesOfTheDay();
-        Task<IEnumerable<OrderByDateDTO>> GetOrdersByDate(DateTime initialDate, DateTime finalDate);
+        Task<IEnumerable<RecentOrderDTO>> GetOrdersByDate(DateTime initialDate, DateTime finalDate);
         Task<DbResponse<OrderDTO>> NewOrderTransaction(OrderRequest order);
     }
 }
