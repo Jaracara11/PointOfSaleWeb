@@ -50,7 +50,11 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<Decimal> GetSalesByDate(DateTime initialDate, DateTime finalDate)
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QuerySingleOrDefaultAsync<Decimal>("GetSalesByDate", commandType: CommandType.StoredProcedure);
+            var parameters = new DynamicParameters();
+            parameters.Add("@InitialDate", initialDate);
+            parameters.Add("@FinalDate", finalDate);
+
+            return await db.QuerySingleOrDefaultAsync<Decimal>("GetSalesByDate", parameters, commandType: CommandType.StoredProcedure);; 
         }
 
         public async Task<IEnumerable<RecentOrderDTO>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
