@@ -47,6 +47,12 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QuerySingleOrDefaultAsync<Decimal>("GetTotalSalesOfTheDay", commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<Decimal> GetSalesByDate(DateTime initialDate, DateTime finalDate)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            return await db.QuerySingleOrDefaultAsync<Decimal>("GetSalesByDate", commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<IEnumerable<RecentOrderDTO>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
         {
             using IDbConnection db = _context.CreateConnection();
