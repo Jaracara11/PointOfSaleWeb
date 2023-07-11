@@ -80,5 +80,19 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
             return Created("Order", response.Data);
         }
+
+        [HttpPost("{id}/cancel")]
+        public async Task<ActionResult> CancelOrder(string id)
+        {
+            var response = await _ordersRepo.CancelOrder(id);
+
+            if (!response.Success)
+            {
+                ModelState.AddModelError("OrdersError", response.Message);
+                return BadRequest(ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }

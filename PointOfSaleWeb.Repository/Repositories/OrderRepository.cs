@@ -94,5 +94,28 @@ namespace PointOfSaleWeb.Repository.Repositories
                 };
             }
         }
+
+        public async Task<DbResponse<string>> CancelOrder(string id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            try
+            {
+                await db.ExecuteAsync("CancelOrderTransaction", new { OrderID = id }, commandType: CommandType.StoredProcedure);
+
+                return new DbResponse<string>
+                {
+                    Success = true
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<string>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
