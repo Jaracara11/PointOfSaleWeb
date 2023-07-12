@@ -32,7 +32,6 @@ namespace PointOfSaleWeb.App.Controllers.Order
         public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetRecentOrders() => Ok(await _ordersRepo.GetRecentOrders());
 
         [HttpGet("{id}")]
-        [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<OrderDTO>> GetOrderByID(string id)
         {
             var order = await _ordersRepo.GetOrderByID(id);
