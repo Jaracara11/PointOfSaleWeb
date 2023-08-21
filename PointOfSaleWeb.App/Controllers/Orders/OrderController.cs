@@ -73,8 +73,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
             if (!response.Success)
             {
-                ModelState.AddModelError("OrdersError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return Created("Order", response.Data);
@@ -87,8 +86,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
             if (!response.Success)
             {
-                ModelState.AddModelError("OrdersError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return NoContent();

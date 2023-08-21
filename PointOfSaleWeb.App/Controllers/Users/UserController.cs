@@ -52,8 +52,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (!response.Success)
             {
-                ModelState.AddModelError("UserError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             if (response.Data != null)
@@ -71,8 +70,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (!response.Success)
             {
-                ModelState.AddModelError("UserError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return Created("User", response.Data);
@@ -86,8 +84,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (!response.Success)
             {
-                ModelState.AddModelError("UserError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return Ok(response);
@@ -101,8 +98,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (!response.Success)
             {
-                ModelState.AddModelError("UserError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return NoContent();
@@ -116,8 +112,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (!response.Success)
             {
-                ModelState.AddModelError("UserError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return NoContent();
@@ -131,8 +126,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
             if (!response.Success)
             {
-                ModelState.AddModelError("UserError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return NoContent();

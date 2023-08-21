@@ -40,8 +40,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
             if (!response.Success)
             {
-                ModelState.AddModelError("CategoryError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return Created("Category", response.Data);
@@ -55,8 +54,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
             if (!response.Success)
             {
-                ModelState.AddModelError("CategoryError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return Ok(response);
@@ -70,8 +68,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
             if (!response.Success)
             {
-                ModelState.AddModelError("CategoryError", response.Message);
-                return BadRequest(ModelState);
+                return BadRequest(new { error = response.Message });
             }
 
             return NoContent();
