@@ -38,7 +38,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProductByID(int id)
+        public async Task<ActionResult<Product>> GetProductByID(string id)
         {
             var product = await _prodRepo.GetProductByID(id);
 
@@ -80,7 +80,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
         [HttpDelete("{id}/delete")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<ActionResult> DeleteProduct(string id)
         {
             var response = await _prodRepo.DeleteProduct(id);
 

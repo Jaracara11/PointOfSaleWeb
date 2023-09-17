@@ -33,7 +33,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<Product>("GetProductsByCategoryId", new { ProductCategoryID = id }, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<Product> GetProductByID(int id)
+        public async Task<Product> GetProductByID(string id)
         {
             using IDbConnection db = _context.CreateConnection();
             return await db.QuerySingleOrDefaultAsync<Product>("GetProductById", new { ProductID = id }, commandType: CommandType.StoredProcedure);
@@ -104,7 +104,7 @@ namespace PointOfSaleWeb.Repository.Repositories
         }
 
 
-        public async Task<DbResponse<Product>> DeleteProduct(int id)
+        public async Task<DbResponse<Product>> DeleteProduct(string id)
         {
             using IDbConnection db = _context.CreateConnection();
 

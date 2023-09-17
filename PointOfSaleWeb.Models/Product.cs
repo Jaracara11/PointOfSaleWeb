@@ -4,8 +4,9 @@ namespace PointOfSaleWeb.Models
 {
     public class Product
     {
-        [Key]
-        public int ProductID { get; set; }
+        [Required]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Product barcode must have between 3 and 50 characters.")]
+        public string ProductID { get; set; } = string.Empty;
 
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Product name must have between 3 and 50 characters.")]
