@@ -43,6 +43,7 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();
+            parameters.Add("@ProductID", product.ProductID);
             parameters.Add("@ProductName", product.ProductName);
             parameters.Add("@ProductDescription", product.ProductDescription);
             parameters.Add("@ProductStock", product.ProductStock);
