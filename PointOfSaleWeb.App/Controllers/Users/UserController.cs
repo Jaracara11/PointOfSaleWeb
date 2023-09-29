@@ -33,12 +33,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         {
             var user = await _userRepo.GetUserByUsername(username);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
+            return user != null ? Ok(user) : NotFound();
         }
 
         [HttpGet("roles")]
