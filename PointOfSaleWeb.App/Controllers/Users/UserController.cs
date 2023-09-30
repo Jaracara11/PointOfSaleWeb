@@ -9,7 +9,7 @@ using System.Security.Claims;
 
 namespace PointOfSaleWeb.App.Controllers.Users
 {
-    [Route("api/user")]
+    [Route("api/users")]
     [Authorize]
     [ApiController]
     public class UserController : ControllerBase

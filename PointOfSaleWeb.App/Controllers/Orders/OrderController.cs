@@ -6,7 +6,7 @@ using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.App.Controllers.Order
 {
-    [Route("api/order")]
+    [Route("api/orders")]
     [Authorize]
     [ApiController]
     public class OrderController : ControllerBase
@@ -44,14 +44,14 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
         [HttpGet("sales-by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<Decimal>> GetSalesByDate(DateRangeRequest dateRange) =>
-            Ok(await _ordersRepo.GetSalesByDate(dateRange));
+        public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime initialDate, DateTime finalDate) =>
+            Ok(await _ordersRepo.GetSalesByDate(initialDate, finalDate));
 
         [HttpGet("orders-by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateRangeRequest dateRange)
+        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
         {
-            var orders = await _ordersRepo.GetOrdersByDate(dateRange);
+            var orders = await _ordersRepo.GetOrdersByDate(initialDate, finalDate);
 
             return orders != null && orders.Any() ? Ok(orders) : NotFound();
         }

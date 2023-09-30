@@ -7,7 +7,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
     {
         Task<IEnumerable<Product>> GetAllProducts();
         Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts();
-        Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateRangeRequest dateRange);
+        Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate);
         Task<IEnumerable<Product>> GetProductsByCategoryID(int id);
         Task<Product> GetProductByID(string id);
         Task<DbResponse<Product>> AddNewProduct(Product product);

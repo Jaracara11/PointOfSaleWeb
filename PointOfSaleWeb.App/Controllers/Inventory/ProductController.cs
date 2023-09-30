@@ -6,7 +6,7 @@ using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.App.Controllers.Inventory
 {
-    [Route("api/product")]
+    [Route("api/products")]
     [Authorize]
     [ApiController]
     public class ProductController : ControllerBase
@@ -24,10 +24,10 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
 
-        [HttpGet("sold-by-date")]
+        [HttpGet("sold-by-date"), AllowAnonymous]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<ProductSoldByDateDTO>> GetProductsSoldByDate(DateRangeRequest dateRange) =>
-            Ok(await _prodRepo.GetProductsSoldByDate(dateRange));
+        public async Task<ActionResult<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate) =>
+            Ok(await _prodRepo.GetProductsSoldByDate(initialDate, finalDate));
 
         [HttpGet("category/{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryID(int id) => Ok(await _prodRepo.GetProductsByCategoryID(id));

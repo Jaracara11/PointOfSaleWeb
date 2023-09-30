@@ -5,7 +5,7 @@ using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.App.Controllers.Inventory
 {
-    [Route("api/category")]
+    [Route("api/categories")]
     [Authorize]
     [ApiController]
     public class CategoryController : ControllerBase
