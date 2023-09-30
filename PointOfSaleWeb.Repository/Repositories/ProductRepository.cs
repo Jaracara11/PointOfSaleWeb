@@ -27,6 +27,16 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<BestSellerProductDTO>("GetBestSellerProducts", commandType: CommandType.StoredProcedure);
         }
 
+        public async Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate)
+        {
+            using IDbConnection db = _context.CreateConnection();
+            var parameters = new DynamicParameters();
+            parameters.Add("@InitialDate", initialDate);
+            parameters.Add("@FinalDate", finalDate);
+
+            return await db.QueryAsync<ProductSoldByDateDTO>("GetProductsSoldByDate", parameters, commandType: CommandType.StoredProcedure);
+        }
+
         public async Task<IEnumerable<Product>> GetProductsByCategoryID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
