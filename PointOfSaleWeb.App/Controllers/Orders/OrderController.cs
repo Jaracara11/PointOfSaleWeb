@@ -25,7 +25,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
         [HttpGet("discounts/{username}")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<IEnumerable<decimal>>> GetAvailableDiscountsByUsername(string username) => 
+        public async Task<ActionResult<IEnumerable<decimal>>> GetAvailableDiscountsByUsername(string username) =>
             Ok(await _ordersRepo.GetDiscountsByUsername(username));
 
         [HttpGet("recent-orders")]
@@ -36,12 +36,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         {
             var order = await _ordersRepo.GetOrderByID(id);
 
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(order);
+            return order != null ? Ok(order) : NotFound();
         }
 
         [HttpGet("sales-today")]
@@ -49,7 +44,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
         [HttpGet("sales-by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime initialDate, DateTime finalDate) => 
+        public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime initialDate, DateTime finalDate) =>
             Ok(await _ordersRepo.GetSalesByDate(initialDate, finalDate));
 
         [HttpGet("orders-by-date")]
@@ -58,25 +53,15 @@ namespace PointOfSaleWeb.App.Controllers.Order
         {
             var orders = await _ordersRepo.GetOrdersByDate(initialDate, finalDate);
 
-            if (orders == null || !orders.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(orders);
+            return orders != null && orders.Any() ? Ok(orders) : NotFound();
         }
-          
+
         [HttpPost("checkout-order")]
         public async Task<ActionResult<OrderDTO>> CheckoutOrder(OrderRequest order)
         {
             var response = await _ordersRepo.NewOrderTransaction(order);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return Created("Order", response.Data);
+            return response.Success ? Created("Order", response.Data) : BadRequest(new { error = response.Message });
         }
 
         [HttpPost("{id}/cancel")]
@@ -84,12 +69,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         {
             var response = await _ordersRepo.CancelOrder(id);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return NoContent();
+            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
         }
     }
 }

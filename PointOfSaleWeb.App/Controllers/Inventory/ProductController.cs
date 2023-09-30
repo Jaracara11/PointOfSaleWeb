@@ -25,29 +25,14 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
 
         [HttpGet("category/{id}")]
-        public async Task<ActionResult<Product>> GetProductsByCategoryID(int id)
-        {
-            var products = await _prodRepo.GetProductsByCategoryID(id);
-
-            if (products == null || !products.Any())
-            {
-                return NotFound();
-            }
-
-            return Ok(products);
-        }
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryID(int id) => Ok(await _prodRepo.GetProductsByCategoryID(id));
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProductByID(string id)
         {
             var product = await _prodRepo.GetProductByID(id);
 
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(product);
+            return product != null ? Ok(product) : NotFound();
         }
 
         [HttpPost]
@@ -56,12 +41,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _prodRepo.AddNewProduct(product);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return Created("Product", response.Data);
+            return response.Success ? Created("Product", response.Data) : BadRequest(new { error = response.Message });
         }
 
         [HttpPut("edit")]
@@ -70,12 +50,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _prodRepo.UpdateProduct(product);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return Ok(response);
+            return response.Success ? Ok(response) : BadRequest(new { error = response.Message });
         }
 
         [HttpDelete("{id}/delete")]
@@ -84,12 +59,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _prodRepo.DeleteProduct(id);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return NoContent();
+            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
         }
     }
 }

@@ -63,12 +63,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         {
             var response = await _userRepo.CreateUser(user);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return Created("User", response.Data);
+            return response.Success ? Created("User", response.Data) : BadRequest(new { error = response.Message });
         }
 
         [HttpPut("edit")]
@@ -77,12 +72,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         {
             var response = await _userRepo.UpdateUser(user);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return Ok(response);
+            return response.Success ? Ok(response) : BadRequest(new { error = response.Message });
         }
 
         [HttpPut("change-password")]
@@ -91,12 +81,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         {
             var response = await _userRepo.ChangeUserPassword(userData);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return NoContent();
+            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
         }
 
         [HttpPut("new-password")]
@@ -105,12 +90,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         {
             var response = await _userRepo.ResetUserPassword(userData);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return NoContent();
+            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
         }
 
         [HttpDelete("{username}/delete")]
@@ -119,12 +99,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
         {
             var response = await _userRepo.DeleteUser(username);
 
-            if (!response.Success)
-            {
-                return BadRequest(new { error = response.Message });
-            }
-
-            return NoContent();
+            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
         }
 
         private string CreateToken(string userRole)
