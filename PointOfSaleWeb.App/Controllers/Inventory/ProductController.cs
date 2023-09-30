@@ -26,8 +26,8 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
         [HttpGet("sold-by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate) =>
-            Ok(await _prodRepo.GetProductsSoldByDate(initialDate, finalDate));
+        public async Task<ActionResult<ProductSoldByDateDTO>> GetProductsSoldByDate(DateRangeRequest dateRange) =>
+            Ok(await _prodRepo.GetProductsSoldByDate(dateRange));
 
         [HttpGet("category/{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryID(int id) => Ok(await _prodRepo.GetProductsByCategoryID(id));
