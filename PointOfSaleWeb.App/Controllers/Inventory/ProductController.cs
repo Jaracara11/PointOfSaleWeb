@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
@@ -26,8 +27,23 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 
         [HttpGet("sold-by-date"), AllowAnonymous]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate) =>
-            Ok(await _prodRepo.GetProductsSoldByDate(initialDate, finalDate));
+        public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(DateTime? initialDate, DateTime? finalDate)
+        {
+            if (!initialDate.HasValue || !finalDate.HasValue)
+            {
+                return BadRequest(new { error = "Both InitialDate and FinalDate are required." });
+            }
+
+            if (initialDate.Value > finalDate.Value)
+            {
+                return BadRequest(new { error = "InitialDate cannot be greater than FinalDate." });
+            }
+
+            var products = await _prodRepo.GetProductsSoldByDate(initialDate.Value, finalDate.Value);
+
+            return products != null && products.Any() ? Ok(products) : NotFound();
+        }
+
 
         [HttpGet("category/{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryID(int id) => Ok(await _prodRepo.GetProductsByCategoryID(id));

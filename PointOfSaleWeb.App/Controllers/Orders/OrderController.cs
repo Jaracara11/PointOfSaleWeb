@@ -44,14 +44,36 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
         [HttpGet("sales-by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime initialDate, DateTime finalDate) =>
-            Ok(await _ordersRepo.GetSalesByDate(initialDate, finalDate));
+        public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime? initialDate, DateTime? finalDate)
+        {
+            if (!initialDate.HasValue || !finalDate.HasValue)
+            {
+                return BadRequest(new { error = "Both InitialDate and FinalDate are required." });
+            }
+
+            if (initialDate.Value > finalDate.Value)
+            {
+                return BadRequest(new { error = "InitialDate cannot be greater than FinalDate." });
+            }
+
+            return Ok(await _ordersRepo.GetSalesByDate(initialDate.Value, finalDate.Value));
+        }
 
         [HttpGet("orders-by-date")]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime initialDate, DateTime finalDate)
+        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            var orders = await _ordersRepo.GetOrdersByDate(initialDate, finalDate);
+            if (!initialDate.HasValue || !finalDate.HasValue)
+            {
+                return BadRequest(new { error = "Both InitialDate and FinalDate are required." });
+            }
+
+            if (initialDate.Value > finalDate.Value)
+            {
+                return BadRequest(new { error = "InitialDate cannot be greater than FinalDate." });
+            }
+
+            var orders = await _ordersRepo.GetOrdersByDate(initialDate.Value, finalDate.Value);
 
             return orders != null && orders.Any() ? Ok(orders) : NotFound();
         }
