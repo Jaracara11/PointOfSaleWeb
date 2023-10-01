@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PointOfSaleWeb.App.Utilities;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
@@ -46,36 +47,19 @@ namespace PointOfSaleWeb.App.Controllers.Order
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            if (!initialDate.HasValue || !finalDate.HasValue)
-            {
-                return BadRequest(new { error = "Both InitialDate and FinalDate are required." });
-            }
+            var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
 
-            if (initialDate.Value > finalDate.Value)
-            {
-                return BadRequest(new { error = "InitialDate cannot be greater than FinalDate." });
-            }
-
-            return Ok(await _ordersRepo.GetSalesByDate(initialDate.Value, finalDate.Value));
+            return dateValidationResult.Success ? Ok(await _ordersRepo.GetSalesByDate(initialDate!.Value, finalDate!.Value))
+                : BadRequest(new { error = dateValidationResult.Message });
         }
 
         [HttpGet("orders-by-date")]
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            if (!initialDate.HasValue || !finalDate.HasValue)
-            {
-                return BadRequest(new { error = "Both InitialDate and FinalDate are required." });
-            }
+            var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
 
-            if (initialDate.Value > finalDate.Value)
-            {
-                return BadRequest(new { error = "InitialDate cannot be greater than FinalDate." });
-            }
-
-            var orders = await _ordersRepo.GetOrdersByDate(initialDate.Value, finalDate.Value);
-
-            return orders != null && orders.Any() ? Ok(orders) : NotFound();
+            return dateValidationResult.Success ? Ok(await _ordersRepo.GetOrdersByDate(initialDate!.Value, finalDate!.Value)) : NotFound();
         }
 
         [HttpPost("checkout-order")]
