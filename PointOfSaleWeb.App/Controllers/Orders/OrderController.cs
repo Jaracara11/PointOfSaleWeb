@@ -8,7 +8,6 @@ using PointOfSaleWeb.Repository.Interfaces;
 namespace PointOfSaleWeb.App.Controllers.Order
 {
     [Route("api/orders")]
-    [Authorize]
     [ApiController]
     public class OrderController : ControllerBase
     {

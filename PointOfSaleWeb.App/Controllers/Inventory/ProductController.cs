@@ -8,7 +8,6 @@ using PointOfSaleWeb.Repository.Interfaces;
 namespace PointOfSaleWeb.App.Controllers.Inventory
 {
     [Route("api/products")]
-    [Authorize]
     [ApiController]
     public class ProductController : ControllerBase
     {
