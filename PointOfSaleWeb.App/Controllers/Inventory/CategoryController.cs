@@ -7,13 +7,9 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 {
     [Route("api/categories")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoryController(ICategoryRepository catRepo) : ControllerBase
     {
-        private readonly ICategoryRepository _catRepo;
-        public CategoryController(ICategoryRepository catRepo)
-        {
-            _catRepo = catRepo;
-        }
+        private readonly ICategoryRepository _catRepo = catRepo;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories() => Ok(await _catRepo.GetAllCategories());

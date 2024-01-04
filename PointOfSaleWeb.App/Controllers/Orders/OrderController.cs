@@ -9,14 +9,9 @@ namespace PointOfSaleWeb.App.Controllers.Order
 {
     [Route("api/orders")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrderController(IOrderRepository ordersRepo) : ControllerBase
     {
-        private readonly IOrderRepository _ordersRepo;
-
-        public OrderController(IOrderRepository ordersRepo)
-        {
-            _ordersRepo = ordersRepo;
-        }
+        private readonly IOrderRepository _ordersRepo = ordersRepo;
 
         [HttpGet("discounts")]
         [ResponseCache(Duration = 43200)]

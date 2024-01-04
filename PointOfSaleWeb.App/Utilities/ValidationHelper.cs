@@ -4,29 +4,22 @@ namespace PointOfSaleWeb.App.Utilities
 {
     public static class ValidationHelper
     {
-        public static ValidationResult DateRangeValidation(DateTime? initialDate, DateTime? finalDate)
+        public static ValidationResult DateRangeValidation(DateTime? startDate, DateTime? endDate)
         {
-            var result = new ValidationResult();
+            const string MissingDatesMessage = "Both start date and end date are required.";
+            const string InvalidDateRangeMessage = "Start date cannot be greater than end date.";
 
-            if (!initialDate.HasValue || !finalDate.HasValue)
+            if (!startDate.HasValue || !endDate.HasValue)
             {
-                result.Success = false;
-                result.Message = "Both InitialDate and FinalDate are required.";
-
-                return result;
-            }
-             
-            if (initialDate.Value > finalDate.Value)
-            {
-                result.Success = false;
-                result.Message = "InitialDate cannot be greater than FinalDate.";
-
-                return result;
+                return new ValidationResult { Success = false, Message = MissingDatesMessage };
             }
 
-            result.Success = true;
+            if (startDate.Value > endDate.Value)
+            {
+                return new ValidationResult { Success = false, Message = InvalidDateRangeMessage };
+            }
 
-            return result;
+            return new ValidationResult { Success = true };
         }
     }
 }

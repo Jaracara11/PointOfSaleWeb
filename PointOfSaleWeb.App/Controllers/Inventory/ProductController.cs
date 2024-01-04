@@ -9,13 +9,9 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
 {
     [Route("api/products")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController(IProductRepository prodRepo) : ControllerBase
     {
-        private readonly IProductRepository _prodRepo;
-        public ProductController(IProductRepository prodRepo)
-        {
-            _prodRepo = prodRepo;
-        }
+        private readonly IProductRepository _prodRepo = prodRepo;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => Ok(await _prodRepo.GetAllProducts());

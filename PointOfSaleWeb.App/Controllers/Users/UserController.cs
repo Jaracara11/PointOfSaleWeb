@@ -11,16 +11,10 @@ namespace PointOfSaleWeb.App.Controllers.Users
 {
     [Route("api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IUserRepository userRepo, IConfiguration configuration) : ControllerBase
     {
-        private readonly IUserRepository _userRepo;
-        private readonly IConfiguration _configuration;
-
-        public UserController(IUserRepository userRepo, IConfiguration configuration)
-        {
-            _userRepo = userRepo;
-            _configuration = configuration;
-        }
+        private readonly IUserRepository _userRepo = userRepo;
+        private readonly IConfiguration _configuration = configuration;
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -103,10 +97,10 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
         private string CreateToken(string userRole)
         {
-            List<Claim> claims = new()
-            {
+            List<Claim> claims =
+            [
                 new Claim(ClaimTypes.Role, userRole)
-            };
+            ];
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
                 _configuration.GetSection("Jwt:SecretKey").Value ?? ""));
