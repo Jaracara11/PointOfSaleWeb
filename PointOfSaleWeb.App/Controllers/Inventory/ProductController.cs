@@ -26,14 +26,8 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
 
-            if (!dateValidationResult.Success)
-            {
-                return BadRequest(new { error = dateValidationResult.Message });
-            }
-
-            var products = await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value);
-
-            return products != null && products.Any() ? Ok(products) : NotFound();
+            return dateValidationResult.Success ? Ok(await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value))
+             : BadRequest(new { error = dateValidationResult.Message });
         }
 
         [HttpGet("category/{id}")]
