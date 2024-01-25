@@ -1,12 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TmdIw3w/Vfe/JgLlMeunxrsA0BoHs39fCETN4nw68C3OKYI7R4+pBABmUDjWkKVxBZpHk4a7u6OGiBFIpwRmaQ==",
+  "dgSpecHash": "0LkPX0mP6QrE4MIy6lk+Oi0ocCQW2FqYJb3XAlq7WI9xZuZVKjuXpUQmn9L6zJ1MyT7cpCWa/CxsnM0ySxq5cw==",
   "success": true,
   "projectFilePath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

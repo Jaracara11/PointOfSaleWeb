@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uwlscoyrB2Q04BzqihdzeoGPSUfE3MQVbvR/ZBT8eBYA2wEM0yUDr38TWvHXXtSuMy20mxwtvMAE5wmjZJiQgg==",
+  "dgSpecHash": "9+bYPrpUFHLa6jo4Q9/Tuxqk5PQwsXGI7n02cvVoyaJpYCIlWlGtnowDCHapjw0Bf+cpdASIeHq78CimTYusRA==",
   "success": true,
   "projectFilePath": "C:\\Users\\under\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
   "expectedPackageFiles": [
@@ -47,10 +47,7 @@
     "C:\\Users\\under\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
     "C:\\Users\\under\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.26\\microsoft.windowsdesktop.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.26\\microsoft.netcore.app.ref.6.0.26.nupkg.sha512",
-    "C:\\Users\\under\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.26\\microsoft.aspnetcore.app.ref.6.0.26.nupkg.sha512"
+    "C:\\Users\\under\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }
