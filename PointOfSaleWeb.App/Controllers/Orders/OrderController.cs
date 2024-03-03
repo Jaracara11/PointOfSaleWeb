@@ -24,9 +24,11 @@ namespace PointOfSaleWeb.App.Controllers.Order
             Ok(await _ordersRepo.GetDiscountsByUsername(username));
 
         [HttpGet("recent-orders")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetRecentOrders() => Ok(await _ordersRepo.GetRecentOrders());
 
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<OrderDTO>> GetOrderByID(string id)
         {
             var order = await _ordersRepo.GetOrderByID(id);
@@ -35,10 +37,11 @@ namespace PointOfSaleWeb.App.Controllers.Order
         }
 
         [HttpGet("sales-today")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Decimal>> GetTotalSalesOfTheDay() => Ok(await _ordersRepo.GetTotalSalesOfTheDay());
 
         [HttpGet("sales-by-date")]
-        [ResponseCache(Duration = 43200)]
+        [ResponseCache(Duration = 300)]
         public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime? initialDate, DateTime? finalDate)
         {
             var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
@@ -48,7 +51,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         }
 
         [HttpGet("orders-by-date")]
-        [ResponseCache(Duration = 43200)]
+        [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime? initialDate, DateTime? finalDate)
         {
             var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);

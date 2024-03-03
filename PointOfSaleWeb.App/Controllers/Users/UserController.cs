@@ -18,10 +18,12 @@ namespace PointOfSaleWeb.App.Controllers.Users
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<IEnumerable<UserDataDTO>>> GetAllUsers() => Ok(await _userRepo.GetAllUsers());
 
         [HttpGet("{username}")]
         [Authorize(Roles = "Admin")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<UserDataDTO>> GetUserByUsername(string username)
         {
             var user = await _userRepo.GetUserByUsername(username);
@@ -29,7 +31,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
             return user != null ? Ok(user) : NotFound();
         }
 
-        [HttpGet("roles")]
+        [HttpGet("roles"), AllowAnonymous]
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles() => Ok(await _userRepo.GetAllUserRoles());
 

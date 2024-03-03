@@ -14,14 +14,15 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         private readonly IProductRepository _prodRepo = prodRepo;
 
         [HttpGet]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => Ok(await _prodRepo.GetAllProducts());
 
         [HttpGet("best-sellers")]
-        [ResponseCache(Duration = 43200)]
+        [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
 
         [HttpGet("sold-by-date")]
-        [ResponseCache(Duration = 43200)]
+        [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(DateTime? initialDate, DateTime? finalDate)
         {
             var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
@@ -31,9 +32,11 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         }
 
         [HttpGet("category/{id}")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryID(int id) => Ok(await _prodRepo.GetProductsByCategoryID(id));
 
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductByID(string id)
         {
             var product = await _prodRepo.GetProductByID(id);
