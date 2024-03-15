@@ -2,6 +2,7 @@
 
 cd PointOfSaleWeb.App
 git checkout master
+git config pull.rebase false
 git pull
 docker stop pos-web.app
 docker rm pos-web.app
