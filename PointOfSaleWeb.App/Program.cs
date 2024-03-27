@@ -60,6 +60,6 @@ app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-app.MapGet("/healthcheck", () => "API is running!");
+app.MapGet("/healthcheck", () => "API is running!").AllowAnonymous();
 app.Run();
 
