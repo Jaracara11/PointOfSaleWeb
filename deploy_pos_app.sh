@@ -17,7 +17,10 @@ docker stop "$CONTAINER_NAME" || true  # Ignore errors if container doesn't exis
 docker rm "$CONTAINER_NAME" || true    # Ignore errors if container doesn't exist
 docker build -t "$DOCKER_IMAGE_NAME" .
 docker run -d -p "$PORT_MAPPING" --restart unless-stopped --name "$CONTAINER_NAME" "$DOCKER_IMAGE_NAME"
-docker image prune -f
+
+# Cleanup
+docker system prune -af   # Remove all stopped containers, unused networks, and dangling images
+docker volume prune -f    # Remove all unused volumes
 
 # Logging
 echo "List of running Docker containers:"
