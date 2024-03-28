@@ -63,6 +63,9 @@ jobs:
       - name: Print Working Directory 2
         run: pwd
 
+      - name: Verify publish directory exists
+        run: ls -l ${{ github.workspace }}/publish
+
       - name: List contents of the publish directory
         run: ls -l ${{ env.WORKING_DIRECTORY }}/publish
 
