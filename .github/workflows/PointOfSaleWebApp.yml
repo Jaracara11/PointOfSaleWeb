@@ -20,7 +20,7 @@ env:
   API_IMPORT_VERSION: v1
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
-  WORKING_DIRECTORY: PointOfSaleWeb.App  # Define the working directory where your project file is located
+  WORKING_DIRECTORY: PointOfSaleWeb.App
 
 jobs:
   build:
@@ -32,25 +32,23 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
       - name: Restore
-        run: dotnet restore ${{ env.WORKING_DIRECTORY }}
-        working-directory: ${{ env.WORKING_DIRECTORY }}  # Set the working directory for this step
+        run: |
+          cd ${{ env.WORKING_DIRECTORY }}
+          dotnet restore
       - name: Build
-        run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
-        working-directory: ${{ env.WORKING_DIRECTORY }}  # Set the working directory for this step
+        run: |
+          cd ${{ env.WORKING_DIRECTORY }}
+          dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
       - name: Test
-        run: dotnet test ${{ env.WORKING_DIRECTORY }} --no-build
-        working-directory: ${{ env.WORKING_DIRECTORY }}  # Set the working directory for this step
+        run: |
+          cd ${{ env.WORKING_DIRECTORY }}
+          dotnet test --no-build
       - name: Publish
-        run: dotnet publish ${{ env.WORKING_DIRECTORY }} --configuration ${{ env.CONFIGURATION }} --no-build --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        working-directory: ${{ env.WORKING_DIRECTORY }}  # Set the working directory for this step
-      - name: Install Swashbuckle CLI .NET Global Tool
-        run: dotnet tool install --global Swashbuckle.AspNetCore.Cli --version ${{ env.SWASHBUCLE_ASPNET_CORE_CLI_PACKAGE_VERSION }}
-        working-directory: ${{ env.WORKING_DIRECTORY }}  # Set the working directory for this step
-      - name: Publish Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: webapp
-          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: |
+          cd ${{ env.WORKING_DIRECTORY }}
+          dotnet publish --configuration ${{ env.CONFIGURATION }} --no-build --output ${AZURE_WEBAPP_PACKAGE_PATH}
+      # Add other build steps here, ensuring to set the working directory
+      # appropriately for each step
 
   deploy:
     runs-on: ubuntu-latest
