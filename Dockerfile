@@ -15,6 +15,9 @@ RUN dotnet restore PointOfSaleWeb.App/PointOfSaleWeb.App.csproj
 # Copy the rest of the application and build
 COPY . .
 
+# Create directory for SSL certificates
+RUN mkdir /app
+
 # Generate self-signed SSL certificate
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost" \
