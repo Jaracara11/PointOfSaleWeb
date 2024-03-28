@@ -69,7 +69,7 @@ jobs:
         run: pwd
 
       - name: List contents of the publish directory
-        run: ls -l ${{ env.WORKING_DIRECTORY }}
+        run: ls -l /home/runner/work/PointOfSaleWeb.App/PointOfSaleWeb.App/PointOfSaleWeb.App/publish/
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
