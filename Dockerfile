@@ -15,14 +15,6 @@ RUN dotnet restore PointOfSaleWeb.App/PointOfSaleWeb.App.csproj
 # Copy the rest of the application and build
 COPY . .
 
-# Create directory for SSL certificates
-RUN mkdir /app
-
-# Generate self-signed SSL certificate
-RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost" \
-    -keyout /app/server.key  -out /app/server.crt
-
 RUN dotnet publish PointOfSaleWeb.App/PointOfSaleWeb.App.csproj -c Release -o /app
 
 # Build runtime image
@@ -33,4 +25,4 @@ COPY --from=build /app /app
 WORKDIR /app
 
 ENTRYPOINT ["dotnet", "PointOfSaleWeb.App.dll"]
-CMD ["--urls", "https://pointofsalewebapp.azurewebsites.net", "http://+:5000"]
+CMD ["--urls", "http://+:5000"]
