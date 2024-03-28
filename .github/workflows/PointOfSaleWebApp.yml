@@ -47,15 +47,16 @@ jobs:
         run: |
           cd ${{ env.WORKING_DIRECTORY }}
           dotnet publish --configuration Release --no-build --output publish
-      # Add other build steps here, ensuring to set the working directory
-      # appropriately for each step
+      - name: List Publish Directory
+        run: |
+          ls -l ${{ env.WORKING_DIRECTORY }}/publish
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Print Working Directory
-        run: ls -la 
+        run: ls -la
       - name: List contents of the artifact directory
         run: |
           ls -l ${{ github.workspace }}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
