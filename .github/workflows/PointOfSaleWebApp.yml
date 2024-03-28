@@ -56,7 +56,7 @@ jobs:
     needs: build
     steps:
       - name: Print Working Directory
-        run: ls -la
+        run: pwd
       - name: List contents of the publish directory
         run: ls -l PointOfSaleWeb.App/publish
       - name: Download artifact from build job
