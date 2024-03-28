@@ -57,8 +57,8 @@ jobs:
     steps:
       - name: Print Working Directory
         run: ls -la
-      - name: List contents of the artifact directory
-        run: ls -l ${{ github.workspace }}/PointOfSaleWeb.App/publish
+      - name: List contents of the publish directory
+        run: ls -l PointOfSaleWeb.App/publish
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
