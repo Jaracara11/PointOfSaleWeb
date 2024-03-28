@@ -1,10 +1,6 @@
 # Dockerfile
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-# Install OpenSSL
-RUN apt-get update && \
-    apt-get install -y openssl
-
 # Copy csproj files and restore dependencies
 COPY PointOfSaleWeb.App/PointOfSaleWeb.App.csproj PointOfSaleWeb.App/
 COPY PointOfSaleWeb.Models/PointOfSaleWeb.Models.csproj PointOfSaleWeb.Models/
