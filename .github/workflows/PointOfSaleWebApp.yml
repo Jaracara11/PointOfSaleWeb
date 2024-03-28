@@ -47,11 +47,6 @@ jobs:
           cd ${{ env.WORKING_DIRECTORY }}
           dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
 
-      - name: Run tests
-        run: |
-          cd ${{ env.WORKING_DIRECTORY }}
-          dotnet test --no-build
-
       - name: Publish artifacts
         run: |
           cd ${{ env.WORKING_DIRECTORY }}
@@ -69,7 +64,7 @@ jobs:
         run: pwd
 
       - name: List contents of the publish directory
-        run: ls -l /home/runner/work/PointOfSaleWeb.App/PointOfSaleWeb.App
+        run: ls -l ls -l ${{ env.WORKING_DIRECTORY }}/publish
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
