@@ -11,7 +11,7 @@ RUN dotnet restore PointOfSaleWeb.App/PointOfSaleWeb.App.csproj
 # Copy the rest of the application and build
 COPY . .
 
-RUN dotnet publish -c Release -o /app
+RUN dotnet publish PointOfSaleWeb.App/PointOfSaleWeb.App.csproj -c Release -o /app
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
