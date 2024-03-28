@@ -54,6 +54,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Print Working Directory
+        run: ls -la 
       - name: List contents of the artifact directory
         run: |
           ls -l ${{ github.workspace }}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
