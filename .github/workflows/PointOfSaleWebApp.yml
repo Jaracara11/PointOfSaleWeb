@@ -28,32 +28,35 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-      
+
       - name: Restore dependencies
         run: |
           cd ${{ env.WORKING_DIRECTORY }}
           dotnet restore
-      
+
+      - name: Print Working Directory 1
+        run: pwd
+
       - name: Build project
         run: |
           cd ${{ env.WORKING_DIRECTORY }}
           dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
-      
+
       - name: Run tests
         run: |
           cd ${{ env.WORKING_DIRECTORY }}
           dotnet test --no-build
-      
+
       - name: Publish artifacts
         run: |
           cd ${{ env.WORKING_DIRECTORY }}
           dotnet publish --configuration Release --no-build --output publish
-      
+
       - name: List Publish Directory
         run: |
           ls -l ${{ env.WORKING_DIRECTORY }}/publish
@@ -62,33 +65,33 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Print Working Directory
+      - name: Print Working Directory 2
         run: pwd
-      
+
       - name: List contents of the publish directory
         run: ls -l ${{ env.WORKING_DIRECTORY }}
-      
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: webapp
-      
+
       - name: Navigate to artifact directory
         run: cd ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-      
+
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.PointOfSaleWebApp_BFB6 }}
-      
+
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.PointOfSaleWebApi_SPN }}
-      
+
       - name: Import API into Azure API Management
         run: az apim api import --path "${{ env.AZURE_APIM_RESOURCE_PATH }}" --resource-group "${{ env.AZURE_APIM_RESOURCEGROUP }}" --service-name "${{ env.AZURE_APIM_SERVICENAME }}" --api-id "${{ env.AZURE_APIM_API_ID }}" --service-url "${{ env.AZURE_APIM_APPSERVICEURL }}" --specification-path "${{ env.API_IMPORT_SPECIFICATION_PATH }}" --specification-format OpenApi --subscription-required false
-      
+
       - name: Logout
         run: az logout
