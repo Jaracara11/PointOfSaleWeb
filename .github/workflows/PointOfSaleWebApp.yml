@@ -58,8 +58,7 @@ jobs:
       - name: Print Working Directory
         run: ls -la
       - name: List contents of the artifact directory
-        run: |
-          ls -l ls -l /home/runner/work/PointOfSaleWeb.App/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: ls -l ${{ github.workspace }}/PointOfSaleWeb.App/publish
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
