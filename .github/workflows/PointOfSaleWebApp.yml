@@ -64,7 +64,7 @@ jobs:
         run: pwd
 
       - name: List contents of the publish directory
-        run: ls -l ls -l ${{ env.WORKING_DIRECTORY }}/publish
+        run: ls -l ${{ env.WORKING_DIRECTORY }}/publish
 
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
