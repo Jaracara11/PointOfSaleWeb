@@ -21,3 +21,4 @@ COPY --from=build /app /app
 WORKDIR /app
 
 ENTRYPOINT ["dotnet", "PointOfSaleWeb.App.dll"]
+CMD ["--urls", "https://pointofsalewebapp.azurewebsites.net", "http://+:5000"]
