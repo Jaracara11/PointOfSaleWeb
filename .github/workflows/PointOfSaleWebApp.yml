@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-     - name: List contents of the artifact directory
+      - name: List contents of the artifact directory
         run: |
           ls -l ${{ github.workspace }}/PointOfSaleWeb.App/publish
       - name: Download artifact from build job
