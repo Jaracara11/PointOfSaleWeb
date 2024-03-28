@@ -56,7 +56,7 @@ jobs:
     steps:
       - name: List contents of the artifact directory
         run: |
-          ls -l ${{ github.workspace }}/PointOfSaleWeb.App/publish
+          ls -l ${{ github.workspace }}/${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
