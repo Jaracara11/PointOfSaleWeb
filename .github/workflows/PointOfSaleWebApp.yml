@@ -49,8 +49,8 @@ jobs:
           dotnet publish --configuration ${{ env.CONFIGURATION }} --no-build --output ${AZURE_WEBAPP_PACKAGE_PATH}
       # Add other build steps here, ensuring to set the working directory
       # appropriately for each step
-      
- deploy:
+
+deploy:
   runs-on: ubuntu-latest
   needs: build
   steps:
@@ -58,11 +58,12 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: webapp
+    - name: Navigate to artifact directory
+      run: cd PointOfSaleWeb.App/publish
     - name: Deploy to Azure WebApp
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: . # Default directory where artifact is downloaded
         publish-profile: ${{ secrets.PointOfSaleWebApp_BFB6 }}
     - name: Azure Login
       uses: azure/login@v1
