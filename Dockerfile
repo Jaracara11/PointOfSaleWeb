@@ -18,4 +18,4 @@ WORKDIR /app
 
 COPY --from=build /app .
 
-ENTRYPOINT ["dotnet", "PointOfSaleWeb.App.dll", "--urls", "http://+:5000"]
+ENTRYPOINT ["dotnet", "PointOfSaleWeb.App.dll", "--urls", "https://+:5000"]
