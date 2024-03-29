@@ -23,4 +23,8 @@ RUN dotnet publish PointOfSaleWeb.App.csproj -c Release -o /app/publish /p:UseAp
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+ENV ASPNETCORE_URLS=http://0.0.0.0:5000
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 ENTRYPOINT ["dotnet", "PointOfSaleWeb.App.dll"]
