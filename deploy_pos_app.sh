@@ -26,3 +26,7 @@ sudo docker volume prune -f    # Remove all unused volumes
 # Logging
 echo "List of running Docker containers:"
 sudo docker ps
+
+# Retrieve and log container IP address
+CONTAINER_IP=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' "$CONTAINER_NAME")
+echo "Container IP Address: $CONTAINER_IP"
