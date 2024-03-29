@@ -9,7 +9,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts();
         Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate);
         Task<IEnumerable<Product>> GetProductsByCategoryID(int id);
-        Task<Product> GetProductByID(string id);
+        Task<Product?> GetProductByID(string id);
         Task<DbResponse<Product>> AddNewProduct(Product product);
         Task<DbResponse<Product>> UpdateProduct(Product product);
         Task<DbResponse<Product>> DeleteProduct(string id);

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PointOfSaleWeb.Repository")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4961175337149605c44ba1b09ae4759b1fdecb16")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0d32218bee25bf00f475ef8f04699d55ad7ca7b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("PointOfSaleWeb.Repository")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PointOfSaleWeb.Repository")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

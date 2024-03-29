@@ -43,7 +43,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<Product>("GetProductsByCategoryId", new { ProductCategoryID = id }, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<Product> GetProductByID(string id)
+        public async Task<Product?> GetProductByID(string id)
         {
             using IDbConnection db = _context.CreateConnection();
             return await db.QuerySingleOrDefaultAsync<Product>("GetProductById", new { ProductID = id }, commandType: CommandType.StoredProcedure);
@@ -61,14 +61,16 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@ProductPrice", product.ProductPrice);
             parameters.Add("@ProductCategoryID", product.ProductCategoryID);
 
+            Product? newProduct;
+
             try
             {
-                product = await db.QuerySingleOrDefaultAsync<Product>("AddNewProduct", parameters, commandType: CommandType.StoredProcedure);
+                newProduct = await db.QuerySingleOrDefaultAsync<Product>("AddNewProduct", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Product>
                 {
                     Success = true,
-                    Data = product
+                    Data = newProduct
                 };
             }
             catch (SqlException ex)
@@ -93,15 +95,17 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@ProductStock", product.ProductStock);
             parameters.Add("@ProductCategoryID", product.ProductCategoryID);
 
+            Product? updatedProduct;
+
             try
             {
-                product = await db.QuerySingleOrDefaultAsync<Product>("UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
+                updatedProduct = await db.QuerySingleOrDefaultAsync<Product>("UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Product>
                 {
                     Success = true,
                     Message = "Product updated!",
-                    Data = product
+                    Data = updatedProduct
                 };
             }
             catch (SqlException ex)

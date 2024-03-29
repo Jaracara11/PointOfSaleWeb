@@ -7,7 +7,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
     {
         Task<IEnumerable<Discount>> GetAllDiscounts();
         Task<IEnumerable<decimal>> GetDiscountsByUsername(string username);
-        Task<OrderDTO> GetOrderByID(string id);
+        Task<OrderDTO?> GetOrderByID(string id);
         Task<IEnumerable<RecentOrderDTO>> GetRecentOrders();
         Task<Decimal> GetTotalSalesOfTheDay();
         Task<Decimal> GetSalesByDate(DateTime initialDate, DateTime finalDate);
