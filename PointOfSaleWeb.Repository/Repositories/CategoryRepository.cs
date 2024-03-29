@@ -20,7 +20,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<Category>("GetAllCategories", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<Category> GetCategoryByID(int id)
+        public async Task<Category?> GetCategoryByID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
             return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryById", new { CategoryID = id }, commandType: CommandType.StoredProcedure);
@@ -57,15 +57,17 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@CategoryID", category.CategoryID);
             parameters.Add("@CategoryName", category.CategoryName);
 
+            Category? updatedCategory;
+
             try
             {
-                category = await db.QuerySingleOrDefaultAsync<Category>("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
+                updatedCategory = await db.QuerySingleOrDefaultAsync<Category>("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Category>
                 {
                     Success = true,
                     Message = "Category updated!",
-                    Data = category
+                    Data = updatedCategory
                 };
             }
             catch (SqlException ex)
@@ -77,7 +79,6 @@ namespace PointOfSaleWeb.Repository.Repositories
                 };
             }
         }
-
 
         public async Task<DbResponse<Category>> DeleteCategory(int id)
         {

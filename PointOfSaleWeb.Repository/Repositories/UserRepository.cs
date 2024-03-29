@@ -21,7 +21,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<UserDataDTO>("GetAllUsers", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<UserDataDTO> GetUserByUsername(string username)
+        public async Task<UserDataDTO?> GetUserByUsername(string username)
         {
             using IDbConnection db = _context.CreateConnection();
             return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserByUsername", new { Username = username }, commandType: CommandType.StoredProcedure);
