@@ -21,7 +21,7 @@ WORKDIR /src/PointOfSaleWeb.App
 RUN dotnet build PointOfSaleWeb.App.csproj -c Release -o /app/build
 
 FROM build as publish
-RUN dotnet publish PointOfSaleWeb.App.csproj -c Debug -o /app/publish /p:UseAppHost=false
+RUN dotnet publish PointOfSaleWeb.App.csproj -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
