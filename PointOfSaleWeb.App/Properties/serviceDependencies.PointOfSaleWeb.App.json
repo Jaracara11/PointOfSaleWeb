@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/pos-web-app/providers/Microsoft.ServiceLinker/linkers/ConnectionStringsDbConn_47B545CAF1",
+      "secretStore": null,
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/pos-web-sql-srv/databases/pos",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:DbConn",
+      "dynamicId": null
+    }
+  }
+}
