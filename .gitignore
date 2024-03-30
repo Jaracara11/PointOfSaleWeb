@@ -19,6 +19,7 @@ Debug
 Release
 obj
 .vscode/
+PointOfSaleWeb.App/obj/
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -30,4 +31,3 @@ obj
 *.crt
 *.key
 *.cache
-
