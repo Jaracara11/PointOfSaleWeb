@@ -27,7 +27,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: poswebacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_97fd1d441a5347378c615c2beb206012 }}/pos.app:${{ github.sha | lower }}
+        tags: poswebacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_97fd1d441a5347378c615c2beb206012 }}/pos.app:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -45,4 +45,4 @@ jobs:
         app-name: 'pos-web-app'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_c2a4d7e14b094cdfab94b74819da5541 }}
-        images: 'poswebacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_97fd1d441a5347378c615c2beb206012 }}/pos.app:${{ github.sha | lower }}'
+        images: 'poswebacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_97fd1d441a5347378c615c2beb206012 }}/pos.app:${{ github.sha }}'
