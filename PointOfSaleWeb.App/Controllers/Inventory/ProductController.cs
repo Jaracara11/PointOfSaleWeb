@@ -25,7 +25,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
+            var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
             return dateValidationResult.Success ? Ok(await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value))
              : BadRequest(new { error = dateValidationResult.Message });
