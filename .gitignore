@@ -20,6 +20,8 @@ Release
 obj
 .vscode/
 PointOfSaleWeb.App/obj/
+PointOfSaleWeb.Models/obj/
+PointOfSaleWeb.Repository/obj/
 !.vscode/extensions.json
 .idea
 .DS_Store
