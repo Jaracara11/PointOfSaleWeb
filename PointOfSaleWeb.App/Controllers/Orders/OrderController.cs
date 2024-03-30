@@ -44,7 +44,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         [ResponseCache(Duration = 300)]
         public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
+            var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
             return dateValidationResult.Success ? Ok(await _ordersRepo.GetSalesByDate(initialDate!.Value, finalDate!.Value))
                 : BadRequest(new { error = dateValidationResult.Message });
@@ -54,7 +54,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetOrdersByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            var dateValidationResult = ValidationHelper.DateRangeValidation(initialDate, finalDate);
+            var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
             return dateValidationResult.Success ? Ok(await _ordersRepo.GetOrdersByDate(initialDate!.Value, finalDate!.Value)) : NotFound();
         }

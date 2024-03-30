@@ -2,7 +2,7 @@
 
 namespace PointOfSaleWeb.App.Utilities
 {
-    public static class ValidationHelper
+    public static class ValidationUtil
     {
         public static ValidationResult DateRangeValidation(DateTime? startDate, DateTime? endDate)
         {
