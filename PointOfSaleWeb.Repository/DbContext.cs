@@ -12,7 +12,7 @@ namespace PointOfSaleWeb.Repository
         public DbContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DbConn");
+            _connectionString = _configuration.GetConnectionString("DbConnLocal");
         }
 
         public IDbConnection CreateConnection()
