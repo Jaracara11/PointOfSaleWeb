@@ -33,7 +33,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<Role>("GetAllUserRoles", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<DbResponse<UserInfoDTO>> AuthUser(UserLoginDTO user)
+        public async Task<DbResponse<UserInfoDTO>> AuthUser(UserAuthDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
             var parameters = new DynamicParameters();

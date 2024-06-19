@@ -35,8 +35,8 @@ namespace PointOfSaleWeb.App.Controllers.Users
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles() => Ok(await _userRepo.GetAllUserRoles());
 
-        [HttpPost("login"), AllowAnonymous]
-        public async Task<ActionResult<UserDataDTO>> Login(UserLoginDTO user)
+        [HttpPost("auth"), AllowAnonymous]
+        public async Task<ActionResult<UserDataDTO>> AuthUser(UserAuthDTO user)
         {
             var response = await _userRepo.AuthUser(user);
 
