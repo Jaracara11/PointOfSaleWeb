@@ -47,7 +47,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
             var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
             return dateValidationResult.Success ? Ok(await _ordersRepo.GetSalesByDate(initialDate!.Value, finalDate!.Value))
-                : BadRequest(new { error = dateValidationResult.Message });
+                : BadRequest(new { dateValidationResult.Message });
         }
 
         [HttpGet("orders-by-date")]
@@ -64,7 +64,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         {
             var response = await _ordersRepo.NewOrderTransaction(order);
 
-            return response.Success ? Created("Order", response.Data) : BadRequest(new { error = response.Message });
+            return response.Success ? Created("Order", response.Data) : BadRequest(new { response.Message });
         }
 
         [HttpPost("{id}/cancel")]
@@ -72,7 +72,7 @@ namespace PointOfSaleWeb.App.Controllers.Order
         {
             var response = await _ordersRepo.CancelOrder(id);
 
-            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
+            return response.Success ? NoContent() : BadRequest(new { response.Message });
         }
     }
 }

@@ -30,7 +30,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _catRepo.AddNewCategory(category.CategoryName);
 
-            return response.Success ? Created("Category", response.Data) : BadRequest(new { error = response.Message });
+            return response.Success ? Created("Category", response.Data) : BadRequest(new { response.Message });
         }
 
         [HttpPut("edit")]
@@ -39,7 +39,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _catRepo.UpdateCategory(category);
 
-            return response.Success ? Ok(response) : BadRequest(new { error = response.Message });
+            return response.Success ? Ok(response) : BadRequest(new { response.Message });
         }
 
         [HttpDelete("{id}/delete")]
@@ -48,7 +48,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _catRepo.DeleteCategory(id);
 
-            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
+            return response.Success ? NoContent() : BadRequest(new { response.Message });
         }
     }
 }

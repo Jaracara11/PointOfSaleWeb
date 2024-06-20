@@ -28,7 +28,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
             var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
             return dateValidationResult.Success ? Ok(await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value))
-             : BadRequest(new { error = dateValidationResult.Message });
+             : BadRequest(new { dateValidationResult.Message });
         }
 
         [HttpGet("category/{id}")]
@@ -50,7 +50,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _prodRepo.AddNewProduct(product);
 
-            return response.Success ? Created("Product", response.Data) : BadRequest(new { error = response.Message });
+            return response.Success ? Created("Product", response.Data) : BadRequest(new { response.Message });
         }
 
         [HttpPut("edit")]
@@ -59,7 +59,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _prodRepo.UpdateProduct(product);
 
-            return response.Success ? Ok(response) : BadRequest(new { error = response.Message });
+            return response.Success ? Ok(response) : BadRequest(new { response.Message });
         }
 
         [HttpDelete("{id}/delete")]
@@ -68,7 +68,7 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
         {
             var response = await _prodRepo.DeleteProduct(id);
 
-            return response.Success ? NoContent() : BadRequest(new { error = response.Message });
+            return response.Success ? NoContent() : BadRequest(new { response.Message });
         }
     }
 }
