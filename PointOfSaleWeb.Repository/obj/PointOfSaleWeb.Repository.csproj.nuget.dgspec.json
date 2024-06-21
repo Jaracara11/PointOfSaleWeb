@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj": {}
+    "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
+    "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
+        "projectUniqueName": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
         "projectName": "PointOfSaleWeb.Models",
-        "projectPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
+        "projectPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj",
         "packagesPath": "C:\\Users\\Luis Eduardo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\obj\\",
+        "outputPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Luis Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -65,14 +65,14 @@
         }
       }
     },
-    "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj": {
+    "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
         "projectName": "PointOfSaleWeb.Repository",
-        "projectPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
+        "projectPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Repository\\PointOfSaleWeb.Repository.csproj",
         "packagesPath": "C:\\Users\\Luis Eduardo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Repository\\obj\\",
+        "outputPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Luis Eduardo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -90,8 +90,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
-                "projectPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb.App\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj"
+              "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj": {
+                "projectPath": "C:\\Users\\Luis Eduardo\\source\\repos\\Jaracara11\\PointOfSaleWeb\\PointOfSaleWeb.Models\\PointOfSaleWeb.Models.csproj"
               }
             }
           }
