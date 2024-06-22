@@ -8,7 +8,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://10.0.0.4:5000;https://10.0.0.4:5001"
+      "applicationUrl": "http://10.0.0.4:5000"
     },
     "Docker": {
       "commandName": "Docker",
