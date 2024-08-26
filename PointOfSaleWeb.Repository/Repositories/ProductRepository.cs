@@ -59,7 +59,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@ProductStock", product.ProductStock);
             parameters.Add("@ProductCost", product.ProductCost);
             parameters.Add("@ProductPrice", product.ProductPrice);
-            parameters.Add("@ProductCategoryID", product.ProductCategoryID);
+            parameters.Add("@ProductCategoryName", product.ProductCategoryName);
 
             Product? newProduct;
 
@@ -93,7 +93,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@ProductPrice", product.ProductPrice);
             parameters.Add("@ProductCost", product.ProductCost);
             parameters.Add("@ProductStock", product.ProductStock);
-            parameters.Add("@ProductCategoryID", product.ProductCategoryID);
+            parameters.Add("@ProductCategoryName", product.ProductCategoryName);
 
             Product? updatedProduct;
 

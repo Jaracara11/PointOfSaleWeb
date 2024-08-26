@@ -16,8 +16,10 @@ namespace PointOfSaleWeb.Models
         public string ProductDescription { get; set; } = string.Empty;
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Product stock cannot be negative.")]
         public int ProductStock { get; set; }
 
+        [Range(0, int.MaxValue, ErrorMessage = "Product quantity cannot be negative.")]
         public int ProductQuantity { get; set; }
 
         [Required]
@@ -29,7 +31,7 @@ namespace PointOfSaleWeb.Models
         public decimal ProductPrice { get; set; }
 
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "Product category ID must be greater than zero.")]
-        public int ProductCategoryID { get; set; }
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Category name must have between 4 and 50 characters.")]
+        public string ProductCategoryName { get; set; } = string.Empty;
     }
 }
