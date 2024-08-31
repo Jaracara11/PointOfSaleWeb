@@ -31,10 +31,6 @@ namespace PointOfSaleWeb.App.Controllers.Inventory
              : BadRequest(new { dateValidationResult.Message });
         }
 
-        [HttpGet("category/{id}")]
-        [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryID(int id) => Ok(await _prodRepo.GetProductsByCategoryID(id));
-
         [HttpGet("{id}")]
         [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductByID(string id)

@@ -31,7 +31,6 @@ namespace PointOfSaleWeb.Models
         public decimal ProductPrice { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 4, ErrorMessage = "Category name must have between 4 and 50 characters.")]
-        public string ProductCategoryName { get; set; } = string.Empty;
+        public Category ProductCategory { get; set; } = new();
     }
 }

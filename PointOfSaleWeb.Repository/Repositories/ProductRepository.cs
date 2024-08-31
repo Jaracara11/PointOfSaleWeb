@@ -18,7 +18,19 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<Product>("GetAllProducts", commandType: CommandType.StoredProcedure);
+
+            var products = await db.QueryAsync<Product, Category, Product>(
+                "GetAllProducts",
+                (prod, cat) =>
+                {
+                    prod.ProductCategory = cat;
+                    return prod;
+                },
+                splitOn: "CategoryID",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return products;
         }
 
         public async Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts()
@@ -37,16 +49,23 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<ProductSoldByDateDTO>("GetProductsSoldByDate", parameters, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategoryID(int id)
+        public async Task<Product?> GetProductByID(string productId)
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<Product>("GetProductsByCategoryId", new { ProductCategoryID = id }, commandType: CommandType.StoredProcedure);
-        }
 
-        public async Task<Product?> GetProductByID(string id)
-        {
-            using IDbConnection db = _context.CreateConnection();
-            return await db.QuerySingleOrDefaultAsync<Product>("GetProductById", new { ProductID = id }, commandType: CommandType.StoredProcedure);
+            var product = await db.QueryAsync<Product, Category, Product>(
+                "GetProductById",
+                (prod, cat) =>
+                {
+                    prod.ProductCategory = cat;
+                    return prod;
+                },
+                new { ProductId = productId },
+                splitOn: "CategoryID",
+                commandType: CommandType.StoredProcedure
+            );
+
+            return product.SingleOrDefault();
         }
 
         public async Task<DbResponse<Product>> AddNewProduct(Product product)
@@ -59,7 +78,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@ProductStock", product.ProductStock);
             parameters.Add("@ProductCost", product.ProductCost);
             parameters.Add("@ProductPrice", product.ProductPrice);
-            parameters.Add("@ProductCategoryName", product.ProductCategoryName);
+            parameters.Add("@ProductCategoryID", product.ProductCategory.CategoryID);
 
             Product? newProduct;
 
@@ -93,7 +112,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@ProductPrice", product.ProductPrice);
             parameters.Add("@ProductCost", product.ProductCost);
             parameters.Add("@ProductStock", product.ProductStock);
-            parameters.Add("@ProductCategoryName", product.ProductCategoryName);
+            parameters.Add("@ProductCategoryID", product.ProductCategory.CategoryID);
 
             Product? updatedProduct;
 
