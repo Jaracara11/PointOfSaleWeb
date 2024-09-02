@@ -7,7 +7,7 @@ using PointOfSaleWeb.Repository.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace PointOfSaleWeb.App.Controllers.Users
+namespace PointOfSaleWeb.App.Controllers
 {
     [Route("api/users")]
     [ApiController]
@@ -97,7 +97,7 @@ namespace PointOfSaleWeb.App.Controllers.Users
             return response.Success ? NoContent() : BadRequest(new { response.Message });
         }
 
-        private string CreateToken(string userRole)
+        private protected string CreateToken(string userRole)
         {
             List<Claim> claims =
             [

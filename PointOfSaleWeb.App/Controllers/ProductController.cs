@@ -5,7 +5,7 @@ using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 
-namespace PointOfSaleWeb.App.Controllers.Inventory
+namespace PointOfSaleWeb.App.Controllers
 {
     [Route("api/products")]
     [ApiController]

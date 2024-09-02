@@ -113,11 +113,11 @@
           "dependencies": {
             "Dapper": {
               "target": "Package",
-              "version": "[2.1.28, )"
+              "version": "[2.1.35, )"
             },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
-              "version": "[5.1.4, )"
+              "version": "[5.2.2, )"
             },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",

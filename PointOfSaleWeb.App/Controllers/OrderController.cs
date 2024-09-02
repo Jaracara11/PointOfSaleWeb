@@ -5,7 +5,7 @@ using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 
-namespace PointOfSaleWeb.App.Controllers.Order
+namespace PointOfSaleWeb.App.Controllers
 {
     [Route("api/orders")]
     [ApiController]
@@ -38,11 +38,11 @@ namespace PointOfSaleWeb.App.Controllers.Order
 
         [HttpGet("sales-today")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<Decimal>> GetTotalSalesOfTheDay() => Ok(await _ordersRepo.GetTotalSalesOfTheDay());
+        public async Task<ActionResult<decimal>> GetTotalSalesOfTheDay() => Ok(await _ordersRepo.GetTotalSalesOfTheDay());
 
         [HttpGet("sales-by-date")]
         [ResponseCache(Duration = 300)]
-        public async Task<ActionResult<Decimal>> GetSalesByDate(DateTime? initialDate, DateTime? finalDate)
+        public async Task<ActionResult<decimal>> GetSalesByDate(DateTime? initialDate, DateTime? finalDate)
         {
             var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
