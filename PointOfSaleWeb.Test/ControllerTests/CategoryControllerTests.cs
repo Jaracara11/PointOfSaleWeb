@@ -28,7 +28,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
         }
 
         [Fact]
-        public async Task CategoryController_GetAllCategories_Returns_OK()
+        public async Task GetAllCategories_Returns_OK()
         {
             // Arrange
             A.CallTo(() => _catRepo.GetAllCategories()).Returns(Task.FromResult((IEnumerable<Category>)_categories));
@@ -46,7 +46,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
         }
 
         [Fact]
-        public async Task CategoryController_GetCategoryByID_Returns_OK()
+        public async Task GetCategoryByID_Returns_OK()
         {
             // Arrange
             var categoryId = 1;
@@ -65,7 +65,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
         }
 
         [Fact]
-        public async Task CategoryController_AddNewCategory_Success_Returns_Created()
+        public async Task AddNewCategory_Success_Returns_Created()
         {
             // Arrange
             var category = new Category { CategoryName = "Chocolates" };
@@ -84,7 +84,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
         }
 
         [Fact]
-        public async Task CategoryController_UpdateCategory_Success_Returns_Ok()
+        public async Task UpdateCategory_Success_Returns_Ok()
         {
             // Arrange
             var category = new Category { CategoryID = 1, CategoryName = "Updated Category" };
@@ -102,7 +102,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
         }
 
         [Fact]
-        public async Task CategoryController_DeleteCategory_Success_Return_NoContent()
+        public async Task DeleteCategory_Success_Return_NoContent()
         {
             // Arrange
             var categoryId = 1;
