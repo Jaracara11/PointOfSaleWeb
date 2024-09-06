@@ -162,7 +162,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
         }
 
         [Fact]
-        public async Task GetProductsSoldByDate_ValidDates_Returns_OK()
+        public async Task GetProductsSoldByDate_ValidDateRange_Returns_OK()
         {
             // Arrange
             var initialDate = new DateTime(2023, 01, 01);
@@ -189,6 +189,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
             var initialDate = new DateTime(2023, 12, 31);
             var finalDate = new DateTime(2023, 01, 01);
             var expectedMessage = "Start date cannot be greater than end date.";
+
             A.CallTo(() => _prodRepo.GetProductsSoldByDate(A<DateTime>.Ignored, A<DateTime>.Ignored))
                 .Returns(Task.FromResult((IEnumerable<ProductSoldByDateDTO>)[]));
 
@@ -208,6 +209,7 @@ namespace PointOfSaleWeb.Tests.ControllerTests
             DateTime? initialDate = null;
             DateTime? finalDate = null;
             var expectedMessage = "Both start date and end date are required.";
+
             A.CallTo(() => _prodRepo.GetProductsSoldByDate(A<DateTime>.Ignored, A<DateTime>.Ignored))
                 .Returns(Task.FromResult((IEnumerable<ProductSoldByDateDTO>)[]));
 

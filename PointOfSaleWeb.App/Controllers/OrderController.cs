@@ -56,7 +56,8 @@ namespace PointOfSaleWeb.App.Controllers
         {
             var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
-            return dateValidationResult.Success ? Ok(await _ordersRepo.GetOrdersByDate(initialDate!.Value, finalDate!.Value)) : NotFound();
+            return dateValidationResult.Success ? Ok(await _ordersRepo.GetOrdersByDate(initialDate!.Value, finalDate!.Value))
+                : BadRequest(new { dateValidationResult.Message });
         }
 
         [HttpPost("checkout-order")]
