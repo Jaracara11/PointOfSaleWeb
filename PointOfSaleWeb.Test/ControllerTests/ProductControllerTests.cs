@@ -40,7 +40,6 @@ namespace PointOfSaleWeb.Tests.ControllerTests
                     ProductName = "KitchenAid Stand Mixer",
                     ProductDescription = "High-performance kitchen appliance",
                     ProductStock = 5,
-                    ProductQuantity = 0,
                     ProductCost = 250.00m,
                     ProductPrice = 299.99m,
                     ProductCategory = new Category { CategoryID = 3, CategoryName = "Home and Kitchen" }
@@ -232,7 +231,6 @@ namespace PointOfSaleWeb.Tests.ControllerTests
                 ProductName = "New Product",
                 ProductDescription = "Description of new product",
                 ProductStock = 10,
-                ProductQuantity = 5,
                 ProductCost = 10.00m,
                 ProductPrice = 20.00m,
                 ProductCategory = new Category { CategoryID = 2, CategoryName = "Electronics" }
@@ -261,7 +259,6 @@ namespace PointOfSaleWeb.Tests.ControllerTests
                 ProductName = "Updated Product",
                 ProductDescription = "Updated description",
                 ProductStock = 20,
-                ProductQuantity = 10,
                 ProductCost = 15.00m,
                 ProductPrice = 25.00m,
                 ProductCategory = new Category { CategoryID = 2, CategoryName = "Electronics" }

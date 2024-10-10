@@ -19,9 +19,6 @@ namespace PointOfSaleWeb.Models
         [Range(0, int.MaxValue, ErrorMessage = "Product stock cannot be negative.")]
         public int ProductStock { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Product quantity cannot be negative.")]
-        public int ProductQuantity { get; set; }
-
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Product cost must be greater than zero.")]
         public decimal ProductCost { get; set; }
