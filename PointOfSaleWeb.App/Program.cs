@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using PointOfSaleWeb.App.Middleware;
 using PointOfSaleWeb.Repository;
 using PointOfSaleWeb.Repository.Interfaces;
 using PointOfSaleWeb.Repository.Repositories;
@@ -59,6 +60,7 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.MapControllers();
 app.MapGet("/healthcheck", () => "API is running!").AllowAnonymous();
 app.Run();
