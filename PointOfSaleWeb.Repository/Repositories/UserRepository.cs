@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
@@ -50,7 +50,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Data = userData
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<UserInfoDTO>
                 {
@@ -80,7 +80,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Data = user
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<UserInfoDTO>
                 {
@@ -111,7 +111,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Data = userModified
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<UserInfoDTO>
                 {
@@ -139,7 +139,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Message = "Password changed successfully!"
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<string>
                 {
@@ -166,7 +166,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Message = "Password reset successfully!"
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<string>
                 {
@@ -189,7 +189,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Success = true
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<UserInfoDTO>
                 {

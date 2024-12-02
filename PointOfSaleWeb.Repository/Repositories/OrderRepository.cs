@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
@@ -85,7 +85,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Data = orderResponse
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<OrderDTO>
                 {
@@ -108,7 +108,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Success = true
                 };
             }
-            catch (MySqlException ex)
+            catch (SqlException ex)
             {
                 return new DbResponse<string>
                 {

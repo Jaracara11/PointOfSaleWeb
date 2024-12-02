@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;  
 using System.Data;
 
 namespace PointOfSaleWeb.Repository
@@ -21,7 +21,7 @@ namespace PointOfSaleWeb.Repository
 
             try
             {
-                conn = new MySqlConnection(_connectionString);
+                conn = new SqlConnection(_connectionString);
                 conn.Open();
             }
             catch (Exception ex)
