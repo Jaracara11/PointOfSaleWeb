@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
@@ -92,7 +92,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Data = newProduct
                 };
             }
-            catch (SqlException ex)
+            catch (MySqlException ex)
             {
                 return new DbResponse<Product>
                 {
@@ -127,7 +127,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Data = updatedProduct
                 };
             }
-            catch (SqlException ex)
+            catch (MySqlException ex)
             {
                 return new DbResponse<Product>
                 {
@@ -151,7 +151,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Success = true
                 };
             }
-            catch (SqlException ex)
+            catch (MySqlException ex)
             {
                 return new DbResponse<Product>
                 {

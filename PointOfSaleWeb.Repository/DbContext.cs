@@ -1,5 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace PointOfSaleWeb.Repository
@@ -12,7 +12,7 @@ namespace PointOfSaleWeb.Repository
         public DbContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DbConnLocal");
+            _connectionString = _configuration.GetConnectionString("DbConnMonsterAsp");
         }
 
         public IDbConnection CreateConnection()
@@ -21,7 +21,7 @@ namespace PointOfSaleWeb.Repository
 
             try
             {
-                conn = new SqlConnection(_connectionString);
+                conn = new MySqlConnection(_connectionString);
                 conn.Open();
             }
             catch (Exception ex)
