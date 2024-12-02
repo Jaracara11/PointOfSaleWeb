@@ -33,30 +33,26 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.QueryAsync<Role>("GetAllUserRoles", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<DbResponse<UserInfoDTO>> AuthUser(UserAuthDTO user)
+        public async Task<DbResponse<UserAuthResponseDTO>> AuthUser(UserAuthDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
+
             var parameters = new DynamicParameters();
             parameters.Add("@Username", user.Username);
             parameters.Add("@Password", user.Password);
 
             try
             {
-                var userData = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("AuthUser", parameters, commandType: CommandType.StoredProcedure);
+                var userData = await db.QuerySingleOrDefaultAsync<UserAuthResponseDTO>(
+                    "sp_AuthUser", parameters, commandType: CommandType.StoredProcedure);
 
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = true,
-                    Data = userData
-                };
+                return userData?.Message == "Success"
+                    ? new DbResponse<UserAuthResponseDTO> { Success = true, Data = userData }
+                    : new DbResponse<UserAuthResponseDTO> { Success = false, Message = userData?.Message ?? "Invalid username or password." };
             }
             catch (SqlException ex)
             {
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
+                return new DbResponse<UserAuthResponseDTO> { Success = false, Message = ex.Message };
             }
         }
 

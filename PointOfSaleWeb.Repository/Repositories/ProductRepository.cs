@@ -20,7 +20,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             using IDbConnection db = _context.CreateConnection();
 
             var products = await db.QueryAsync<Product, Category, Product>(
-                "GetAllProducts",
+                "sp_GetAllProducts",
                 (prod, cat) =>
                 {
                     prod.ProductCategory = cat;

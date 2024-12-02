@@ -36,7 +36,7 @@ namespace PointOfSaleWeb.App.Controllers
         public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles() => Ok(await _userRepo.GetAllUserRoles());
 
         [HttpPost("auth"), AllowAnonymous]
-        public async Task<ActionResult<UserDataDTO>> AuthUser(UserAuthDTO user)
+        public async Task<ActionResult<UserInfoDTO>> AuthUser(UserAuthDTO user)
         {
             var response = await _userRepo.AuthUser(user);
 
@@ -45,12 +45,23 @@ namespace PointOfSaleWeb.App.Controllers
                 return BadRequest(new { response.Message });
             }
 
-            if (response.Data != null)
+            var userData = response.Data;
+
+            if (userData != null)
             {
-                response.Data.Token = CreateToken(response.Data.Role);
+                var userInfo = new UserInfoDTO
+                {
+                    Username = userData.Username,
+                    Name = $"{userData.FirstName} {userData.LastName}",
+                    Email = userData.Email,
+                    Role = userData.RoleName,
+                    Token = CreateToken(userData.RoleName)
+                };
+
+                return Ok(userInfo);
             }
 
-            return Ok(response.Data);
+            return BadRequest(new { Message = "An unknown error occurred." });
         }
 
         [HttpPost("register"), AllowAnonymous]
