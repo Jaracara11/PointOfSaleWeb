@@ -17,13 +17,16 @@ namespace PointOfSaleWeb.Repository.Repositories
         public async Task<IEnumerable<Category>> GetAllCategories()
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<Category>("GetAllCategories", commandType: CommandType.StoredProcedure);
+
+            return await db.QueryAsync<Category>("sp_GetAllCategories", 
+                commandType: CommandType.StoredProcedure);
         }
 
         public async Task<Category?> GetCategoryByID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryById", new { CategoryID = id }, commandType: CommandType.StoredProcedure);
+            return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryById", 
+                new { CategoryID = id }, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<DbResponse<Category>> AddNewCategory(string categoryName)

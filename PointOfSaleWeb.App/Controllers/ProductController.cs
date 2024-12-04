@@ -19,25 +19,27 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpGet("best-sellers")]
         [ResponseCache(Duration = 300)]
-        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
+        //public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
+        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(new List<BestSellerProductDTO>());
 
         [HttpGet("sold-by-date")]
         [ResponseCache(Duration = 300)]
         public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(DateTime? initialDate, DateTime? finalDate)
         {
-            var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
+            //var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
-            return dateValidationResult.Success ? Ok(await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value))
-             : BadRequest(new { dateValidationResult.Message });
+            //return dateValidationResult.Success ? Ok(await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value))
+            // : BadRequest(new { dateValidationResult.Message });
+            return new List<ProductSoldByDateDTO>();
         }
 
         [HttpGet("{id}")]
         [ResponseCache(Duration = 5)]
         public async Task<ActionResult<Product>> GetProductByID(string id)
         {
-            var product = await _prodRepo.GetProductByID(id);
+            var response = await _prodRepo.GetProductByID(id);
 
-            return product != null ? Ok(product) : NotFound();
+            return response != null ? Ok(response) : NotFound();
         }
 
         [HttpPost]
@@ -51,7 +53,7 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpPut("edit")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> UpdateProduct(Product product)
+        public async Task<ActionResult<Product>> UpdateProduct(Product product)
         {
             var response = await _prodRepo.UpdateProduct(product);
 

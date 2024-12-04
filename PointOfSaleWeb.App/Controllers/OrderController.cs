@@ -25,7 +25,8 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpGet("recent-orders")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetRecentOrders() => Ok(await _ordersRepo.GetRecentOrders());
+        // public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetRecentOrders() => Ok(await _ordersRepo.GetRecentOrders());
+        public async Task<ActionResult<IEnumerable<RecentOrderDTO>>> GetRecentOrders() => Ok(new List<RecentOrderDTO>());
 
         [HttpGet("{id}")]
         [ResponseCache(Duration = 5)]

@@ -4,6 +4,7 @@ namespace PointOfSaleWeb.Models
 {
     public class OrderProducts
     {
+        [Key]
         [Required]
         public string ProductID { get; set; } = string.Empty;
 

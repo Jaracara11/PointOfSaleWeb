@@ -10,133 +10,70 @@ namespace PointOfSaleWeb.Repository.Repositories
     public class ProductRepository : IProductRepository
     {
         private readonly DbContext _context;
+
         public ProductRepository(DbContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<DbResponse<IEnumerable<Product>>> GetAllProducts()
         {
-            using IDbConnection db = _context.CreateConnection();
-
-            var products = await db.QueryAsync<Product, Category, Product>(
-                "sp_GetAllProducts",
-                (prod, cat) =>
-                {
-                    prod.ProductCategory = cat;
-                    return prod;
-                },
-                splitOn: "CategoryID",
-                commandType: CommandType.StoredProcedure
-            );
-
-            return products;
+            return await ExecuteProductQuery("sp_GetAllProducts");
         }
 
         public async Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts()
         {
+            //Pending refactor
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<BestSellerProductDTO>("GetBestSellerProducts", commandType: CommandType.StoredProcedure);
+
+            return await db.QueryAsync<BestSellerProductDTO>(
+                "sp_GetBestSellerProducts", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate)
+        public async Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(
+            DateTime initialDate, DateTime finalDate)
         {
+            //Pending refactor
             using IDbConnection db = _context.CreateConnection();
+
             var parameters = new DynamicParameters();
             parameters.Add("@InitialDate", initialDate);
             parameters.Add("@FinalDate", finalDate);
 
-            return await db.QueryAsync<ProductSoldByDateDTO>("GetProductsSoldByDate", parameters, commandType: CommandType.StoredProcedure);
+            return await db.QueryAsync<ProductSoldByDateDTO>(
+                "GetProductsSoldByDate", parameters, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<Product?> GetProductByID(string productId)
         {
-            using IDbConnection db = _context.CreateConnection();
+            var response = await ExecuteProductQuery("sp_GetProductById", new { ProductID = productId });
 
-            var product = await db.QueryAsync<Product, Category, Product>(
-                "GetProductById",
-                (prod, cat) =>
-                {
-                    prod.ProductCategory = cat;
-                    return prod;
-                },
-                new { ProductId = productId },
-                splitOn: "CategoryID",
-                commandType: CommandType.StoredProcedure
-            );
-
-            return product.SingleOrDefault();
+            return response.Success ? response.Data?.FirstOrDefault() : null;
         }
 
         public async Task<DbResponse<Product>> AddNewProduct(Product product)
         {
-            using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@ProductID", product.ProductID);
-            parameters.Add("@ProductName", product.ProductName);
-            parameters.Add("@ProductDescription", product.ProductDescription);
-            parameters.Add("@ProductStock", product.ProductStock);
-            parameters.Add("@ProductCost", product.ProductCost);
-            parameters.Add("@ProductPrice", product.ProductPrice);
-            parameters.Add("@ProductCategoryID", product.ProductCategory.CategoryID);
+            var response = await ExecuteProductQuery("sp_AddNewProduct", MapProductToParameters(product));
 
-            Product? newProduct;
-
-            try
+            return new DbResponse<Product>
             {
-                newProduct = await db.QuerySingleOrDefaultAsync<Product>("AddNewProduct", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<Product>
-                {
-                    Success = true,
-                    Data = newProduct
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<Product>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+                Success = response.Success,
+                Data = response.Data?.FirstOrDefault(),
+                Message = response.Message
+            };
         }
 
         public async Task<DbResponse<Product>> UpdateProduct(Product product)
         {
-            using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@ProductID", product.ProductID);
-            parameters.Add("@ProductName", product.ProductName);
-            parameters.Add("@ProductDescription", product.ProductDescription);
-            parameters.Add("@ProductPrice", product.ProductPrice);
-            parameters.Add("@ProductCost", product.ProductCost);
-            parameters.Add("@ProductStock", product.ProductStock);
-            parameters.Add("@ProductCategoryID", product.ProductCategory.CategoryID);
+            var response = await ExecuteProductQuery("sp_UpdateProduct", MapProductToParameters(product));
 
-            Product? updatedProduct;
-
-            try
+            return new DbResponse<Product>
             {
-                updatedProduct = await db.QuerySingleOrDefaultAsync<Product>("UpdateProduct", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<Product>
-                {
-                    Success = true,
-                    Message = "Product updated!",
-                    Data = updatedProduct
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<Product>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+                Success = response.Success,
+                Data = response.Data?.FirstOrDefault(),
+                Message = response.Message
+            };
         }
-
 
         public async Task<DbResponse<Product>> DeleteProduct(string id)
         {
@@ -144,7 +81,8 @@ namespace PointOfSaleWeb.Repository.Repositories
 
             try
             {
-                await db.ExecuteAsync("DeleteProduct", new { ProductID = id }, commandType: CommandType.StoredProcedure);
+                await db.ExecuteAsync("DeleteProduct",
+                    new { ProductID = id }, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Product>
                 {
@@ -159,6 +97,56 @@ namespace PointOfSaleWeb.Repository.Repositories
                     Message = ex.Message
                 };
             }
+        }
+
+        private async Task<DbResponse<IEnumerable<Product>>> ExecuteProductQuery(
+            string storedProcedureName, object? parameters = null)
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            try
+            {
+                var result = await db.QueryAsync<Product, Category, Product>(
+                    storedProcedureName,
+                    (productData, categoryData) =>
+                    {
+                        productData.ProductCategory = categoryData;
+                        return productData;
+                    },
+                    parameters,
+                    splitOn: "CategoryID",
+                    commandType: CommandType.StoredProcedure
+                );
+
+                return new DbResponse<IEnumerable<Product>>
+                {
+                    Success = true,
+                    Data = result
+                };
+            }
+            catch (SqlException ex)
+            {
+                return new DbResponse<IEnumerable<Product>>
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        private static DynamicParameters MapProductToParameters(Product product)
+        {
+            var parameters = new DynamicParameters();
+
+            parameters.Add("@ProductID", product.ProductID);
+            parameters.Add("@ProductName", product.ProductName);
+            parameters.Add("@ProductDescription", product.ProductDescription);
+            parameters.Add("@ProductStock", product.ProductStock);
+            parameters.Add("@ProductCost", product.ProductCost);
+            parameters.Add("@ProductPrice", product.ProductPrice);
+            parameters.Add("@ProductCategoryID", product.ProductCategory.CategoryID);
+
+            return parameters;
         }
     }
 }

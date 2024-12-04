@@ -30,6 +30,7 @@ namespace PointOfSaleWeb.App.Middleware
             };
 
             var jsonResponse = JsonSerializer.Serialize(response);
+
             await context.Response.WriteAsync(jsonResponse);
         }
     }
