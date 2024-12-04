@@ -4,7 +4,7 @@ namespace PointOfSaleWeb.Models
 {
     public class Product
     {
-        [Key]
+        [Dapper.Contrib.Extensions.Key]
         [Required]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Product ID must have between 3 and 50 characters.")]
         public string ProductID { get; set; } = string.Empty;

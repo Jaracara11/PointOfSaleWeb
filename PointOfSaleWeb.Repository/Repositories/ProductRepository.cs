@@ -30,8 +30,7 @@ namespace PointOfSaleWeb.Repository.Repositories
                 "sp_GetBestSellerProducts", commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(
-            DateTime initialDate, DateTime finalDate)
+        public async Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate)
         {
             //Pending refactor
             using IDbConnection db = _context.CreateConnection();
@@ -81,8 +80,7 @@ namespace PointOfSaleWeb.Repository.Repositories
 
             try
             {
-                await db.ExecuteAsync("DeleteProduct",
-                    new { ProductID = id }, commandType: CommandType.StoredProcedure);
+                await db.ExecuteAsync("DeleteProduct", new { ProductID = id }, commandType: CommandType.StoredProcedure);
 
                 return new DbResponse<Product>
                 {
