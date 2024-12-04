@@ -2,74 +2,111 @@
 using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.App.Utilities;
 using PointOfSaleWeb.Models;
-using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 
-namespace PointOfSaleWeb.App.Controllers
+namespace PointOfSaleWeb.App.Controllers;
+
+[Route("api/products")]
+[ApiController]
+public class ProductController : ControllerBase
 {
-    [Route("api/products")]
-    [ApiController]
-    public class ProductController(IProductRepository prodRepo) : ControllerBase
+    private readonly IProductRepository _prodRepo;
+
+    public ProductController(IProductRepository prodRepo) =>
+        _prodRepo = prodRepo;
+
+    [HttpGet]
+    [ResponseCache(Duration = 5)]
+    public async Task<IResult> GetAllProducts() =>
+        Results.Ok(await _prodRepo.GetAllProducts());
+
+    [HttpGet("best-sellers")]
+    [ResponseCache(Duration = 300)]
+    public async Task<IResult> GetBestSellerProducts() =>
+        Results.Ok(await _prodRepo.GetBestSellerProducts());
+
+    [HttpGet("sold-by-date")]
+    [ResponseCache(Duration = 300)]
+    public async Task<IResult> GetProductsSoldByDate([FromQuery] DateTime? initialDate, [FromQuery] DateTime? finalDate)
     {
-        private readonly IProductRepository _prodRepo = prodRepo;
+        var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
-        [HttpGet]
-        [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => 
-            Ok((await _prodRepo.GetAllProducts()).Data);
-
-        [HttpGet("best-sellers")]
-        [ResponseCache(Duration = 300)]
-        //public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
-        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => 
-            Ok(new List<BestSellerProductDTO>());
-
-        [HttpGet("sold-by-date")]
-        [ResponseCache(Duration = 300)]
-        public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(
-            DateTime? initialDate, DateTime? finalDate)
+        if (!dateValidationResult.Success)
         {
-            //var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
-
-            //return dateValidationResult.Success ? Ok(await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value))
-            // : BadRequest(new { dateValidationResult.Message });
-            return new List<ProductSoldByDateDTO>();
+            return Results.BadRequest(new ProblemDetails
+            {
+                Title = "Invalid Date Range",
+                Detail = dateValidationResult.Message,
+                Status = StatusCodes.Status400BadRequest
+            });
         }
 
-        [HttpGet("{id}")]
-        [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<Product>> GetProductByID(string id)
-        {
-            var response = await _prodRepo.GetProductByID(id);
+        var products = await _prodRepo.GetProductsSoldByDate(initialDate!.Value, finalDate!.Value);
 
-            return response != null ? Ok(response) : NotFound();
-        }
+        return Results.Ok(products);
+    }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult<Product>> AddNewProduct(Product product)
-        {
-            var response = await _prodRepo.AddNewProduct(product);
+    [HttpGet("{id}")]
+    [ResponseCache(Duration = 5)]
+    public async Task<IResult> GetProductByID(string id)
+    {
+        var product = await _prodRepo.GetProductByID(id);
 
-            return response.Success ? Created("Product", response.Data) : BadRequest(new { response.Message });
-        }
+        return product != null
+            ? Results.Ok(product)
+            : Results.NotFound(new ProblemDetails
+            {
+                Title = "Product Not Found",
+                Detail = $"No product found with ID {id}.",
+                Status = StatusCodes.Status404NotFound
+            });
+    }
 
-        [HttpPut("edit")]
-        [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult<Product>> UpdateProduct(Product product)
-        {
-            var response = await _prodRepo.UpdateProduct(product);
+    [HttpPost]
+    [Authorize(Roles = "Admin, Manager")]
+    public async Task<IResult> AddNewProduct([FromBody] Product product)
+    {
+        var newProduct = await _prodRepo.AddNewProduct(product);
 
-            return response.Success ? Ok(response) : BadRequest(new { response.Message });
-        }
+        return newProduct != null
+            ? Results.Created("Product", newProduct)
+            : Results.BadRequest(new ProblemDetails
+            {
+                Title = "Failed to Add Product",
+                Detail = "Product could not be added.",
+                Status = StatusCodes.Status400BadRequest
+            });
+    }
 
-        [HttpDelete("{id}/delete")]
-        [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult<bool>> DeleteProduct(string id)
-        {
-            bool isDeleted = await _prodRepo.DeleteProduct(id);
+    [HttpPut("edit")]
+    [Authorize(Roles = "Admin, Manager")]
+    public async Task<IResult> UpdateProduct([FromBody] Product product)
+    {
+        var updatedProduct = await _prodRepo.UpdateProduct(product);
 
-            return isDeleted ? NoContent() : BadRequest(new { Message = "Product not found or could not be deleted." });
-        }
+        return updatedProduct != null
+            ? Results.Ok(updatedProduct)
+            : Results.BadRequest(new ProblemDetails
+            {
+                Title = "Failed to Update Product",
+                Detail = "Product could not be updated.",
+                Status = StatusCodes.Status400BadRequest
+            });
+    }
+
+    [HttpDelete("{id}/delete")]
+    [Authorize(Roles = "Admin, Manager")]
+    public async Task<IResult> DeleteProduct(string id)
+    {
+        var isDeleted = await _prodRepo.DeleteProduct(id);
+
+        return isDeleted
+            ? Results.NoContent()
+            : Results.BadRequest(new ProblemDetails
+            {
+                Title = "Failed to Delete Product",
+                Detail = "Product not found or could not be deleted.",
+                Status = StatusCodes.Status400BadRequest
+            });
     }
 }
