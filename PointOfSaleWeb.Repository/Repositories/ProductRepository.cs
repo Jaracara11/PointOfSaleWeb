@@ -74,27 +74,14 @@ namespace PointOfSaleWeb.Repository.Repositories
             };
         }
 
-        public async Task<DbResponse<Product>> DeleteProduct(string id)
+        public async Task<bool> DeleteProduct(string id)
         {
             using IDbConnection db = _context.CreateConnection();
 
-            try
-            {
-                await db.ExecuteAsync("DeleteProduct", new { ProductID = id }, commandType: CommandType.StoredProcedure);
+            string query = "DELETE FROM Products WHERE ProductID = @ProductID";
+            int rowsAffected = await db.ExecuteAsync(query, new { ProductID = id });
 
-                return new DbResponse<Product>
-                {
-                    Success = true
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<Product>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+            return rowsAffected > 0;
         }
 
         private async Task<DbResponse<IEnumerable<Product>>> ExecuteProductQuery(

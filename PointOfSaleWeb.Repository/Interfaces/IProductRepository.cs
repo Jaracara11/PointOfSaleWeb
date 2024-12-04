@@ -11,6 +11,6 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<Product?> GetProductByID(string id);
         Task<DbResponse<Product>> AddNewProduct(Product product);
         Task<DbResponse<Product>> UpdateProduct(Product product);
-        Task<DbResponse<Product>> DeleteProduct(string id);
+        Task<bool> DeleteProduct(string id);
     }
 }

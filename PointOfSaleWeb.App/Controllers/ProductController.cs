@@ -65,11 +65,11 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpDelete("{id}/delete")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> DeleteProduct(string id)
+        public async Task<ActionResult<bool>> DeleteProduct(string id)
         {
-            var response = await _prodRepo.DeleteProduct(id);
+            bool isDeleted = await _prodRepo.DeleteProduct(id);
 
-            return response.Success ? NoContent() : BadRequest(new { response.Message });
+            return isDeleted ? NoContent() : BadRequest(new { Message = "Product not found or could not be deleted." });
         }
     }
 }
