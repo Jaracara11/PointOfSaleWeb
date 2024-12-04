@@ -15,16 +15,19 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => Ok(await _prodRepo.GetAllProducts());
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts() => 
+            Ok((await _prodRepo.GetAllProducts()).Data);
 
         [HttpGet("best-sellers")]
         [ResponseCache(Duration = 300)]
         //public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(await _prodRepo.GetBestSellerProducts());
-        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => Ok(new List<BestSellerProductDTO>());
+        public async Task<ActionResult<IEnumerable<BestSellerProductDTO>>> GetBestSellerProducts() => 
+            Ok(new List<BestSellerProductDTO>());
 
         [HttpGet("sold-by-date")]
         [ResponseCache(Duration = 300)]
-        public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(DateTime? initialDate, DateTime? finalDate)
+        public async Task<ActionResult<IEnumerable<ProductSoldByDateDTO>>> GetProductsSoldByDate(
+            DateTime? initialDate, DateTime? finalDate)
         {
             //var dateValidationResult = ValidationUtil.DateRangeValidation(initialDate, finalDate);
 
