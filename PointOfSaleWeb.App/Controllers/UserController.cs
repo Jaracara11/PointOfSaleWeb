@@ -109,7 +109,7 @@ namespace PointOfSaleWeb.App.Controllers
             return response.Success ? NoContent() : BadRequest(new { response.Message });
         }
 
-        private protected string CreateToken(string userRole)
+        private static string CreateToken(string userRole)
         {
             List<Claim> claims =
             [
