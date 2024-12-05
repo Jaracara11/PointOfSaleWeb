@@ -33,7 +33,7 @@ public class CategoryController(ICategoryRepository catRepo) : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin, Manager")]
-    public async Task<IResult> AddNewCategory([FromBody] string categoryName)
+    public async Task<IResult> CreateCategory([FromBody] string categoryName)
     {
         var success = await _catRepo.AddNewCategory(categoryName);
 
