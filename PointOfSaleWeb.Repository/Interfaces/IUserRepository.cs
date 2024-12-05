@@ -9,7 +9,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<UserDataDTO?> GetUserByUsername(string username);
         Task<IEnumerable<UserRole>> GetAllUserRoles();
         Task<UserAuthResponseDTO?> AuthUser(UserAuthDTO user);
-        Task<UserInfoDTO?> AddNewUser(User userData);
+        Task<bool> AddNewUser(UserInsertDTO userData);
         Task<UserInfoDTO?> UpdateUser(UserDataDTO user);
         Task<bool> ChangeUserPassword(UserChangePasswordDTO userData);
         Task<bool> ResetUserPassword(UserChangePasswordDTO userData);

@@ -13,7 +13,7 @@ namespace PointOfSaleWeb.Models
 
         [Required]
         [StringLength(25, MinimumLength = 4, ErrorMessage = "Password must have between 4 and 50 characters.")]
-        public string Password { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
 
         [Required]
         [StringLength(25, MinimumLength = 3, ErrorMessage = "FirstName must have between 3 and 50 characters.")]

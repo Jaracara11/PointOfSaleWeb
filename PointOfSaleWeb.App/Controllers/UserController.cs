@@ -12,14 +12,9 @@ namespace PointOfSaleWeb.App.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IUserRepository userRepo) : ControllerBase
     {
-        private readonly IUserRepository _userRepo;
-
-        public UserController(IUserRepository userRepo)
-        {
-            _userRepo = userRepo;
-        }
+        private readonly IUserRepository _userRepo = userRepo;
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
@@ -75,12 +70,12 @@ namespace PointOfSaleWeb.App.Controllers
         }
 
         [HttpPost("register"), AllowAnonymous]
-        public async Task<IResult> CreateUser([FromBody] User user)
+        public async Task<IResult> CreateUser([FromBody] UserInsertDTO user)
         {
-            var response = await _userRepo.AddNewUser(user);
+            var success = await _userRepo.AddNewUser(user);
 
-            return response != null
-                ? Results.Created("/api/users", response)
+            return success
+                ? Results.Created("/api/users", null)
                 : Results.BadRequest(new ProblemDetails
                 {
                     Title = "Registration Failed",

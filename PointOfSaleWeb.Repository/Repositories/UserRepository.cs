@@ -50,17 +50,13 @@ namespace PointOfSaleWeb.Repository.Repositories
             );
         }
 
-        public async Task<UserInfoDTO?> AddNewUser(User userData)
+        public async Task<bool> AddNewUser(UserInsertDTO userData)
         {
             using IDbConnection db = _context.CreateConnection();
 
-            var result = await db.QueryAsync<UserInfoDTO>(
-                "CreateUser",
-                MapUserToParameters(userData),
-                commandType: CommandType.StoredProcedure
-            );
+            var userID = await db.InsertAsync(userData);
 
-            return result.FirstOrDefault();
+            return userID > 0;
         }
 
         public async Task<UserInfoDTO?> UpdateUser(UserDataDTO user)
@@ -111,19 +107,6 @@ namespace PointOfSaleWeb.Repository.Repositories
             var rowsAffected = await db.ExecuteAsync("DeleteUser", user, commandType: CommandType.StoredProcedure);
 
             return rowsAffected > 0;
-        }
-
-        private static DynamicParameters MapUserToParameters(User user)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@Username", user.Username);
-            parameters.Add("@Password", user.Password);
-            parameters.Add("@FirstName", user.FirstName);
-            parameters.Add("@LastName", user.LastName);
-            parameters.Add("@Email", user.Email);
-            parameters.Add("@UserRoleID", user.UserRoleID);
-
-            return parameters;
         }
 
         private static DynamicParameters MapUserToParameters(UserDataDTO user)
