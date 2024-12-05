@@ -12,10 +12,9 @@ namespace PointOfSaleWeb.App.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class UserController(IUserRepository userRepo, IConfiguration configuration) : ControllerBase
+    public class UserController(IUserRepository userRepo) : ControllerBase
     {
         private readonly IUserRepository _userRepo = userRepo;
-        private readonly IConfiguration _configuration = configuration;
 
         [HttpGet]
         [Authorize(Roles = "Admin")]

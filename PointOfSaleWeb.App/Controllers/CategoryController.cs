@@ -77,6 +77,5 @@ namespace PointOfSaleWeb.App.Controllers
                     Status = StatusCodes.Status400BadRequest
                 });
         }
-
     }
 }
