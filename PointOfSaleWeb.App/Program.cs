@@ -26,20 +26,16 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
-var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? "";
-
-if (string.IsNullOrEmpty(jwtSecretKey))
-{
-    throw new Exception("JWT Secret Key is missing. Please set the 'JWT_SECRET_KEY' environment variable.");
-}
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.
+                       GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? ""));
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey)),
+            IssuerSigningKey = jwtKey,
             ValidateIssuer = false,
             ValidateAudience = false,
             ClockSkew = TimeSpan.Zero

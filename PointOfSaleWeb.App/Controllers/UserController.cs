@@ -6,6 +6,7 @@ using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace PointOfSaleWeb.App.Controllers
 {
@@ -115,10 +116,10 @@ namespace PointOfSaleWeb.App.Controllers
                 new Claim(ClaimTypes.Role, userRole)
             ];
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("Jwt:SecretKey").Value ?? ""));
+            var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.
+                       GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? ""));
 
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var credentials = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
                 claims: claims,

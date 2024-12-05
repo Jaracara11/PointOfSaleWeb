@@ -1,18 +1,20 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Data.SqlClient;  
+﻿using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace PointOfSaleWeb.Repository
 {
     public class DbContext
     {
-        private readonly IConfiguration? _configuration;
         private readonly string? _connectionString;
 
-        public DbContext(IConfiguration configuration)
+        public DbContext()
         {
-            _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("DbConnMonsterAsp");
+            _connectionString = Environment.GetEnvironmentVariable("DB_CONN");
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                throw new Exception("Database connection string is missing. Please set the 'DB_CONN' environment variable.");
+            }
         }
 
         public IDbConnection CreateConnection()
