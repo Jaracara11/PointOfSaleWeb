@@ -1,130 +1,174 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace PointOfSaleWeb.App.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class UserController(IUserRepository userRepo) : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepo = userRepo;
+        private readonly IUserRepository _userRepo;
+
+        public UserController(IUserRepository userRepo)
+        {
+            _userRepo = userRepo;
+        }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<UserDataDTO>>> GetAllUsers() => Ok(await _userRepo.GetAllUsers());
+        public async Task<IResult> GetAllUsers() =>
+            Results.Ok(await _userRepo.GetAllUsers());
 
         [HttpGet("{username}")]
         [Authorize(Roles = "Admin")]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<UserDataDTO>> GetUserByUsername(string username)
+        public async Task<IResult> GetUserByUsername(string username)
         {
             var user = await _userRepo.GetUserByUsername(username);
 
-            return user != null ? Ok(user) : NotFound();
+            return user != null
+                ? Results.Ok(user)
+                : Results.NotFound(new ProblemDetails
+                {
+                    Title = "User Not Found",
+                    Detail = $"No user found with username {username}.",
+                    Status = StatusCodes.Status404NotFound
+                });
         }
 
         [HttpGet("roles"), AllowAnonymous]
         [ResponseCache(Duration = 43200)]
-        public async Task<ActionResult<IEnumerable<Role>>> GetAllUserRoles() => Ok(await _userRepo.GetAllUserRoles());
+        public async Task<IResult> GetAllUserRoles() =>
+            Results.Ok(await _userRepo.GetAllUserRoles());
 
         [HttpPost("auth"), AllowAnonymous]
-        public async Task<ActionResult<UserInfoDTO>> AuthUser(UserAuthDTO user)
+        public async Task<IResult> AuthUser([FromBody] UserAuthDTO user)
         {
             var response = await _userRepo.AuthUser(user);
 
-            if (!response.Success)
+            if (response?.UserID == null)
             {
-                return BadRequest(new { response.Message });
-            }
-
-            var userData = response.Data;
-
-            if (userData != null)
-            {
-                var userInfo = new UserInfoDTO
+                return Results.BadRequest(new ProblemDetails
                 {
-                    Username = userData.Username,
-                    Name = $"{userData.FirstName} {userData.LastName}",
-                    Email = userData.Email,
-                    Role = userData.RoleName,
-                    Token = CreateToken(userData.RoleName)
-                };
-
-                return Ok(userInfo);
+                    Title = "Authentication Failed",
+                    Detail = response?.Message ?? "Authentication failed for unknown reasons.",
+                    Status = StatusCodes.Status400BadRequest
+                });
             }
 
-            return BadRequest(new { Message = "An unknown error occurred." });
+            return Results.Ok(new UserInfoDTO
+            {
+                Username = response.Username,
+                Name = $"{response.FirstName} {response.LastName}",
+                Email = response.Email,
+                Role = response.RoleName,
+                Token = CreateToken(response.RoleName)
+            });
         }
 
         [HttpPost("register"), AllowAnonymous]
-        public async Task<ActionResult<UserDataDTO>> CreateUser(User user)
+        public async Task<IResult> CreateUser([FromBody] User user)
         {
-            var response = await _userRepo.CreateUser(user);
+            var response = await _userRepo.AddNewUser(user);
 
-            return response.Success ? Created("User", response.Data) : BadRequest(new { response.Message });
+            return response != null
+                ? Results.Created("/api/users", response)
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Registration Failed",
+                    Detail = "User registration failed due to unknown error.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         [HttpPut("edit")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> UpdateUser(UserDataDTO user)
+        public async Task<IResult> UpdateUser([FromBody] UserDataDTO user)
         {
             var response = await _userRepo.UpdateUser(user);
 
-            return response.Success ? Ok(response) : BadRequest(new { response.Message });
+            return response != null
+                ? Results.Ok(response)
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Update Failed",
+                    Detail = "Failed to update user.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         [HttpPut("change-password")]
         [Authorize]
-        public async Task<ActionResult> ChangeUserPassword(UserChangePasswordDTO userData)
+        public async Task<IResult> ChangeUserPassword([FromBody] UserChangePasswordDTO userData)
         {
             var response = await _userRepo.ChangeUserPassword(userData);
 
-            return response.Success ? NoContent() : BadRequest(new { response.Message });
+            return response
+                ? Results.NoContent()
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Password Change Failed",
+                    Detail = "Failed to change password.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         [HttpPut("new-password")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> ResetUserPassword(UserChangePasswordDTO userData)
+        public async Task<IResult> ResetUserPassword([FromBody] UserChangePasswordDTO userData)
         {
             var response = await _userRepo.ResetUserPassword(userData);
 
-            return response.Success ? NoContent() : BadRequest(new { response.Message });
+            return response
+                ? Results.NoContent()
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Password Reset Failed",
+                    Detail = "Failed to reset password.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         [HttpDelete("{username}/delete")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> DeleteUser(string username)
+        public async Task<IResult> DeleteUser(string username)
         {
             var response = await _userRepo.DeleteUser(username);
 
-            return response.Success ? NoContent() : BadRequest(new { response.Message });
+            return response
+                ? Results.NoContent()
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Deletion Failed",
+                    Detail = "Failed to delete user.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         private static string CreateToken(string userRole)
         {
-            List<Claim> claims =
-            [
-                new Claim(ClaimTypes.Role, userRole)
-            ];
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Role, userRole)
+            };
 
-            var jwtKey = new SymmetricSecurityKey(Encoding.UTF8.
-                       GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? ""));
+            var jwtKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? string.Empty));
 
             var credentials = new SigningCredentials(jwtKey, SecurityAlgorithms.HmacSha512Signature);
 
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: DateTime.Now.AddHours(12),
-                signingCredentials: credentials
-                );
+                signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

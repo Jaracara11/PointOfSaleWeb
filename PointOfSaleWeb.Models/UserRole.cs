@@ -2,10 +2,10 @@
 
 namespace PointOfSaleWeb.Models
 {
-    public class Role
+    public class UserRole
     {
-        [Key]
-        public int RoleID { get; set; }
+        [Dapper.Contrib.Extensions.Key]
+        public int UserRoleID { get; set; }
 
         [Required]
         public string RoleName { get; set; } = string.Empty;

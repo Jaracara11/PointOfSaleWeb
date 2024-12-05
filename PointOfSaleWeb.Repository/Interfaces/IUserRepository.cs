@@ -7,12 +7,12 @@ namespace PointOfSaleWeb.Repository.Interfaces
     {
         Task<IEnumerable<UserDataDTO>> GetAllUsers();
         Task<UserDataDTO?> GetUserByUsername(string username);
-        Task<IEnumerable<Role>> GetAllUserRoles();
-        Task<DbResponse<UserAuthResponseDTO>> AuthUser(UserAuthDTO user);
-        Task<DbResponse<UserInfoDTO>> CreateUser(User user);
-        Task<DbResponse<UserInfoDTO>> UpdateUser(UserDataDTO user);
-        Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO userData);
-        Task<DbResponse<string>> ResetUserPassword(UserChangePasswordDTO userData);
-        Task<DbResponse<UserInfoDTO>> DeleteUser(string username);
+        Task<IEnumerable<UserRole>> GetAllUserRoles();
+        Task<UserAuthResponseDTO?> AuthUser(UserAuthDTO user);
+        Task<UserInfoDTO?> AddNewUser(User userData);
+        Task<UserInfoDTO?> UpdateUser(UserDataDTO user);
+        Task<bool> ChangeUserPassword(UserChangePasswordDTO userData);
+        Task<bool> ResetUserPassword(UserChangePasswordDTO userData);
+        Task<bool> DeleteUser(string username);
     }
 }

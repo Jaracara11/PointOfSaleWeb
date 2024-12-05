@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
+using Dapper.Contrib.Extensions;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
@@ -7,33 +7,35 @@ using System.Data;
 
 namespace PointOfSaleWeb.Repository.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository(DbContext context) : IUserRepository
     {
-        private readonly DbContext _context;
-        public UserRepository(DbContext context)
-        {
-            _context = context;
-        }
+        private readonly DbContext _context = context;
 
         public async Task<IEnumerable<UserDataDTO>> GetAllUsers()
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<UserDataDTO>("GetAllUsers", commandType: CommandType.StoredProcedure);
+
+            return await db.GetAllAsync<UserDataDTO>();
         }
 
         public async Task<UserDataDTO?> GetUserByUsername(string username)
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QuerySingleOrDefaultAsync<UserDataDTO>("GetUserByUsername", new { Username = username }, commandType: CommandType.StoredProcedure);
+
+            return await db.QuerySingleOrDefaultAsync<UserDataDTO>(
+                "SELECT UserID, Username, Email, FirstName, LastName, UserRoleID FROM Users WHERE Username = @Username",
+                new { Username = username }
+            );
         }
 
-        public async Task<IEnumerable<Role>> GetAllUserRoles()
+        public async Task<IEnumerable<UserRole>> GetAllUserRoles()
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QueryAsync<Role>("GetAllUserRoles", commandType: CommandType.StoredProcedure);
+
+            return await db.GetAllAsync<UserRole>();
         }
 
-        public async Task<DbResponse<UserAuthResponseDTO>> AuthUser(UserAuthDTO user)
+        public async Task<UserAuthResponseDTO?> AuthUser(UserAuthDTO user)
         {
             using IDbConnection db = _context.CreateConnection();
 
@@ -41,54 +43,91 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@Username", user.Username);
             parameters.Add("@Password", user.Password);
 
-            try
-            {
-                var userData = await db.QuerySingleOrDefaultAsync<UserAuthResponseDTO>(
-                    "sp_AuthUser", parameters, commandType: CommandType.StoredProcedure);
-
-                return userData?.Message == "Success"
-                    ? new DbResponse<UserAuthResponseDTO> { Success = true, Data = userData }
-                    : new DbResponse<UserAuthResponseDTO> { Success = false, Message = userData?.Message ?? "Invalid username or password." };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<UserAuthResponseDTO> { Success = false, Message = ex.Message };
-            }
+            return await db.QuerySingleOrDefaultAsync<UserAuthResponseDTO>(
+                "sp_AuthUser",
+                parameters,
+                commandType: CommandType.StoredProcedure
+            );
         }
 
-        public async Task<DbResponse<UserInfoDTO>> CreateUser(User userData)
+        public async Task<UserInfoDTO?> AddNewUser(User userData)
         {
             using IDbConnection db = _context.CreateConnection();
+
+            var result = await db.QueryAsync<UserInfoDTO>(
+                "CreateUser",
+                MapUserToParameters(userData),
+                commandType: CommandType.StoredProcedure
+            );
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<UserInfoDTO?> UpdateUser(UserDataDTO user)
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            var result = await db.QueryAsync<UserInfoDTO>(
+                "UpdateUser",
+                MapUserToParameters(user),
+                commandType: CommandType.StoredProcedure
+            );
+
+            return result.FirstOrDefault();
+        }
+
+        public async Task<bool> ChangeUserPassword(UserChangePasswordDTO userData)
+        {
+            using IDbConnection db = _context.CreateConnection();
+
             var parameters = new DynamicParameters();
             parameters.Add("@Username", userData.Username);
-            parameters.Add("@Password", userData.Password);
-            parameters.Add("@FirstName", userData.FirstName);
-            parameters.Add("@LastName", userData.LastName);
-            parameters.Add("@Email", userData.Email);
+            parameters.Add("@OldPassword", userData.OldPassword);
+            parameters.Add("@NewPassword", userData.NewPassword);
 
-            try
-            {
-                var user = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("CreateUser", parameters, commandType: CommandType.StoredProcedure);
+            var rowsAffected = await db.ExecuteAsync("ChangeUserPassword", parameters, commandType: CommandType.StoredProcedure);
 
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = true,
-                    Data = user
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+            return rowsAffected > 0;
         }
 
-        public async Task<DbResponse<UserInfoDTO>> UpdateUser(UserDataDTO user)
+        public async Task<bool> ResetUserPassword(UserChangePasswordDTO userData)
         {
             using IDbConnection db = _context.CreateConnection();
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@Username", userData.Username);
+            parameters.Add("@NewPassword", userData.NewPassword);
+
+            var rowsAffected = await db.ExecuteAsync("ResetUserPassword", parameters, commandType: CommandType.StoredProcedure);
+
+            return rowsAffected > 0;
+        }
+
+        public async Task<bool> DeleteUser(string username)
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            var user = new { Username = username };
+            var rowsAffected = await db.ExecuteAsync("DeleteUser", user, commandType: CommandType.StoredProcedure);
+
+            return rowsAffected > 0;
+        }
+
+        private static DynamicParameters MapUserToParameters(User user)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Username", user.Username);
+            parameters.Add("@Password", user.Password);
+            parameters.Add("@FirstName", user.FirstName);
+            parameters.Add("@LastName", user.LastName);
+            parameters.Add("@Email", user.Email);
+            parameters.Add("@UserRoleID", user.UserRoleID);
+
+            return parameters;
+        }
+
+        private static DynamicParameters MapUserToParameters(UserDataDTO user)
+        {
             var parameters = new DynamicParameters();
             parameters.Add("@Username", user.Username);
             parameters.Add("@FirstName", user.FirstName);
@@ -96,103 +135,7 @@ namespace PointOfSaleWeb.Repository.Repositories
             parameters.Add("@Email", user.Email);
             parameters.Add("@UserRoleID", user.UserRoleID);
 
-            try
-            {
-                var userModified = await db.QuerySingleOrDefaultAsync<UserInfoDTO>("UpdateUser", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = true,
-                    Message = "User updated!",
-                    Data = userModified
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
-        }
-
-        public async Task<DbResponse<string>> ChangeUserPassword(UserChangePasswordDTO userData)
-        {
-            using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@Username", userData.Username);
-            parameters.Add("@OldPassword", userData.OldPassword);
-            parameters.Add("@NewPassword", userData.NewPassword);
-
-            try
-            {
-                await db.ExecuteAsync("ChangeUserPassword", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<string>
-                {
-                    Success = true,
-                    Message = "Password changed successfully!"
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<string>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
-        }
-
-        public async Task<DbResponse<string>> ResetUserPassword(UserChangePasswordDTO userData)
-        {
-            using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@Username", userData.Username);
-            parameters.Add("@NewPassword", userData.NewPassword);
-
-            try
-            {
-                await db.ExecuteAsync("ResetUserPassword", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<string>
-                {
-                    Success = true,
-                    Message = "Password reset successfully!"
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<string>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
-        }
-
-        public async Task<DbResponse<UserInfoDTO>> DeleteUser(string username)
-        {
-            using IDbConnection db = _context.CreateConnection();
-
-            try
-            {
-                await db.ExecuteAsync("DeleteUser", new { Username = username }, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = true
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<UserInfoDTO>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+            return parameters;
         }
     }
 }
