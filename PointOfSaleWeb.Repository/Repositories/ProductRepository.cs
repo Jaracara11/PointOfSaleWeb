@@ -6,11 +6,9 @@ using System.Data;
 
 namespace PointOfSaleWeb.Repository.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(DbContext context) : IProductRepository
 {
-    private readonly DbContext _context;
-
-    public ProductRepository(DbContext context) => _context = context;
+    private readonly DbContext _context = context;
 
     public async Task<IEnumerable<Product>> GetAllProducts()
     {

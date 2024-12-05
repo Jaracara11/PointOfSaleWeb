@@ -52,14 +52,17 @@ public class ProductController : ControllerBase
     {
         var product = await _prodRepo.GetProductByID(id);
 
-        return product != null
-            ? Results.Ok(product)
-            : Results.NotFound(new ProblemDetails
+        if (product == null)
+        {
+            return Results.NotFound(new ProblemDetails
             {
                 Title = "Product Not Found",
-                Detail = $"No product found with ID {id}.",
+                Detail = $"No product found with ID {id}. Please verify the product ID and try again.",
                 Status = StatusCodes.Status404NotFound
             });
+        }
+
+        return Results.Ok(product);
     }
 
     [HttpPost]

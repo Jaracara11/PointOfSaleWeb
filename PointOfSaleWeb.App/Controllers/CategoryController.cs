@@ -13,42 +13,70 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpGet]
         [ResponseCache(Duration = 5)]
-        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories() => Ok(await _catRepo.GetAllCategories());
+        public async Task<IResult> GetAllCategories() =>
+            Results.Ok(await _catRepo.GetAllCategories());
 
         [HttpGet("{id}")]
         [ResponseCache(Duration = 300)]
-        public async Task<ActionResult<Category>> GetCategoryByID(int id)
+        public async Task<IResult> GetCategoryByID(int id)
         {
             var category = await _catRepo.GetCategoryByID(id);
 
-            return category != null ? Ok(category) : NotFound();
+            return category != null
+                ? Results.Ok(category)
+                : Results.NotFound(new ProblemDetails
+                {
+                    Title = "Category Not Found",
+                    Detail = $"No category found with ID {id}.",
+                    Status = StatusCodes.Status404NotFound
+                });
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult<Category>> AddNewCategory(Category category)
+        public async Task<IResult> AddNewCategory([FromBody] Category category)
         {
-            var response = await _catRepo.AddNewCategory(category.CategoryName);
+            var newCategory = await _catRepo.AddNewCategory(category.CategoryName);
 
-            return response.Success ? Created("Category", response.Data) : BadRequest(new { response.Message });
+            return newCategory != null
+                ? Results.Created($"/api/categories/{newCategory.CategoryID}", newCategory)
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Failed to Add Category",
+                    Detail = "Category could not be added.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         [HttpPut("edit")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> UpdateCategory(Category category)
+        public async Task<IResult> UpdateCategory([FromBody] Category category)
         {
-            var response = await _catRepo.UpdateCategory(category);
+            var updatedCategory = await _catRepo.UpdateCategory(category);
 
-            return response.Success ? Ok(response) : BadRequest(new { response.Message });
+            return updatedCategory != null
+                ? Results.Ok(updatedCategory)
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Failed to Update Category",
+                    Detail = "Category could not be updated.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
 
         [HttpDelete("{id}/delete")]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<ActionResult> DeleteCategory(int id)
+        public async Task<IResult> DeleteCategory(int id)
         {
-            var response = await _catRepo.DeleteCategory(id);
-
-            return response.Success ? NoContent() : BadRequest(new { response.Message });
+            return await _catRepo.DeleteCategory(id)
+                ? Results.NoContent()
+                : Results.BadRequest(new ProblemDetails
+                {
+                    Title = "Failed to Delete Category",
+                    Detail = $"Category with ID {id} could not be deleted.",
+                    Status = StatusCodes.Status400BadRequest
+                });
         }
+
     }
 }

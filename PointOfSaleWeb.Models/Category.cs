@@ -2,9 +2,10 @@
 
 namespace PointOfSaleWeb.Models
 {
+    [Dapper.Contrib.Extensions.Table("Categories")]
     public class Category
     {
-        [Key]
+        [Dapper.Contrib.Extensions.Key]
         public int CategoryID { get; set; }
 
         [Required]

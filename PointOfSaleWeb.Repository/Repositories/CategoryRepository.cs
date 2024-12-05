@@ -1,109 +1,62 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
+using Dapper.Contrib.Extensions;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
 
 namespace PointOfSaleWeb.Repository.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository(DbContext context) : ICategoryRepository
     {
-        private readonly DbContext _context;
-        public CategoryRepository(DbContext context)
-        {
-            _context = context;
-        }
+        private readonly DbContext _context = context;
 
         public async Task<IEnumerable<Category>> GetAllCategories()
         {
             using IDbConnection db = _context.CreateConnection();
 
-            return await db.QueryAsync<Category>("sp_GetAllCategories", 
-                commandType: CommandType.StoredProcedure);
+            return await db.GetAllAsync<Category>();
         }
 
         public async Task<Category?> GetCategoryByID(int id)
         {
             using IDbConnection db = _context.CreateConnection();
-            return await db.QuerySingleOrDefaultAsync<Category>("GetCategoryById", 
-                new { CategoryID = id }, commandType: CommandType.StoredProcedure);
+
+            return await db.GetAsync<Category>(id);
         }
 
-        public async Task<DbResponse<Category>> AddNewCategory(string categoryName)
+        public async Task<Category?> AddNewCategory(string categoryName)
         {
             using IDbConnection db = _context.CreateConnection();
 
-            try
-            {
-                var category = await db.QuerySingleOrDefaultAsync<Category>("AddNewCategory", new { CategoryName = categoryName }, commandType: CommandType.StoredProcedure);
+            var result = await db.QueryAsync<Category>(
+                "sp_AddNewCategory",
+                new { CategoryName = categoryName },
+                commandType: CommandType.StoredProcedure
+            );
 
-                return new DbResponse<Category>
-                {
-                    Success = true,
-                    Data = category
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<Category>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+            return result.FirstOrDefault();
         }
 
-        public async Task<DbResponse<Category>> UpdateCategory(Category category)
-        {
-            using IDbConnection db = _context.CreateConnection();
-            var parameters = new DynamicParameters();
-            parameters.Add("@CategoryID", category.CategoryID);
-            parameters.Add("@CategoryName", category.CategoryName);
-
-            Category? updatedCategory;
-
-            try
-            {
-                updatedCategory = await db.QuerySingleOrDefaultAsync<Category>("UpdateCategory", parameters, commandType: CommandType.StoredProcedure);
-
-                return new DbResponse<Category>
-                {
-                    Success = true,
-                    Message = "Category updated!",
-                    Data = updatedCategory
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<Category>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
-        }
-
-        public async Task<DbResponse<Category>> DeleteCategory(int id)
+        public async Task<Category> UpdateCategory(Category category)
         {
             using IDbConnection db = _context.CreateConnection();
 
-            try
-            {
-                await db.ExecuteAsync("DeleteCategory", new { CategoryID = id }, commandType: CommandType.StoredProcedure);
+            var result = await db.UpdateAsync(category);
 
-                return new DbResponse<Category>
-                {
-                    Success = true
-                };
-            }
-            catch (SqlException ex)
-            {
-                return new DbResponse<Category>
-                {
-                    Success = false,
-                    Message = ex.Message
-                };
-            }
+            if (result)
+                return category;
+
+            throw new Exception("Failed to update category.");
+        }
+
+        public async Task<bool> DeleteCategory(int id)
+        {
+            using IDbConnection db = _context.CreateConnection();
+
+            string query = "DELETE FROM Categories WHERE CategoryID = @CategoryID";
+            int rowsAffected = await db.ExecuteAsync(query, new { CategoryID = id });
+
+            return rowsAffected > 0;
         }
     }
 }
