@@ -8,12 +8,9 @@ namespace PointOfSaleWeb.App.Controllers;
 
 [Route("api/products")]
 [ApiController]
-public class ProductController : ControllerBase
+public class ProductController(IProductRepository prodRepo) : ControllerBase
 {
-    private readonly IProductRepository _prodRepo;
-
-    public ProductController(IProductRepository prodRepo) =>
-        _prodRepo = prodRepo;
+    private readonly IProductRepository _prodRepo = prodRepo;
 
     [HttpGet]
     [ResponseCache(Duration = 5)]

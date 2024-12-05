@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
@@ -94,10 +95,9 @@ public class ProductRepository(DbContext context) : IProductRepository
     {
         using IDbConnection db = _context.CreateConnection();
 
-        string query = "DELETE FROM Products WHERE ProductID = @ProductID";
-        int rowsAffected = await db.ExecuteAsync(query, new { ProductID = id });
+        var product = new Product { ProductID = id };
 
-        return rowsAffected > 0;
+        return await db.DeleteAsync(product);
     }
 
     private static DynamicParameters MapProductToParameters(Product product)

@@ -53,10 +53,9 @@ namespace PointOfSaleWeb.Repository.Repositories
         {
             using IDbConnection db = _context.CreateConnection();
 
-            string query = "DELETE FROM Categories WHERE CategoryID = @CategoryID";
-            int rowsAffected = await db.ExecuteAsync(query, new { CategoryID = id });
+            var category = new Category { CategoryID = id };
 
-            return rowsAffected > 0;
+            return await db.DeleteAsync(category);
         }
     }
 }
