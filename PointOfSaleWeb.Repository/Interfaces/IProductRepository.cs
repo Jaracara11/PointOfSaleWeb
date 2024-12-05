@@ -9,8 +9,8 @@ namespace PointOfSaleWeb.Repository.Interfaces
         Task<IEnumerable<BestSellerProductDTO>> GetBestSellerProducts();
         Task<IEnumerable<ProductSoldByDateDTO>> GetProductsSoldByDate(DateTime initialDate, DateTime finalDate);
         Task<Product?> GetProductByID(string productId);
-        Task<Product?> AddNewProduct(Product product);
-        Task<Product?> UpdateProduct(Product product);
+        Task<bool> AddNewProduct(ProductInsertDTO productData);
+        Task<bool> UpdateProduct(Product product);
         Task<bool> DeleteProduct(string id);
     }
 }

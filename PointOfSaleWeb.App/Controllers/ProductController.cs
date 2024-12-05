@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PointOfSaleWeb.App.Utilities;
 using PointOfSaleWeb.Models;
+using PointOfSaleWeb.Models.DTOs;
 using PointOfSaleWeb.Repository.Interfaces;
 
 namespace PointOfSaleWeb.App.Controllers;
@@ -64,12 +65,12 @@ public class ProductController(IProductRepository prodRepo) : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin, Manager")]
-    public async Task<IResult> AddNewProduct([FromBody] Product product)
+    public async Task<IResult> CreateProduct([FromBody] ProductInsertDTO product)
     {
-        var newProduct = await _prodRepo.AddNewProduct(product);
+        var success = await _prodRepo.AddNewProduct(product);
 
-        return newProduct != null
-            ? Results.Created("Product", newProduct)
+        return success
+            ? Results.Created("/api/products", product)
             : Results.BadRequest(new ProblemDetails
             {
                 Title = "Failed to Add Product",
@@ -84,8 +85,8 @@ public class ProductController(IProductRepository prodRepo) : ControllerBase
     {
         var updatedProduct = await _prodRepo.UpdateProduct(product);
 
-        return updatedProduct != null
-            ? Results.Ok(updatedProduct)
+        return updatedProduct
+            ? Results.Ok(product)
             : Results.BadRequest(new ProblemDetails
             {
                 Title = "Failed to Update Product",

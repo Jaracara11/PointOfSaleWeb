@@ -65,30 +65,22 @@ public class ProductRepository(DbContext context) : IProductRepository
         )).FirstOrDefault();
     }
 
-    public async Task<Product?> AddNewProduct(Product product)
+    public async Task<bool> AddNewProduct(ProductInsertDTO productData)
     {
         using IDbConnection db = _context.CreateConnection();
 
-        var result = await db.QueryAsync<Product>(
-            "sp_AddNewProduct",
-            MapProductToParameters(product),
-            commandType: CommandType.StoredProcedure
-        );
+        var productID = await db.InsertAsync(productData);
 
-        return result.FirstOrDefault();
+        return productID > 0;
     }
 
-    public async Task<Product?> UpdateProduct(Product product)
+    public async Task<bool> UpdateProduct(Product product)
     {
         using IDbConnection db = _context.CreateConnection();
 
-        var result = await db.QueryAsync<Product>(
-            "sp_UpdateProduct",
-            MapProductToParameters(product),
-            commandType: CommandType.StoredProcedure
-        );
+        var success = await db.UpdateAsync(product);
 
-        return result.FirstOrDefault();
+        return success;
     }
 
     public async Task<bool> DeleteProduct(string id)

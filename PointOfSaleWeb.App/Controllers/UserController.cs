@@ -75,7 +75,7 @@ namespace PointOfSaleWeb.App.Controllers
             var success = await _userRepo.AddNewUser(user);
 
             return success
-                ? Results.Created("/api/users", null)
+                ? Results.Created("/api/users", user)
                 : Results.BadRequest(new ProblemDetails
                 {
                     Title = "Registration Failed",

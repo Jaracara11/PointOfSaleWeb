@@ -6,7 +6,7 @@ namespace PointOfSaleWeb.Repository.Interfaces
     {
         Task<IEnumerable<Category>> GetAllCategories();
         Task<Category?> GetCategoryByID(int id);
-        Task<Category?> AddNewCategory(string categoryName);
+        Task<bool> AddNewCategory(string categoryName);
         Task<Category> UpdateCategory(Category category);
         Task<bool> DeleteCategory(int id);
     }

@@ -1,5 +1,4 @@
-﻿using Dapper;
-using Dapper.Contrib.Extensions;
+﻿using Dapper.Contrib.Extensions;
 using PointOfSaleWeb.Models;
 using PointOfSaleWeb.Repository.Interfaces;
 using System.Data;
@@ -24,17 +23,18 @@ namespace PointOfSaleWeb.Repository.Repositories
             return await db.GetAsync<Category>(id);
         }
 
-        public async Task<Category?> AddNewCategory(string categoryName)
+        public async Task<bool> AddNewCategory(string categoryName)
         {
             using IDbConnection db = _context.CreateConnection();
 
-            var result = await db.QueryAsync<Category>(
-                "sp_AddNewCategory",
-                new { CategoryName = categoryName },
-                commandType: CommandType.StoredProcedure
-            );
+            var category = new Category
+            {
+                CategoryName = categoryName
+            };
 
-            return result.FirstOrDefault();
+            var categoryID = await db.InsertAsync(category);
+
+            return categoryID > 0;
         }
 
         public async Task<Category> UpdateCategory(Category category)

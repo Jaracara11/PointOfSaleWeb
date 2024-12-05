@@ -34,12 +34,12 @@ namespace PointOfSaleWeb.App.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<IResult> AddNewCategory([FromBody] Category category)
+        public async Task<IResult> AddNewCategory([FromBody] string categoryName)
         {
-            var newCategory = await _catRepo.AddNewCategory(category.CategoryName);
+            var success = await _catRepo.AddNewCategory(categoryName);
 
-            return newCategory != null
-                ? Results.Created($"/api/categories/{newCategory.CategoryID}", newCategory)
+            return success
+                ? Results.Created("/api/categories", categoryName)
                 : Results.BadRequest(new ProblemDetails
                 {
                     Title = "Failed to Add Category",
@@ -70,11 +70,11 @@ namespace PointOfSaleWeb.App.Controllers
         {
             return await _catRepo.DeleteCategory(id)
                 ? Results.NoContent()
-                : Results.BadRequest(new ProblemDetails
+                : Results.NotFound(new ProblemDetails
                 {
-                    Title = "Failed to Delete Category",
-                    Detail = $"Category with ID {id} could not be deleted.",
-                    Status = StatusCodes.Status400BadRequest
+                    Title = "Category Not Found",
+                    Detail = $"No category found with ID {id}.",
+                    Status = StatusCodes.Status404NotFound
                 });
         }
     }
