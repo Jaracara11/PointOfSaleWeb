@@ -26,14 +26,20 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
+var jwtSecretKey = Environment.GetEnvironmentVariable("JWT_SECRET_KEY") ?? "";
+
+if (string.IsNullOrEmpty(jwtSecretKey))
+{
+    throw new Exception("JWT Secret Key is missing. Please set the 'JWT_SECRET_KEY' environment variable.");
+}
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
-            GetBytes(builder.Configuration.GetSection("Jwt:SecretKey").Value ?? "")),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretKey)),
             ValidateIssuer = false,
             ValidateAudience = false,
             ClockSkew = TimeSpan.Zero
@@ -53,5 +59,5 @@ app.UseAuthorization();
 app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
 app.MapControllers();
 app.MapGet("/healthcheck", () => "API is running!").AllowAnonymous();
-app.Run();
 
+app.Run();
